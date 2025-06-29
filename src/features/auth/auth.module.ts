@@ -7,6 +7,7 @@ import { AuthOuletComponent } from './auth-oulet/auth-oulet.component';
 import { LoginComponent } from './login/login.component';
 import { SharedModule } from '../../shared/modules/shared/shared.module';
 import { ForgetPasswordComponent } from './forget-password/forget-password.component';
+import { OTPVerficationComponent } from './otp-verfication/otp-verfication.component';
 
 
 @NgModule({
@@ -15,6 +16,7 @@ import { ForgetPasswordComponent } from './forget-password/forget-password.compo
     AuthOuletComponent,
     LoginComponent,
     ForgetPasswordComponent,
+    OTPVerficationComponent,
 
   ],
   imports: [

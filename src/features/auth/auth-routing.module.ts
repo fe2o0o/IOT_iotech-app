@@ -3,6 +3,7 @@ import { RouterModule, Routes } from '@angular/router';
 import { AuthOuletComponent } from './auth-oulet/auth-oulet.component';
 import { LoginComponent } from './login/login.component';
 import { ForgetPasswordComponent } from './forget-password/forget-password.component';
+import { OTPVerficationComponent } from './otp-verfication/otp-verfication.component';
 
 const routes: Routes = [
   {
@@ -11,7 +12,8 @@ const routes: Routes = [
     children: [
       { path: '', redirectTo: 'login', pathMatch: 'full' },
       { path: 'login', component: LoginComponent },
-      {path:'forgot-password' , component:ForgetPasswordComponent}
+      { path: 'forgot-password', component: ForgetPasswordComponent },
+      {path:'otp-verfication' , component:OTPVerficationComponent}
     ]
   }
 ];

@@ -1,0 +1,38 @@
+<div class="flex flex-col  justify-center  h-full">
+  <div class="head text-center mb-8 lg:w-3/5 mx-auto">
+    <h2 class="text-5xl font-semibold text-white_color mb-4">
+      {{ 'AUTH.OTP_VERIFICATION_TITLE' | translate }}
+    </h2>
+    <p class="text-sm text-white_color">
+      {{ 'AUTH.OTP_VERIFICATION_DESC' | translate }}
+      <span class="underline">{{current_mail()}}</span>
+    </p>
+  </div>
+
+
+
+  <div class="login_form flex justify-center mb-8">
+    <form [formGroup]="otp_form" class="login_form relative lg:w-3/5 w-full">
+      <div class="form_group mb-12 flex  justify-center">
+        <p-inputOtp [length]="6" formControlName="otp" />
+      </div>
+
+
+      <p class="text-white_color mb-12 text-center">
+        {{ 'AUTH.CODE_EXPIRES_IN' | translate }}
+        <span class="text-white_color">{{ minutes() }}:{{ seconds() }}</span>
+      </p>
+
+      <div class="auth_btn">
+        <p-button [loading]="isLoading()" [label]="'AUTH.VERIFY_OTP' | translate" [disabled]="otp_form.invalid" />
+      </div>
+    </form>
+  </div>
+  <p class="text-white_color text-center">
+    {{ 'AUTH.DIDNT_GET_CODE' | translate }}
+    <button
+      [ngClass]="{ 'text-white_color/50': !isTimerExpired , 'pointer-events-none':!isTimerExpired , 'pointer-events-auto':isTimerExpired , 'text-white_color':isTimerExpired}">
+      {{ 'AUTH.RESEND_CODE' | translate }}
+    </button>
+  </p>
+</div>
