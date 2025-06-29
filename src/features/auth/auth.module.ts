@@ -9,6 +9,7 @@ import { SharedModule } from '../../shared/modules/shared/shared.module';
 import { ForgetPasswordComponent } from './forget-password/forget-password.component';
 import { OTPVerficationComponent } from './otp-verfication/otp-verfication.component';
 import { UpdatePasswordComponent } from './update-password/update-password.component';
+import { SuccessComponent } from './success/success.component';
 
 
 @NgModule({
@@ -19,6 +20,7 @@ import { UpdatePasswordComponent } from './update-password/update-password.compo
     ForgetPasswordComponent,
     OTPVerficationComponent,
     UpdatePasswordComponent,
+    SuccessComponent,
 
   ],
   imports: [

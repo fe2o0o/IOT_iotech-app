@@ -5,6 +5,7 @@ import { LoginComponent } from './login/login.component';
 import { ForgetPasswordComponent } from './forget-password/forget-password.component';
 import { OTPVerficationComponent } from './otp-verfication/otp-verfication.component';
 import { UpdatePasswordComponent } from './update-password/update-password.component';
+import { SuccessComponent } from './success/success.component';
 
 const routes: Routes = [
   {
@@ -15,7 +16,8 @@ const routes: Routes = [
       { path: 'login', component: LoginComponent },
       { path: 'forgot-password', component: ForgetPasswordComponent },
       { path: 'otp-verfication', component: OTPVerficationComponent },
-      {path:'update-password' , component:UpdatePasswordComponent}
+      { path: 'update-password', component: UpdatePasswordComponent },
+      {path:'success-update' , component:SuccessComponent}
     ]
   }
 ];
