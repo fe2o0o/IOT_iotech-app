@@ -1,0 +1,58 @@
+<div class="flex flex-col  justify-center  h-full">
+  <div class="head text-center mb-12">
+    <h2 class="text-5xl font-semibold text-white_color mb-4">{{"AUTH.SIGN_IN"|translate}}</h2>
+    <p class="text-sm text-white_color">{{"AUTH.LOGIN_PAGE_TITLE"|translate}}</p>
+  </div>
+
+  <div class="login_form flex justify-center ">
+    <form [formGroup]="loginForm" class="login_form relative w-full lg:w-3/5">
+      <div class="form_group mb-8">
+        <label class="text-white_color block mb-3 " for="">{{"AUTH.EMAIL_PLACEHOLDER"|translate}}</label>
+        <div class="input_icon_group ">
+          <input id="email" formControlName="email" type="email" pInputText placeholder="Example@gmail.com" />
+          <i class="fi text-black_color text-lg fi-rr-envelope"></i>
+        </div>
+        @if(loginForm.get('email')?.errors && loginForm.get('email')?.touched){
+        <div>
+          @if(loginForm.get('email')?.getError('required')){
+          <p class="p-2 text-sm text-danger_color m-0">{{"AUTH.EMAIL_REQ"|translate}}</p>
+          }
+          @if(loginForm.get('email')?.getError('email')){
+          <p class="p-2 text-sm text-danger_color m-0">{{"AUTH.EMAIL_VAILD"|translate}}</p>
+          }
+        </div>
+        }
+      </div>
+      <div class="form_group mb-14">
+        <label class="text-white_color block mb-3 " for="">{{"AUTH.PASSWORD_PLACEHOLDER"|translate}}</label>
+
+        <div class="input_icon_group mb-2">
+          <i (click)="isShowPass.set(!isShowPass())"
+            [ngClass]="{'fi-rr-eye': !isShowPass() , 'fi fi-rr-eye-crossed':isShowPass()}"
+            class="fi text-black_color cursor-pointer pass_toggle"></i>
+          <input id="password" formControlName="password" [type]="!isShowPass() ? 'password':'text'" pInputText
+            placeholder="***********" />
+          <i class="fi text-black_color text-lg fi-rr-lock"></i>
+        </div>
+        <a [routerLink]="['/auth/forgot-password']" routerLinkActive="router-link-active"
+          class="flex justify-end underline text-white_color">{{"AUTH.FORGOT_PASSWORD"|translate}}</a>
+        @if(loginForm.get('password')?.errors && loginForm.get('password')?.touched){
+        <div>
+          @if(loginForm.get('password')?.getError('required')){
+          <p class="p-2 text-sm text-danger_color m-0">{{"AUTH.PASSWORD_REQ"|translate}}</p>
+          }
+
+        </div>
+        }
+
+      </div>
+
+      <div class="auth_btn">
+        <p-button [loading]="isLoginBtnLoading()" label="{{'AUTH.SIGN_IN' | translate}}"
+          [disabled]="loginForm.invalid" />
+      </div>
+
+    </form>
+  </div>
+
+</div>

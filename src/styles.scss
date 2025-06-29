@@ -1,0 +1,94 @@
+/* You can add global styles to this file, and also import other style files */
+@use "primeng/resources/themes/lara-light-blue/theme.css";
+@use "primeng/resources/primeng.css";
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+@import url('https://fonts.googleapis.com/css2?family=Cairo:wght@200..1000&display=swap');
+@import "@flaticon/flaticon-uicons/css/all/all";
+
+
+:root {
+  --primaryColor: 213 28 84;
+  --primaryWhite: 253 253 253;
+  --whiteColor: 255 255 255;
+  --gray_light: 208 208 208;
+  --red_light: 255 244 249;
+  --danger_color: 255 49 65;
+  --black_color: 0 0 0;
+  --blue_color: 0 216 221;
+  --success_color: 0 181 120;
+  --warning_color: 255 149 0;
+  --gold_color: 159 138 96;
+  --light_white: 238 238 238;
+}
+
+body {
+  background-color: #FDFDFD;
+  font-family: "Cairo", sans-serif !important;
+}
+
+* {
+  font-family: "Cairo", sans-serif !important;
+}
+
+i {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.p-inputtext {
+  @apply bg-white_color rounded-3xl;
+  width: 100%;
+  padding: .8rem 1.5rem;
+
+  @apply border border-gray_light;
+
+  &:focus {
+    box-shadow: none;
+  }
+}
+
+
+.input_icon_group {
+  position: relative;
+
+
+  .p-inputtext {
+    padding-inline-start: 4rem;
+
+    &.ng-dirty.ng-invalid {
+      border: 1px solid red;
+    }
+
+  }
+
+  i {
+    position: absolute;
+    top: 50%;
+    inset-inline-start: 1.5rem;
+    transform: translateY(-50%);
+    -webkit-transform: translateY(-50%);
+    -moz-transform: translateY(-50%);
+    -ms-transform: translateY(-50%);
+    -o-transform: translateY(-50%);
+  }
+}
+
+i.pass_toggle {
+  inset-inline-end: 1.5rem !important;
+  inset-inline-start: auto;
+}
+
+
+.auth_btn {
+  .p-button {
+    @apply w-full bg-black_color rounded-3xl;
+    padding: 1rem;
+
+    .p-button-label {
+      @apply text-white_color;
+    }
+  }
+}
