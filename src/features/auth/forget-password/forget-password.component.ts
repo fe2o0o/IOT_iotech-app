@@ -1,4 +1,5 @@
-import { Component } from '@angular/core';
+import { Component, signal } from '@angular/core';
+import { FormGroup, FormControl, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-forget-password',
@@ -8,4 +9,20 @@ import { Component } from '@angular/core';
 })
 export class ForgetPasswordComponent {
 
+
+  ngOnInit(): void {
+    this.initForgotPasswordForm()
+  }
+
+
+  initForgotPasswordForm() {
+    this.forgot_pass_form = new FormGroup({
+      email: new FormControl(null , [Validators.required , Validators.email])
+    })
+  }
+
+  forgot_pass_form!: FormGroup;
+
+
+  isLoading = signal<boolean>(false)
 }

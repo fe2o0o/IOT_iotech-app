@@ -2,6 +2,7 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { AuthOuletComponent } from './auth-oulet/auth-oulet.component';
 import { LoginComponent } from './login/login.component';
+import { ForgetPasswordComponent } from './forget-password/forget-password.component';
 
 const routes: Routes = [
   {
@@ -9,7 +10,8 @@ const routes: Routes = [
     component: AuthOuletComponent,
     children: [
       { path: '', redirectTo: 'login', pathMatch: 'full' },
-      {path:'login' , component:LoginComponent}
+      { path: 'login', component: LoginComponent },
+      {path:'forgot-password' , component:ForgetPasswordComponent}
     ]
   }
 ];
