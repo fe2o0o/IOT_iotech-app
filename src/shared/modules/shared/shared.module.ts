@@ -5,8 +5,14 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { ChartModule } from 'primeng/chart';
 import { TableModule } from 'primeng/table';
 import { TranslateModule } from '@ngx-translate/core';
+import { SidebarMainLayoutComponent } from '../../../core/components/sidebar-main-layout/sidebar-main-layout.component';
+import { BreadcrumbComponent } from '../../../core/components/breadcrumb/breadcrumb.component';
+import { GoogleMapsModule } from '@angular/google-maps';
+
 @NgModule({
   declarations: [
+    SidebarMainLayoutComponent,
+    BreadcrumbComponent
   ],
   imports: [
     CommonModule,
@@ -15,7 +21,8 @@ import { TranslateModule } from '@ngx-translate/core';
     FormsModule,
     ChartModule,
     TableModule,
-    TranslateModule
+    TranslateModule,
+    GoogleMapsModule
 
 
   ],
@@ -25,7 +32,10 @@ import { TranslateModule } from '@ngx-translate/core';
     ChartModule,
     TableModule,
     PrimeNGModule,
-    TranslateModule
+    TranslateModule,
+    SidebarMainLayoutComponent,
+    BreadcrumbComponent,
+    GoogleMapsModule
 
   ]
 })

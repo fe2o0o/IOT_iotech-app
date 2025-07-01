@@ -1,0 +1,32 @@
+<aside class="sidebar_container relative py-8 ">
+  <div class="logo_container flex items-center justify-center mb-6">
+    @if(isExpand){
+    <button (click)="handleCollapse()">
+      <i class="fi fi-rr-compress-alt"></i>
+    </button>
+    }@else {
+    <button (click)="handleExpand()">
+      <i class="fi fi-rr-expand-arrows-alt"></i>
+    </button> }
+    <img src="images/logo_main-white.svg" alt="">
+  </div>
+
+
+  <div class="sidebar__sidebar-container-links p-3">
+    <ul>
+      @for(link of sidebarLinks() ; track $index){
+      @if(link.visible){
+      <li routerLinkActive="active" class="sidebar__sidebar-container-links-item rounded-lg flex gap-4 mb-6">
+        <a (click)="handleOpenOverlay()" [routerLink]="link?.link" class="flex algin-center gap-2">
+          <i [class]="link.icon" class="text-white_color text-xl"></i>
+          @if(isColapsed()){
+          <span class="text-base text-white_color">{{link.name|translate }}</span>
+          }</a>
+      </li>
+      }
+      }
+    </ul>
+  </div>
+
+
+</aside>

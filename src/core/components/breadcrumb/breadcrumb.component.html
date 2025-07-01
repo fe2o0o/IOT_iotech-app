@@ -1,0 +1,38 @@
+<nav class="p-8 py-6">
+  <div class="inner flex items-center justify-between flex-wrap">
+    <div class="title flex items-center justify-center gap-3">
+      <i class="fi   fi-br-menu-burger text-xl text-primary hidden toggle_menue"></i>
+      <h1 class="font-semibold text-lg lg:text-2xl   text-primary">{{title_bread()|translate}}</h1>
+    </div>
+
+
+    <div class="flex items-center gap-5 flex-wrap">
+      <div class="flex items-center gap-3 flex-wrap">
+        <img src="images/IoTech-Logo2024 2.svg" width="80" alt="">
+      </div>
+      <div class="user_info cursor-pointer flex flex-wrap items-center gap-3">
+        <div class="switch_lang flex items-center gap-3">
+          <div class="icon">
+            <i class="fi fi-rr-globe text-2xl"></i>
+          </div>
+          <p-dropdown [options]="langs" [(ngModel)]="selected_lang" optionValue="code" optionLabel="name"
+            placeholder="" />
+        </div>
+        <div (click)="menu.toggle($event)" class="flex items-center flex-wrap gap-3">
+          <div class="icon">
+            <i class="fi fi-rr-circle-user text-4xl"></i>
+          </div>
+          <div class="flex flex-col">
+            <!-- <p class="text-sm">{{userData?.fullName}}</p> -->
+            <p class="text-sm">{{userData.userName}}</p>
+          </div>
+          <i class=" cursor-pointer fi fi-rr-angle-small-down"></i>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</nav>
+
+
+<p-menu #menu appendTo="body" styleClass="namespace_action" [model]="items" [popup]="true" />

@@ -23,8 +23,9 @@
   --light_white: 238 238 238;
 }
 
+
 body {
-  background-color: #FDFDFD;
+  background-color: #F5F5F5;
   font-family: "Cairo", sans-serif !important;
 }
 
@@ -91,4 +92,32 @@ i.pass_toggle {
       @apply text-white_color;
     }
   }
+}
+
+
+
+
+.adon-input {
+  // min-width: 300px;
+  height: 60px;
+
+
+  i {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    -webkit-transform: translateY(-50%);
+    -moz-transform: translateY(-50%);
+    -ms-transform: translateY(-50%);
+    -o-transform: translateY(-50%);
+    inset-inline-start: 0.75rem;
+  }
+}
+
+
+.adon-input .p-inputtext {
+  @apply bg-white_color shadow-sm;
+  // box-shadow: 1px 1px 5px 0px rgba(0, 0, 0, 0.2509803922) !important;
+  padding: 1rem;
+  padding-inline-start: 2.5rem;
 }

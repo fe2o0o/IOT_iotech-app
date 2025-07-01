@@ -1,0 +1,28 @@
+.sidebar_container {
+  .logo_container {
+    height: 80px;
+
+    i {
+      @apply text-white_color;
+      position: absolute;
+      top: 1rem;
+      right: 1rem;
+    }
+  }
+}
+
+
+.active {
+  @apply bg-white_color text-primary;
+  i{
+    @apply text-primary;
+  }
+
+  span{
+    @apply text-primary;
+  }
+}
+
+.sidebar__sidebar-container-links-item a {
+  padding: 16px 12px;
+}

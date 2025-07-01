@@ -1,0 +1,378 @@
+<section>
+  <div class="cards grid grid-cols-12 gap-5  mb-20">
+    <div
+      class="card col-span-12 md:col-span-5 lg:col-span-4  flex items-center justify-between shadow-md rounded-3xl p-4 px-6 gap-2">
+      <div class="content">
+        <h2 class="mb-4 text-lg font-medium">{{ 'DEVICES.TOTAL_DEVICES' | translate }}</h2>
+        @if(loadingState()){
+        <p-skeleton width="100%" styleClass="mb-2" />
+
+        }@else {
+
+        <p class="text-xl font-semibold">{{allData()?.metadata?.totalDevices}}</p>
+        }
+      </div>
+
+      <div class="icon">
+        <svg width="35" height="35" viewBox="0 0 35 35" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path
+            d="M24.8061 18.5645C25.668 18.5645 26.3666 17.866 26.3666 17.0041C26.3666 16.1424 25.668 15.4438 24.8061 15.4438C23.9444 15.4438 23.2457 16.1424 23.2457 17.0041C23.2457 17.866 23.9444 18.5645 24.8061 18.5645Z"
+            stroke="#D51C54" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+          <path
+            d="M29.1666 8.74984V11.3602C28.802 11.3165 28.3791 11.2873 27.927 11.2873H21.6854C18.5645 11.2873 17.5291 12.3228 17.5291 15.4436V22.8957H8.74996C4.08329 22.8957 2.91663 21.729 2.91663 17.0623V8.74984C2.91663 4.08317 4.08329 2.9165 8.74996 2.9165H23.3333C28 2.9165 29.1666 4.08317 29.1666 8.74984Z"
+            stroke="#D51C54" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+          <path d="M13.125 22.896V29.1667" stroke="#D51C54" stroke-width="1.5" stroke-linecap="round"
+            stroke-linejoin="round" />
+          <path d="M2.91663 17.354H17.5" stroke="#D51C54" stroke-width="1.5" stroke-linecap="round"
+            stroke-linejoin="round" />
+          <path d="M8.677 29.1665H17.4998" stroke="#D51C54" stroke-width="1.5" stroke-linecap="round"
+            stroke-linejoin="round" />
+          <path
+            d="M24.8061 18.5645C25.668 18.5645 26.3666 17.866 26.3666 17.0041C26.3666 16.1424 25.668 15.4438 24.8061 15.4438C23.9444 15.4438 23.2457 16.1424 23.2457 17.0041C23.2457 17.866 23.9444 18.5645 24.8061 18.5645Z"
+            stroke="#D51C54" stroke-width="1.5" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round" />
+          <path
+            d="M29.1667 11.3605C28.8021 11.3167 28.3792 11.2876 27.9271 11.2876H21.6854C18.5646 11.2876 17.5292 12.3231 17.5292 15.4439V27.9272C17.5292 31.048 18.5646 32.0834 21.6854 32.0834H27.9271C31.0479 32.0834 32.0833 31.048 32.0833 27.9272V15.4439C32.0833 12.7752 31.325 11.6376 29.1667 11.3605ZM24.8063 15.4439C25.6667 15.4439 26.3667 16.1439 26.3667 17.0043C26.3667 17.8647 25.6667 18.5647 24.8063 18.5647C23.9458 18.5647 23.2458 17.8647 23.2458 17.0043C23.2458 16.1439 23.9458 15.4439 24.8063 15.4439ZM24.8063 27.9272C23.0854 27.9272 21.6854 26.5272 21.6854 24.8064C21.6854 24.0918 21.9333 23.4209 22.3417 22.8959C22.9104 22.1668 23.8 21.6855 24.8063 21.6855C25.5938 21.6855 26.3083 21.9772 26.8479 22.4439C27.5042 23.0272 27.9271 23.873 27.9271 24.8064C27.9271 26.5272 26.5271 27.9272 24.8063 27.9272Z"
+            stroke="#D51C54" stroke-width="1.5" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round" />
+          <path
+            d="M27.9272 24.8064C27.9272 26.5272 26.5272 27.9272 24.8064 27.9272C23.0855 27.9272 21.6855 26.5272 21.6855 24.8064C21.6855 24.0918 21.9335 23.421 22.3418 22.896C22.9105 22.1668 23.8001 21.6855 24.8064 21.6855C25.5939 21.6855 26.3085 21.9772 26.848 22.4439C27.5043 23.0272 27.9272 23.873 27.9272 24.8064Z"
+            stroke="#D51C54" stroke-width="1.5" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round" />
+          <path
+            d="M24.8061 18.5645C25.668 18.5645 26.3666 17.866 26.3666 17.0041C26.3666 16.1424 25.668 15.4438 24.8061 15.4438C23.9444 15.4438 23.2457 16.1424 23.2457 17.0041C23.2457 17.866 23.9444 18.5645 24.8061 18.5645Z"
+            stroke="#D51C54" stroke-width="1.5" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round" />
+        </svg>
+
+
+
+      </div>
+    </div>
+    <div
+      class="card col-span-12 md:col-span-5 lg:col-span-4  flex items-center justify-between shadow-md rounded-3xl p-4 px-6 gap-2">
+      <div class="content">
+        <h2 class="mb-4 text-lg text-success_color font-medium">{{ 'DEVICES.ONLINE_DEVICES' | translate }}</h2>
+        @if(loadingState()){
+        <p-skeleton width="100%" styleClass="mb-2" />
+
+        }@else {
+
+        <p class="text-xl font-semibold">{{allData()?.metadata?.onlineDevices}}</p>
+        }
+      </div>
+
+      <div class="icon">
+        <div class="doted success">
+        </div>
+      </div>
+    </div>
+    <div
+      class="card col-span-12 md:col-span-5 lg:col-span-4  flex items-center justify-between shadow-md rounded-3xl p-4 px-6 gap-2">
+      <div class="content">
+        <h2 class="mb-4 text-lg text-danger_color font-medium">{{ 'DEVICES.OFFLINE_DEVICES' | translate }}</h2>
+        @if(loadingState()){
+        <p-skeleton width="100%" styleClass="mb-2" />
+
+        }@else {
+
+        <p class="text-xl font-semibold">{{allData()?.metadata?.offlineDevices}}</p>
+        }
+      </div>
+
+      <div class="icon">
+
+        <div class="doted danger"></div>
+
+      </div>
+    </div>
+  </div>
+
+
+
+
+
+  <div [ngClass]="{'rtl_dir':is_arabic , 'ltr_dir':!is_arabic}" class="devices_table">
+    <div class="table_head m-2 flex flex-wrap items-center justify-between">
+      <div>
+        <h2 class="font-medium mb-3 text-2xl">
+          {{ 'DEVICES.DEVICE_DETAILS_TITLE' | translate }}
+        </h2>
+        <p class="text-primary">
+          {{ 'DEVICES.DEVICE_DETAILS' | translate }}
+        </p>
+      </div>
+
+      <div class="flex items-center gap-4 flex-wrap flex-row-reverse">
+        <div (click)="showFilter = true"
+          [ngClass]="{'bg-primatext-primary':filterObj.status || filterObj.type , 'text-white_color':filterObj.status || filterObj.type , 'bg-white_color':!filterObj.status && !filterObj.type}"
+          class="icon_filter relative cursor-pointer  shadow p-4">
+          @if(filterCount){
+          <div class="count p-3 shadow rounded-full bg-white_color text-black_color flex items-center justify-center">
+            {{filterCount}}</div>
+          }
+          <i class="fi fi-rr-settings-sliders text-xl"></i>
+        </div>
+        <div class="adon-input relative w-80">
+          <input (input)="handleSearch()" [(ngModel)]="searchTerm" pInputText
+            [placeholder]="'DEVICES.SEARCH_PLACEHOLDER' | translate" />
+          <i class="fi fi-rr-search text-xl flex items-center justify-center text-gray_light"></i>
+        </div>
+      </div>
+    </div>
+    <p-table (onLazyLoad)="onPageChange($event)" [paginator]="true" [totalRecords]="allData()?.totalItems" [lazy]="true"
+      [rows]="per_page" [tableStyle]="{'min-width': '50rem'}" [value]="devicesListTemp()">
+      <ng-template pTemplate="header" let-columns>
+        <tr>
+          <th>{{ 'DEVICES.DEVICE_NAME_LABEL' | translate }}</th>
+          <th>{{ 'DEVICES.DEVICE_TYPE_LABEL' | translate }}</th>
+          <th>{{ 'DEVICES.DEVICE_ID' | translate }}</th>
+          <th>{{ 'DEVICES.COMUN_TYPE' | translate }}</th>
+          <th>{{ 'DEVICES.BATTERY' | translate }}</th>
+          <th>{{ 'DEVICES.DEVICE_STATUS_LABEL' | translate }}</th>
+          <th>{{ 'DEVICES.LAST_SEEN' | translate }}</th>
+          <th>{{ 'DEVICES.ACTIONS' | translate }}</th>
+        </tr>
+      </ng-template>
+      <ng-template pTemplate="body" let-device let-columns="columns">
+        <tr pTooltip="{{ 'DEVICES.DOUBLE_CLICK_TOOLTIP' | translate }}" tooltipPosition="top"
+          class="rounded-full cursor-pointer">
+          <td class="text-sm">
+            {{device?.deviceName}}
+          </td>
+          <td>
+            <p class="text-sm">{{device?.type }}</p>
+          </td>
+          <td class="text-sm">
+            {{device?.identifier}}
+          </td>
+          <td class="">
+            <!-- Device icon logic here -->
+            {{device?.connectionType}}
+          </td>
+          <td>
+            @if(device?.battery != 0 && device?.battery){
+            @if(device?.battery >= 50){
+            <div class="flex justify-center gap-2 flex-row-reverse items-center text-success_color">
+              <span class="text-sm">{{device?.battery}}%</span>
+              <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path
+                  d="M17.0833 7.91667C18.3333 7.91667 18.3333 8.33333 18.3333 9.16667V10.8333C18.3333 11.6667 18.3333 12.0833 17.0833 12.0833"
+                  stroke="#14AB46" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+                <path d="M5.31665 8.33333C5.59165 9.425 5.59165 10.575 5.31665 11.6667" stroke="#14AB46"
+                  stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+                <path d="M8.2334 8.33333C8.5084 9.425 8.5084 10.575 8.2334 11.6667" stroke="#14AB46" stroke-width="1.5"
+                  stroke-linecap="round" stroke-linejoin="round" />
+                <path
+                  d="M10.8334 15.8333H5.83341C2.50008 15.8333 1.66675 15 1.66675 11.6667V8.33333C1.66675 5 2.50008 4.16667 5.83341 4.16667H10.8334C14.1667 4.16667 15.0001 5 15.0001 8.33333V11.6667C15.0001 15 14.1667 15.8333 10.8334 15.8333Z"
+                  stroke="#14AB46" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+              </svg>
+
+            </div>
+            }@else if (device?.battery < 50 && device?.battery>= 20) {
+              <div class="flex justify-center gap-2 flex-row-reverse items-center text-warning_color">
+                <span class="text-sm">{{device?.battery}}%</span>
+                <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <path
+                    d="M17.0833 7.91666C18.3333 7.91666 18.3333 8.33333 18.3333 9.16666V10.8333C18.3333 11.6667 18.3333 12.0833 17.0833 12.0833"
+                    stroke="#FF9500" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+                  <path d="M5.31665 8.33334C5.59165 9.425 5.59165 10.575 5.31665 11.6667" stroke="#FF9500"
+                    stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+                  <path d="M8.2334 8.33334C8.5084 9.425 8.5084 10.575 8.2334 11.6667" stroke="#FF9500"
+                    stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+                  <path
+                    d="M10.8334 15.8333H5.83341C2.50008 15.8333 1.66675 15 1.66675 11.6667V8.33333C1.66675 5 2.50008 4.16666 5.83341 4.16666H10.8334C14.1667 4.16666 15.0001 5 15.0001 8.33333V11.6667C15.0001 15 14.1667 15.8333 10.8334 15.8333Z"
+                    stroke="#FF9500" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+                </svg>
+
+              </div>
+              }@else {
+              <div class="flex justify-center gap-2 flex-row-reverse items-center ">
+                <span class="text-sm">{{device?.battery}}%</span>
+                <i class="fi fi-rr-battery-bolt"></i>
+              </div>
+              }
+              }@else {
+              {{ 'DEVICES.NA' | translate }}
+              }
+          </td>
+          <td>
+            <span [ngClass]="{'text-success_color':device?.isOnline , 'text-danger_color':!device?.isOnline}">
+              {{device?.isOnline ? ('DEVICES.ONLINE' | translate) : ('DEVICES.OFFLINE' | translate)}}
+            </span>
+          </td>
+          <td class="text-sm">
+            <!-- @if(device?.lastSeen){
+            {{device?.lastSeen|date:'MM/dd/yyyy h:mm a'}}
+            }@else {
+            {{ 'DEVICES.NA' | translate }}
+            } -->
+            {{device?.lastSeen}}
+          </td>
+          <!--
+          <td>
+            <div class="flex justify-center items-center">
+              <button (click)="routeToDetails(device)"
+                class="flex transition-all btn_view justify-center items-center gap-2">
+                <i class="fi fi-rr-eye"></i>
+                <span>{{ 'DEVICES.VIEW' | translate }}</span>
+              </button>
+            </div>
+          </td>
+          -->
+          <td class="cursor-pointer" (click)="menu.toggle($event);selected_device = device">
+            <svg class="mx-auto" width="25" height="25" viewBox="0 0 25 25" fill="none"
+              xmlns="http://www.w3.org/2000/svg">
+              <path
+                d="M5.20833 10.4167C4.0625 10.4167 3.125 11.3542 3.125 12.5C3.125 13.6458 4.0625 14.5833 5.20833 14.5833C6.35417 14.5833 7.29167 13.6458 7.29167 12.5C7.29167 11.3542 6.35417 10.4167 5.20833 10.4167Z"
+                stroke="#1A232D" stroke-width="1.5" />
+              <path
+                d="M19.7917 10.4167C18.6459 10.4167 17.7084 11.3542 17.7084 12.5C17.7084 13.6458 18.6459 14.5833 19.7917 14.5833C20.9375 14.5833 21.875 13.6458 21.875 12.5C21.875 11.3542 20.9375 10.4167 19.7917 10.4167Z"
+                stroke="#1A232D" stroke-width="1.5" />
+              <path
+                d="M12.5 10.4167C11.3541 10.4167 10.4166 11.3542 10.4166 12.5C10.4166 13.6458 11.3541 14.5833 12.5 14.5833C13.6458 14.5833 14.5833 13.6458 14.5833 12.5C14.5833 11.3542 13.6458 10.4167 12.5 10.4167Z"
+                stroke="#1A232D" stroke-width="1.5" />
+            </svg>
+
+          </td>
+        </tr>
+      </ng-template>
+
+      <ng-template pTemplate="emptymessage" let-columns>
+        <tr>
+          <td [attr.colspan]="8">
+            <!-- <app-empty-state [loadingState()]="loadingState()"></app-empty-state> -->
+          </td>
+        </tr>
+      </ng-template>
+    </p-table>
+  </div>
+</section>
+
+<p-menu #menu appendTo="body" styleClass="namespace_action" [model]="items()" [popup]="true" />
+
+<!-- Edit Device Dialog -->
+<p-dialog header="" styleClass="select_type_popup" [(visible)]="showEditPopUp" [dismissableMask]="true" [modal]="true"
+  [breakpoints]="{ '1199px': '50vw', '575px': '90vw' }" [style]="{ width: '40vw' }" [draggable]="false"
+  [resizable]="false">
+  <div class="icon_over_lay flex items-center round justify-center">
+    <svg width="40" height="40" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <rect width="40" height="40" fill="white" />
+      <path
+        d="M22.1 5.99994L8.41658 20.4833C7.89992 21.0333 7.39992 22.1167 7.29992 22.8667L6.68325 28.2667C6.46658 30.2167 7.86658 31.55 9.79992 31.2167L15.1666 30.3C15.9166 30.1667 16.9666 29.6167 17.4833 29.05L31.1666 14.5666C33.5333 12.0666 34.6 9.21661 30.9166 5.73328C27.25 2.28328 24.4666 3.49994 22.1 5.99994Z"
+        stroke="#9F8A60" stroke-width="2" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round" />
+      <path d="M19.8169 8.41675C20.5336 13.0167 24.2669 16.5334 28.9002 17" stroke="#9F8A60" stroke-width="2"
+        stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round" />
+      <path d="M5 36.6667H35" stroke="#9F8A60" stroke-width="2" stroke-miterlimit="10" stroke-linecap="round"
+        stroke-linejoin="round" />
+    </svg>
+
+  </div>
+  <div class=" text-center mb-8">
+    <h5 class="text-2xl  text-primary font-medium ">{{ 'DEVICES.EDIT_DEVICE_TITLE' | translate }}</h5>
+  </div>
+  <div class="devices_types__container ">
+    <div class="form-group mb-5">
+      <div class="input_group ">
+        <input #confirm_input id="name" class="custom_input" [value]="selected_device?.deviceName" pInputText
+          [placeholder]="'DEVICES.EDIT_DEVICE_PLACEHOLDER' | translate" />
+      </div>
+    </div>
+  </div>
+  <ng-template pTemplate="footer">
+    <div class="flex justify-center">
+      <div class="action_btn">
+        <p-button [label]="'DEVICES.SAVE' | translate" />
+      </div>
+    </div>
+  </ng-template>
+</p-dialog>
+
+<!-- Filter Dialog -->
+<p-dialog header="" styleClass="select_type_popup" [(visible)]="showFilter" [dismissableMask]="true" [modal]="true"
+  [breakpoints]="{ '1199px': '50vw', '575px': '90vw' }" [style]="{ width: '35vw' }" [draggable]="false"
+  [resizable]="false">
+  <div class="icon_over_lay flex items-center round justify-center">
+    <svg width="40" height="40" viewBox="0 0 50 50" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M45.8333 13.5417H33.3333" stroke="#9F8A60" stroke-width="3" stroke-miterlimit="10" stroke-linecap="round"
+        stroke-linejoin="round" />
+      <path d="M12.5 13.5417H4.16669" stroke="#9F8A60" stroke-width="3" stroke-miterlimit="10" stroke-linecap="round"
+        stroke-linejoin="round" />
+      <path
+        d="M20.8334 20.8333C24.8604 20.8333 28.125 17.5688 28.125 13.5417C28.125 9.51458 24.8604 6.25 20.8334 6.25C16.8063 6.25 13.5417 9.51458 13.5417 13.5417C13.5417 17.5688 16.8063 20.8333 20.8334 20.8333Z"
+        stroke="#9F8A60" stroke-width="3" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round" />
+      <path d="M45.8333 36.4583H37.5" stroke="#9F8A60" stroke-width="3" stroke-miterlimit="10" stroke-linecap="round"
+        stroke-linejoin="round" />
+      <path d="M16.6667 36.4583H4.16669" stroke="#9F8A60" stroke-width="3" stroke-miterlimit="10" stroke-linecap="round"
+        stroke-linejoin="round" />
+      <path
+        d="M29.1667 43.75C33.1938 43.75 36.4583 40.4854 36.4583 36.4583C36.4583 32.4312 33.1938 29.1667 29.1667 29.1667C25.1396 29.1667 21.875 32.4312 21.875 36.4583C21.875 40.4854 25.1396 43.75 29.1667 43.75Z"
+        stroke="#9F8A60" stroke-width="3" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round" />
+    </svg>
+
+  </div>
+  <div class=" text-center mb-8 flex justify-center">
+    <h5 class="text-2xl flex items-center gap-4 text-primary font-medium ">
+      <span>{{ 'DEVICES.FILTERS' | translate }}</span>
+      <!-- ...SVG... -->
+    </h5>
+  </div>
+  <div class="devices_types__container py-8 ">
+    <div class="custom_input mb-6">
+      <label for="" class="mb-2 block">{{ 'DEVICES.STATUS' | translate }}</label>
+      <p-dropdown [options]="status" appendTo="body" [(ngModel)]="filterObj.status" optionValue="name"
+        [showClear]="filterObj.status" optionLabel="name" [placeholder]="'DEVICES.SELECT_STATUS' | translate" />
+    </div>
+    <div class="custom_input mb-6">
+      <label for="" class="mb-2 block">{{ 'DEVICES.COMM_TYPE' | translate }}</label>
+      <p-dropdown [options]="types" appendTo="body" [(ngModel)]="filterObj.type" optionValue="name"
+        [showClear]="filterObj.type" optionLabel="name" [placeholder]="'DEVICES.SELECT_STATUS' | translate" />
+    </div>
+  </div>
+  <ng-template pTemplate="footer">
+    <div class="flex justify-center">
+      <div class="action_btn">
+        <p-button [disabled]="!filterObj.status && !filterObj.type" [label]="'DEVICES.APPLY_FILTER' | translate" />
+      </div>
+    </div>
+  </ng-template>
+</p-dialog>
+
+<!-- Delete Device Dialog -->
+<p-dialog header="" styleClass="select_type_popup" [(visible)]="showDeletePopUp" [dismissableMask]="true" [modal]="true"
+  [breakpoints]="{ '1199px': '50vw', '575px': '90vw' }" [style]="{ width: '40vw' }" [draggable]="false"
+  [resizable]="false">
+  <div class="icon_over_lay flex items-center round justify-center">
+    <svg width="40" height="40" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M35 9.96663C29.45 9.41663 23.8667 9.1333 18.3 9.1333C15 9.1333 11.7 9.29997 8.4 9.6333L5 9.96663"
+        stroke="#9F8A60" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+      <path
+        d="M14.1665 8.28333L14.5332 6.1C14.7998 4.51666 14.9998 3.33333 17.8165 3.33333H22.1832C24.9998 3.33333 25.2165 4.58333 25.4665 6.11666L25.8332 8.28333"
+        stroke="#9F8A60" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+      <path
+        d="M31.4168 15.2334L30.3335 32.0167C30.1501 34.6333 30.0001 36.6667 25.3501 36.6667H14.6502C10.0002 36.6667 9.85016 34.6333 9.66683 32.0167L8.5835 15.2334"
+        stroke="#9F8A60" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+      <path d="M17.2168 27.5H22.7668" stroke="#9F8A60" stroke-width="2" stroke-linecap="round"
+        stroke-linejoin="round" />
+      <path d="M15.8335 20.8333H24.1668" stroke="#9F8A60" stroke-width="2" stroke-linecap="round"
+        stroke-linejoin="round" />
+    </svg>
+
+  </div>
+  <div class=" text-center mb-8">
+    <h5 class="text-2xl  text-primary font-medium ">{{ 'DEVICES.DELETE_DEVICE_TITLE' | translate }}</h5>
+    <p class="text-primary/50">{{ 'DEVICES.DELETE_CONFIRM_MSG' | translate }} <strong>{{ 'DEVICES.DELETE' | translate
+        }}</strong> </p>
+  </div>
+  <div class="devices_types__container ">
+    <div class="form-group mb-5">
+      <div class="custom_input ">
+        <input #confirm_input id="name" class="custom_input" pInputText
+          [placeholder]="'DEVICES.DELETE_PLACEHOLDER' | translate" />
+      </div>
+    </div>
+  </div>
+  <ng-template pTemplate="footer">
+    <div class="flex justify-center">
+      <div class="action_btn">
+        <p-button [label]="'DEVICES.DELETE' | translate" />
+      </div>
+    </div>
+  </ng-template>
+</p-dialog>

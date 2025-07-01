@@ -1,0 +1,38 @@
+nav {
+  background-color: #F5F5F5;
+}
+
+
+@media screen and (max-width:640px) {
+  .toggle_menue {
+    display: flex !important;
+    justify-content: center;
+    align-items: center;
+  }
+}
+
+
+.lang {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  -webkit-border-radius: 50%;
+  -moz-border-radius: 50%;
+  -ms-border-radius: 50%;
+  -o-border-radius: 50%;
+}
+
+
+::ng-deep .switch_lang .p-dropdown {
+  background-color: transparent;
+  border: none;
+  box-shadow: none;
+
+  .p-inputtext {
+    background-color: transparent;
+    border: none;
+    box-shadow: none;
+    color: black;
+    padding: 0;
+  }
+}

@@ -1,0 +1,25 @@
+<main class="app-layout" [ngClass]="{'rtl_dir':is_ar() , 'ltr_dir':!is_ar()}"
+  [class]="sidebar_state() ? 'app-layout__sidebar-open':'app-layout__sidebar-closed'">
+
+  <div *ngIf="isOverlay()" (click)="handleCloseOverlay()" class="app-layout__sidebar-back-overlay"></div>
+
+  <div
+    [@overlay]="isOverlay() ? {value:'show' , params:{transitionParams:'.5s ease-in-out' } }:{value:'hide',params:{transitionParams:'.5s ease-in-out' },style:{left:0}} "
+    class="app-layout__sidebar border-none"
+    [ngClass]="{'rtl_dir':is_ar() , 'ltr_dir':!is_ar() , 'app-layout__sidebar-over': isOverlay()}">
+    <app-sidebar-main-layout></app-sidebar-main-layout>
+  </div>
+
+  <div class="app-layout__main-content relative">
+    <div class="app-layout__main-content__navbar">
+      <app-breadcrumb></app-breadcrumb>
+    </div>
+    <div class="app-layout__main-content__inner-pages   p-8 pb-4 ">
+      <div class="mb-12 md:mt-0 mt-16">
+        <router-outlet></router-outlet>
+      </div>
+      <!-- <app-footer></app-footer> -->
+    </div>
+  </div>
+
+</main>
