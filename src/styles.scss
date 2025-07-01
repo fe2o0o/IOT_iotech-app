@@ -39,6 +39,23 @@ i {
   align-items: center;
 }
 
+.p-dropdown {
+  @apply bg-custom_white rounded-3xl border border-gray_light;
+  width: 100%;
+
+  box-shadow: none;
+  outline: none;
+
+  &:focus {
+    box-shadow: none;
+  }
+
+  .p-inputtext {
+    @apply bg-white_color;
+    border: none !important
+  }
+}
+
 .p-inputtext {
   @apply bg-white_color rounded-3xl;
   width: 100%;
@@ -94,6 +111,17 @@ i.pass_toggle {
   }
 }
 
+
+.action_btn {
+  .p-button {
+    @apply w-full bg-primary  rounded-2xl;
+    padding: 10px 24px;
+  }
+
+  .p-button-label {
+    @apply text-white_color;
+  }
+}
 
 
 

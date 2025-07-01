@@ -1,0 +1,10 @@
+@if(isLoading){
+<div class="loader-container flex items-center justify-center bg-bgLoadingColor h-44 w-100 relative right-0 left-0">
+  <app-loader></app-loader>
+</div>
+}@else {
+<div class="w-100 bg-white text-center">
+  <img class="w-40 mx-auto" src="images/nodata.png" alt="">
+  No Data Avaliable
+</div>
+}

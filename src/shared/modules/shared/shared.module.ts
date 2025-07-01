@@ -8,11 +8,15 @@ import { TranslateModule } from '@ngx-translate/core';
 import { SidebarMainLayoutComponent } from '../../../core/components/sidebar-main-layout/sidebar-main-layout.component';
 import { BreadcrumbComponent } from '../../../core/components/breadcrumb/breadcrumb.component';
 import { GoogleMapsModule } from '@angular/google-maps';
+import { LoaderComponent } from '../../components/loader/loader.component';
+import { EmptyStateComponent } from '../../components/empty-state/empty-state.component';
 
 @NgModule({
   declarations: [
     SidebarMainLayoutComponent,
-    BreadcrumbComponent
+    BreadcrumbComponent,
+    LoaderComponent,
+    EmptyStateComponent
   ],
   imports: [
     CommonModule,
@@ -35,7 +39,9 @@ import { GoogleMapsModule } from '@angular/google-maps';
     TranslateModule,
     SidebarMainLayoutComponent,
     BreadcrumbComponent,
-    GoogleMapsModule
+    GoogleMapsModule,
+    LoaderComponent,
+    EmptyStateComponent
 
   ]
 })
