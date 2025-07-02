@@ -57,9 +57,9 @@ export class ChartVs350Component implements OnChanges , OnInit {
 
   current_identifier_input = input.required<string>()
   current_identifier:string = ''
-  getChartData(period?: any, fromUtc?: any, toUtc?: any, filterAccumulatedIn: boolean = true, filterAccumulatedOut: boolean = true, filterPeriodIn: boolean = true, filterPeriodOut: boolean = true) {
+  getChartData(period?: any, fromUtc?: any, toUtc?: any) {
     this.loadingChart.set(true);
-    this._DevicesService.getVs350Chart(this.current_identifier, period, fromUtc, toUtc, filterAccumulatedIn, filterAccumulatedOut, filterPeriodIn, filterPeriodOut).subscribe((res: any) => {
+    this._DevicesService.getVs350Chart(this.current_identifier, period, fromUtc, toUtc,this.peopleStatus[2]?.selected , this.peopleStatus[3]?.selected , this.peopleStatus[0]?.selected , this.peopleStatus[1]?.selected ).subscribe((res: any) => {
       this.current_chart_data.set(res?.data)
       console.log("data chart", this.current_chart_data());
       if (this.current_chart_data().length > 10) {
@@ -129,6 +129,8 @@ export class ChartVs350Component implements OnChanges , OnInit {
   handleSelecedStatus(state: any) {
     const selectedFilter = this.customFilters.filter(filter => filter.isActive)[0]
     state.selected = !state?.selected;
+
+    this.getChartData(selectedFilter?.name , null , null )
   }
 
   handleCustomFilter(filter: any) {
@@ -137,6 +139,7 @@ export class ChartVs350Component implements OnChanges , OnInit {
     })
 
     filter.isActive = true;
+
   }
 
   isApplyDisabled(): Boolean {
@@ -258,15 +261,27 @@ export class ChartVs350Component implements OnChanges , OnInit {
   filterVisiblle:boolean = false
   loadingChart = signal<boolean>(false)
   cancelAllFilters() {
+    this.customFilters.map((fil: any) => {
+      fil.isActive = false
+    })
+
+    this.getChartData()
   }
   applyPeriod() {
     this.loadingFilter = true;
     const selectedFilter = this.customFilters.filter(filter => filter.isActive)[0]
+    this.getChartData(selectedFilter?.name , null , null )
   }
 
 
   applyFilterDate() {
+    this.loadingFilter = true;
+    this.customFilters.map((fil: any) => {
+      fil.isActive = false
+    })
 
+
+    this.getChartData(null , this.filterForm.get('fromDate')?.value?.toISOString() , this.filterForm.get('toDate')?.value?.toISOString()  )
   }
 
 
