@@ -24,6 +24,16 @@
 }
 
 
+.filterDailog {
+  height: 100% !important;
+  max-height: 100%;
+  margin: 0;
+}
+
+
+
+
+
 body {
   background-color: #F5F5F5;
   font-family: "Cairo", sans-serif !important;
@@ -148,4 +158,44 @@ i.pass_toggle {
   // box-shadow: 1px 1px 5px 0px rgba(0, 0, 0, 0.2509803922) !important;
   padding: 1rem;
   padding-inline-start: 2.5rem;
+}
+
+
+.p-calendar {
+  @apply bg-white_color rounded-3xl;
+  width: 100%;
+
+  &:focus {
+    box-shadow: none;
+  }
+
+  .p-calendar-clear-icon {
+    // margin-top: 0;
+    margin-right: .5rem;
+  }
+}
+
+.p-datepicker {
+  z-index: 999999;
+  padding: 0;
+}
+
+
+.p-datepicker-group-container td {
+  padding: 0 !important;
+}
+
+
+.p-datepicker table td {
+  padding: 0;
+}
+
+
+.p-datepicker .p-datepicker-header {
+  padding: 0;
+}
+
+.p-datepicker .p-timepicker {
+  padding: 0;
+  line-height: .5;
 }

@@ -1,0 +1,306 @@
+<section>
+  <div class="flex items-center gap-6">
+    <div class="head flex flex-col gap-3 mb-6 justify-start items-start">
+      @if(deviceDetailsLoding()){
+      <p-skeleton width="10rem" styleClass="mb-2" />
+      }@else {
+      <h2 class="text-xl font-semibold">{{deviceDetails()?.deviceName}}</h2>
+      }
+      <p class="text-sm flex items-center">
+        {{ 'DEVICES.IDENTIFIER' | translate }} :
+        @if (deviceDetailsLoding()) {
+        <p-skeleton width="5rem" styleClass="mb-2" />
+        }@else {
+        <span>{{deviceDetails()?.identifier}}</span>
+        }
+      </p>
+    </div>
+    @if(deviceDetailsLoding()){
+    <p-skeleton width="5rem" height="5rem" styleClass="mb-2" />
+    }@else {
+    <div>
+      <img width="90" [src]="deviceDetails()?.image_device" alt="">
+    </div>
+    }
+  </div>
+
+
+  <div class="tabs mb-12">
+    <button (click)="current_tab.set(1)"
+      [ngClass]="{'bg-primary':current_tab() == 1 , 'text-white_color':current_tab() == 1 }" class="rounded-lg  ">{{
+      'DEVICES.DETAILS' | translate }}</button>
+    <button (click)="current_tab.set(2)"
+      [ngClass]="{'bg-primary':current_tab() == 2 , 'text-white_color':current_tab() == 2 }" class="rounded-lg ">{{
+      'DEVICES.READINGS' | translate }}</button>
+  </div>
+
+
+  <div [ngClass]="{'hidden':current_tab() == 2}">
+    <div class="cards grid mb-12 gap-6 grid-cols-12">
+      <div class="single_card col-span-12 md:col-span-6 lg:col-span-4 flex items-center gap-8">
+        <div (click)="handleReload()" class="icon cursor-pointer shadow-md flex items-center justify-center">
+          <svg width="26" height="26" viewBox="0 0 26 26" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M3.05209 16.0938C4.16668 19.6771 7.16669 22.4375 10.8959 23.1979" stroke="#1A232D" stroke-width="2"
+              stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round" />
+            <path
+              d="M2.63541 11.9374C3.16666 6.677 7.60415 2.58325 13 2.58325C18.3958 2.58325 22.8333 6.68742 23.3646 11.9374"
+              stroke="#1A232D" stroke-width="2" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round" />
+            <path d="M15.0938 23.2083C18.8125 22.4478 21.8021 19.7187 22.9375 16.1458" stroke="#1A232D" stroke-width="2"
+              stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round" />
+          </svg>
+
+        </div>
+        <div class="content">
+          <p>{{ 'DEVICES.STATUS' | translate }}</p>
+          @if(deviceDetailsLoding()){
+          <p-skeleton width="5rem" styleClass="mb-2" />
+          }@else {
+          <p
+            [ngClass]="{'text-success_color': deviceDetails()?.isOnline ,  'text-danger_color':!deviceDetails()?.isOnline }">
+            {{deviceDetails()?.isOnline ? ('DEVICES.ONLINE' | translate) : ('DEVICES.OFFLINE' | translate)}}</p>
+          }
+        </div>
+      </div>
+      <div class="single_card col-span-12 md:col-span-6 lg:col-span-4 flex items-center gap-8">
+        <div class="icon shadow-md flex items-center justify-center">
+          <svg width="26" height="26" viewBox="0 0 26 26" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path
+              d="M18.2186 13.7603C18.8343 13.7603 19.3332 13.2614 19.3332 12.6457C19.3332 12.0302 18.8343 11.5312 18.2186 11.5312C17.6031 11.5312 17.1041 12.0302 17.1041 12.6457C17.1041 13.2614 17.6031 13.7603 18.2186 13.7603Z"
+              stroke="#1A232D" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+            <path
+              d="M21.3333 6.74992V8.61448C21.0729 8.58323 20.7708 8.56241 20.4479 8.56241H15.9896C13.7604 8.56241 13.0208 9.30203 13.0208 11.5312V16.8541H6.75001C3.41668 16.8541 2.58334 16.0208 2.58334 12.6874V6.74992C2.58334 3.41659 3.41668 2.58325 6.75001 2.58325H17.1667C20.5 2.58325 21.3333 3.41659 21.3333 6.74992Z"
+              stroke="#1A232D" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+            <path d="M9.875 16.8542V21.3333" stroke="#1A232D" stroke-width="1.5" stroke-linecap="round"
+              stroke-linejoin="round" />
+            <path d="M2.58334 12.8958H13" stroke="#1A232D" stroke-width="1.5" stroke-linecap="round"
+              stroke-linejoin="round" />
+            <path d="M6.69788 21.3333H12.9999" stroke="#1A232D" stroke-width="1.5" stroke-linecap="round"
+              stroke-linejoin="round" />
+            <path
+              d="M18.2186 13.7603C18.8343 13.7603 19.3332 13.2614 19.3332 12.6457C19.3332 12.0302 18.8343 11.5312 18.2186 11.5312C17.6031 11.5312 17.1041 12.0302 17.1041 12.6457C17.1041 13.2614 17.6031 13.7603 18.2186 13.7603Z"
+              stroke="#1A232D" stroke-width="1.5" stroke-miterlimit="10" stroke-linecap="round"
+              stroke-linejoin="round" />
+            <path
+              d="M21.3333 8.61457C21.0729 8.58332 20.7708 8.5625 20.4479 8.5625H15.9896C13.7604 8.5625 13.0208 9.30212 13.0208 11.5313V20.4479C13.0208 22.6771 13.7604 23.4167 15.9896 23.4167H20.4479C22.6771 23.4167 23.4167 22.6771 23.4167 20.4479V11.5313C23.4167 9.62504 22.875 8.81249 21.3333 8.61457ZM18.2188 11.5313C18.8333 11.5313 19.3333 12.0313 19.3333 12.6458C19.3333 13.2604 18.8333 13.7604 18.2188 13.7604C17.6042 13.7604 17.1042 13.2604 17.1042 12.6458C17.1042 12.0313 17.6042 11.5313 18.2188 11.5313ZM18.2188 20.4479C16.9896 20.4479 15.9896 19.4479 15.9896 18.2188C15.9896 17.7083 16.1667 17.2292 16.4583 16.8542C16.8646 16.3333 17.5 15.9896 18.2188 15.9896C18.7813 15.9896 19.2917 16.1979 19.6771 16.5313C20.1458 16.9479 20.4479 17.5521 20.4479 18.2188C20.4479 19.4479 19.4479 20.4479 18.2188 20.4479Z"
+              stroke="#1A232D" stroke-width="1.5" stroke-miterlimit="10" stroke-linecap="round"
+              stroke-linejoin="round" />
+            <path
+              d="M20.448 18.2187C20.448 19.4478 19.448 20.4478 18.2189 20.4478C16.9897 20.4478 15.9897 19.4478 15.9897 18.2187C15.9897 17.7083 16.1668 17.2291 16.4584 16.8541C16.8647 16.3333 17.5001 15.9895 18.2189 15.9895C18.7814 15.9895 19.2918 16.1978 19.6772 16.5312C20.1459 16.9478 20.448 17.552 20.448 18.2187Z"
+              stroke="#1A232D" stroke-width="1.5" stroke-miterlimit="10" stroke-linecap="round"
+              stroke-linejoin="round" />
+            <path
+              d="M18.2186 13.7603C18.8343 13.7603 19.3332 13.2614 19.3332 12.6457C19.3332 12.0302 18.8343 11.5312 18.2186 11.5312C17.6031 11.5312 17.1041 12.0302 17.1041 12.6457C17.1041 13.2614 17.6031 13.7603 18.2186 13.7603Z"
+              stroke="#1A232D" stroke-width="1.5" stroke-miterlimit="10" stroke-linecap="round"
+              stroke-linejoin="round" />
+          </svg>
+
+        </div>
+        <div class="content">
+          <p>{{ 'DEVICES.DEVICE_TYPE' | translate }}</p>
+          @if(deviceDetailsLoding()){
+          <p-skeleton width="5rem" styleClass="mb-2" />
+          }@else {
+          <p class="text-primary">
+            {{deviceDetails()?.deviceType}}</p>
+          }
+        </div>
+      </div>
+      <div class="single_card col-span-12 md:col-span-6 lg:col-span-4 flex items-center gap-8">
+        <div class="icon shadow-md flex items-center justify-center">
+          <svg width="26" height="26" viewBox="0 0 26 26" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path
+              d="M23.4166 12.9999C23.4166 18.7499 18.75 23.4166 13 23.4166C7.24998 23.4166 3.73956 17.6249 3.73956 17.6249M3.73956 17.6249H8.4479M3.73956 17.6249V22.8333M2.58331 12.9999C2.58331 7.24992 7.20831 2.58325 13 2.58325C19.9479 2.58325 23.4166 8.37492 23.4166 8.37492M23.4166 8.37492V3.16659M23.4166 8.37492H18.7916"
+              stroke="#1A232D" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+          </svg>
+
+        </div>
+        <div class="content">
+          <p>{{ 'DEVICES.COMM_TYPE' | translate }}</p>
+          @if(deviceDetailsLoding()){
+          <p-skeleton width="5rem" styleClass="mb-2" />
+          }@else {
+          <p class="text-primary">
+            {{deviceDetails()?.connectivity ?? ('DEVICES.NA' | translate)}}</p>
+          }
+        </div>
+      </div>
+    </div>
+
+    <div class="readings grid grid-cols-12 gap-6">
+      <div class=" col-span-12 lg:col-span-6">
+        <div class="head mb-6">
+          <h3>{{ 'DEVICES.LAST_READINGS' | translate }}</h3>
+        </div>
+
+        <div class="content bg-white_color rounded-lg grid p-4 gap-4 grid-cols-12 shadow-md">
+          @if(deviceDetailsLoding()){
+          <div class="col-span-12">
+            <p-skeleton width="100%" height="15rem" styleClass="mb-2" />
+          </div>
+          }@else {
+          @for(detail of deviceDetails()?.latestReading?.metrics; track $index){
+          @if(detail){
+
+          <div class=" col-span-12 flex items-center gap-4 lg:col-span-6">
+            <div class="icon">
+              <img [src]="detail?.icon" alt="">
+            </div>
+
+            <div class="content">
+              <p class="text-base font-semibold">{{detail?.value}}</p>
+              <p class="text-black_color text-base font-light">{{detail?.name}}</p>
+              <p class="text-black_color text-base font-light">{{this.deviceDetails()?.lastUpdated}}</p>
+            </div>
+          </div>
+
+          }
+          }
+          }
+        </div>
+      </div>
+
+      <div class=" col-span-12 flex flex-col lg:col-span-6">
+        <div class="head mb-6 flex flex-wrap items-center justify-between">
+          <h3>{{ 'DEVICES.LOCATION' | translate }}</h3>
+
+          <!--
+          <div class="flex items-center gap-4 flex-wrap">
+            <div class="form_group flex items-center gap-3">
+              <label class="text-sm" for="">{{ 'DEVICES.LATITUDE' | translate }}</label>
+              <div class="max-w-24 loc">
+                <p-inputNumber [(ngModel)]="location.lat" inputId="locale-us" suffix=" °N" mode="decimal"
+                  [minFractionDigits]="1" />
+              </div>
+            </div>
+            <div class="form_group flex items-center gap-3">
+              <label class="text-sm" for="">{{ 'DEVICES.LONGITUDE' | translate }}</label>
+              <div class="max-w-24 loc">
+                <p-inputNumber [(ngModel)]="location.lng" inputId="locale-us" suffix=" °N" mode="decimal" />
+              </div>
+            </div>
+
+            <div class="bg-primatext-primary text-white_color px-3 py-1 rounded-lg text-sm">
+              <p-button  [label]="'DEVICES.UPDATE' | translate" />
+            </div>
+          </div> -->
+        </div>
+
+        <div class="content h-72 lg:flex-1 rounded-lg">
+          <google-map height="100%" width="100%" [options]="options">
+            <!-- @if(!multipleLocations.length){
+
+            <map-advanced-marker title="Current" #markerElem="mapAdvancedMarker"
+              [position]="{ lat: location.lat, lng: location.lng }" [content]="location.content" />
+            }@else {
+            @for (item of multipleLocations; track $index) {
+            <map-advanced-marker #markerElem="mapAdvancedMarker" [position]="{ lat: item?.lat, lng: item?.lang }"
+              [title]="item?.title" [content]="item.content" />
+            }
+            } -->
+          </google-map>
+        </div>
+      </div>
+
+
+    </div>
+
+    <ng-template #vcr></ng-template>
+  </div>
+
+  <div [ngClass]="{'hidden':current_tab() == 1 , 'rtl_dir':is_arabic , 'ltr_dir':!is_arabic}" class="devices_table">
+    <div class="header flex justify-end items-center flex-wrap gap-6">
+      <div class="filter w-64">
+        <p-calendar [showClear]="rangeDates != null" placeholder="Filter Export Range" [(ngModel)]="rangeDates"
+          selectionMode="range" [readonlyInput]="true" [dateFormat]="'mm-dd-yy'" />
+      </div>
+      <div class="action_btn">
+        <p-button [loading]="loadingEx" (click)="handleExportWithFilter()" label="Export Excel"
+          icon="fi fi-rr-file-export text-white_color" />
+      </div>
+    </div>
+    <p-table [totalRecords]="totalItems" [lazy]="true" (onLazyLoad)="getTableData($event)" [value]="tableData()"
+      [paginator]="true" [rows]="per_page" [tableStyle]="{ 'min-width': '50rem' }"
+      [rowsPerPageOptions]="[5, 10,15 ,20]">
+      <ng-template pTemplate="header">
+        <tr>
+          @for (item of tableData()[0]|keyvalue; track $index) {
+          <th class="capitalize">{{item.key}}</th>
+          }
+        </tr>
+      </ng-template>
+      <ng-template pTemplate="body" let-device>
+        <tr>
+          @for (item of device|keyvalue; track $index) {
+          @if(item.key == 'batteryVoltage'){
+          <td>
+            @if(device?.batteryVoltage >= 50){
+            <div class="flex justify-center gap-3 flex-row-reverse items-center text-success_color">
+              <span>{{device?.batteryVoltage }} %</span>
+              <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path
+                  d="M17.0833 7.91667C18.3333 7.91667 18.3333 8.33333 18.3333 9.16667V10.8333C18.3333 11.6667 18.3333 12.0833 17.0833 12.0833"
+                  stroke="#14AB46" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+                <path d="M5.31665 8.33333C5.59165 9.425 5.59165 10.575 5.31665 11.6667" stroke="#14AB46"
+                  stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+                <path d="M8.2334 8.33333C8.5084 9.425 8.5084 10.575 8.2334 11.6667" stroke="#14AB46" stroke-width="1.5"
+                  stroke-linecap="round" stroke-linejoin="round" />
+                <path
+                  d="M10.8334 15.8333H5.83341C2.50008 15.8333 1.66675 15 1.66675 11.6667V8.33333C1.66675 5 2.50008 4.16667 5.83341 4.16667H10.8334C14.1667 4.16667 15.0001 5 15.0001 8.33333V11.6667C15.0001 15 14.1667 15.8333 10.8334 15.8333Z"
+                  stroke="#14AB46" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+              </svg>
+
+            </div>
+            }@else if (device?.batteryVoltage < 50 && device?.batteryVoltage>= 20) {
+              <div class="flex justify-center gap-3 flex-row-reverse items-center text-warning_color">
+                <span>{{device?.batteryVoltage }} %</span>
+                <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <path
+                    d="M17.0833 7.91666C18.3333 7.91666 18.3333 8.33333 18.3333 9.16666V10.8333C18.3333 11.6667 18.3333 12.0833 17.0833 12.0833"
+                    stroke="#FF9500" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+                  <path d="M5.31665 8.33334C5.59165 9.425 5.59165 10.575 5.31665 11.6667" stroke="#FF9500"
+                    stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+                  <path d="M8.2334 8.33334C8.5084 9.425 8.5084 10.575 8.2334 11.6667" stroke="#FF9500"
+                    stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+                  <path
+                    d="M10.8334 15.8333H5.83341C2.50008 15.8333 1.66675 15 1.66675 11.6667V8.33333C1.66675 5 2.50008 4.16666 5.83341 4.16666H10.8334C14.1667 4.16666 15.0001 5 15.0001 8.33333V11.6667C15.0001 15 14.1667 15.8333 10.8334 15.8333Z"
+                    stroke="#FF9500" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+                </svg>
+
+              </div>
+              }@else {
+              <div class="flex justify-center gap-3 flex-row-reverse items-center text-danger_color">
+                <span>{{device?.batteryVoltage }} %</span>
+                <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <path
+                    d="M17.0833 7.91667C18.3333 7.91667 18.3333 8.33334 18.3333 9.16667V10.8333C18.3333 11.6667 18.3333 12.0833 17.0833 12.0833"
+                    stroke="#FF0004" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+                  <path d="M5.31665 8.33333C5.59165 9.42499 5.59165 10.575 5.31665 11.6667" stroke="#FF0004"
+                    stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+                  <path d="M8.23334 8.33333C8.50834 9.42499 8.50834 10.575 8.23334 11.6667" stroke="#FF0004"
+                    stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+                  <path
+                    d="M10.8334 15.8333H5.83335C2.50002 15.8333 1.66669 15 1.66669 11.6667V8.33334C1.66669 5.00001 2.50002 4.16667 5.83335 4.16667H10.8334C14.1667 4.16667 15 5.00001 15 8.33334V11.6667C15 15 14.1667 15.8333 10.8334 15.8333Z"
+                    stroke="#FF0004" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+                </svg>
+
+
+              </div>
+              }
+          </td>
+          }@else {
+
+          <td class="capitalize">{{item.value ?? 'N/A'}}</td>
+          }
+          }
+        </tr>
+      </ng-template>
+      <ng-template pTemplate="emptymessage" let-columns>
+        <tr>
+          <td [attr.colspan]="8">
+            <app-empty-state [loadingState]="loadingState"></app-empty-state>
+          </td>
+        </tr>
+      </ng-template>
+    </p-table>
+  </div>
+</section>
