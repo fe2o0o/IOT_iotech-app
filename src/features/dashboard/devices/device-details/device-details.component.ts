@@ -8,6 +8,7 @@ import { GoogleMap } from '@angular/google-maps';
 import { ChartVs350Component } from '../chart-vs350/chart-vs350.component';
 import { ChangeDetectorRef } from '@angular/core';
 import { ChartBOSComponent } from '../chart-bos/chart-bos.component';
+import { ChartVs341Component } from '../chart-vs341/chart-vs341.component';
 
 @Component({
   selector: 'app-device-details',
@@ -34,18 +35,27 @@ export class DeviceDetailsComponent {
     ).subscribe((res: any) => {
           switch (this.devceType) {
           case 'PPC-002-LRW':
+            this.vcr.clear()
               const comp = this.vcr.createComponent(ChartVs350Component)
               comp.setInput('current_identifier_input', this.deviceId)
               this._ChangeDetectorRef.markForCheck()
 
             break;
             case 'AW-CO2-SFX':
+              this.vcr.clear()
               this.vcr.createComponent(ChartVs330Component)
               this._ChangeDetectorRef.markForCheck()
               break;
             case 'BOS-002-LRW':
+              this.vcr.clear()
               const Comp = this.vcr.createComponent(ChartBOSComponent)
               Comp.setInput('current_identifier_input', this.deviceId)
+              this._ChangeDetectorRef.markForCheck()
+              break;
+            case 'DOS-002-LRW':
+              this.vcr.clear()
+              const ref = this.vcr.createComponent(ChartVs341Component)
+              ref.setInput('current_identifier_input', this.deviceId)
               this._ChangeDetectorRef.markForCheck()
               break;
           default:

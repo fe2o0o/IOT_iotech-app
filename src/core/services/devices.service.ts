@@ -64,6 +64,29 @@ export class DevicesService {
 
 
 
+
+  getDOSChart(deviceID: any , period?: any, fromUtc?: any, toUtc?: any ,  filterOccupancy:boolean = true , filterBattery:boolean = true):Observable<any> {
+    let query = '?'
+
+    if (deviceID) {
+      query[query.length - 1] == '?' ? query += `deviceId=${deviceID}` : query += `&deviceId=${deviceID}`
+    }
+    if (period) {
+      query[query.length - 1] == '?' ? query += `period=${period}` : query += `&period=${period}`
+    }
+    if (fromUtc) {
+      query[query.length - 1] == '?' ? query += `fromUtc=${fromUtc}` : query += `&fromUtc=${fromUtc}`
+    }
+    if (toUtc) {
+      query[query.length - 1] == '?' ? query += `toUtc=${toUtc}` : query += `&toUtc=${toUtc}`
+    }
+
+  query[query.length - 1] == '?' ? query += `filterOccupancy=${filterOccupancy}` : query += `&filterOccupancy=${filterOccupancy}`
+  query[query.length - 1] == '?' ? query += `filterBattery=${filterBattery}` : query += `&filterBattery=${filterBattery}`
+
+
+    return this._HttpClient.get(environment.app_api_url + `LoraWanVS341/GetChartDataLoraWanVS341`+ query)
+  }
   getBOSChart(deviceID: any , period?: any, fromUtc?: any, toUtc?: any, filterDistance:boolean = true ,  filterOccupancy:boolean = true , filterCalibration:boolean = true):Observable<any> {
     let query = '?'
 

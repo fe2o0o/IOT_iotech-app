@@ -74,7 +74,7 @@ export class ChartBOSComponent {
         return item?.occupancy == 'N/A' ? 0 : item?.occupancy
       })
       this.data_alarms.datasets[2].data = res?.data?.map((item: any) => {
-        return item?.calibration == 'N/A' ? 0 : item?.occupancy
+        return item?.calibration == 'N/A' ? 0 : item?.calibration
       })
 
       this.alarms_chart?.chart?.update()
