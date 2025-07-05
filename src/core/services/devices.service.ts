@@ -9,6 +9,36 @@ export class DevicesService {
 
   constructor(private _HttpClient: HttpClient) { }
 
+  getCO2Chart(identifire: any, period?: any, fromUtc?: any, toUtc?: any, filterTemperature: boolean = true, filterHumidity: boolean = true, filterCo2
+    : boolean = true, filterCo2Baseline
+: boolean = true): Observable<any> {
+    let query = '?'
+    if (period) {
+      query[query.length - 1] == '?' ? query += `period=${period}` : query += `&period=${period}`
+    }
+    if (fromUtc) {
+      query[query.length - 1] == '?' ? query += `fromUtc=${fromUtc}` : query += `&fromUtc=${fromUtc}`
+    }
+    if (toUtc) {
+      query[query.length - 1] == '?' ? query += `toUtc=${toUtc}` : query += `&toUtc=${toUtc}`
+    }
+
+    query[query.length - 1] == '?' ? query += `filterTemperature=${filterTemperature}` : query += `&filterTemperature=${filterTemperature}`
+    query[query.length - 1] == '?' ? query += `filterHumidity=${filterHumidity}` : query += `&filterHumidity=${filterHumidity}`
+    query[query.length - 1] == '?' ? query += `filterCo2
+=${filterCo2
+      }` : query += `&filterCo2
+=${filterCo2
+      }`
+    query[query.length - 1] == '?' ? query += `filterCo2Baseline
+=${filterCo2Baseline
+}` : query += `&filterCo2Baseline
+=${filterCo2Baseline
+}`
+
+
+    return this._HttpClient.get(environment.app_api_url + `SigfoxAirWitsCo2/ChartAirWitsCo2/${identifire}` + query)
+  }
 
   getVs350Chart(deviceName: any,period?: any, fromUtc?: any, toUtc?: any, filterAccumulatedIn: boolean = true, filterAccumulatedOut: boolean = true, filterPeriodIn: boolean = true, filterPeriodOut: boolean = true):Observable<any> {
     let query = '?'
@@ -30,6 +60,32 @@ export class DevicesService {
 
 
     return this._HttpClient.get(environment.app_api_url + `lorawan/vs350/ChartLoraWanVs350/${deviceName}` + query)
+  }
+
+
+
+  getBOSChart(deviceID: any , period?: any, fromUtc?: any, toUtc?: any, filterDistance:boolean = true ,  filterOccupancy:boolean = true , filterCalibration:boolean = true):Observable<any> {
+    let query = '?'
+
+    if (deviceID) {
+      query[query.length - 1] == '?' ? query += `deviceId=${deviceID}` : query += `&deviceId=${deviceID}`
+    }
+    if (period) {
+      query[query.length - 1] == '?' ? query += `period=${period}` : query += `&period=${period}`
+    }
+    if (fromUtc) {
+      query[query.length - 1] == '?' ? query += `fromUtc=${fromUtc}` : query += `&fromUtc=${fromUtc}`
+    }
+    if (toUtc) {
+      query[query.length - 1] == '?' ? query += `toUtc=${toUtc}` : query += `&toUtc=${toUtc}`
+    }
+
+  query[query.length - 1] == '?' ? query += `filterDistance=${filterDistance}` : query += `&filterDistance=${filterDistance}`
+  query[query.length - 1] == '?' ? query += `filterOccupancy=${filterOccupancy}` : query += `&filterOccupancy=${filterOccupancy}`
+  query[query.length - 1] == '?' ? query += `filterCalibration=${filterCalibration}` : query += `&filterCalibration=${filterCalibration}`
+
+
+    return this._HttpClient.get(environment.app_api_url + `LoraWanVS330/GetVs330ChartData`+ query)
   }
 
   getDeviceNewDetails(identifire: any, type: any, PageNumber: number = 1, PageSize: number = 10): Observable<any> {

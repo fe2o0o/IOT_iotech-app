@@ -1,0 +1,122 @@
+<section class="pt-6">
+  <div
+    class="col-span-12 p-6 mb-6 px-12 flex-wrap rounded-full bg-white_color shadow flex items-center justify-between">
+
+    <p class="text-lg fw-medium">{{ 'DEVICES.METRIC_FILTERS' | translate }}</p>
+
+    <div class="flex flex-wrap items-center gap-4">
+      @for(state of matrixFilters ; track state){
+      <button (click)="handleSelecedStatus(state)"
+        [ngClass]="{'bg-primary':state?.selected , 'border-0':state?.selected ,'text-white_color':state?.selected}"
+        class="flex px-3 py-1 rounded-2xl border border-1 border-black_color items-center gap-2">
+        <i [class]="state?.icon"></i>
+        <span>{{state?.name}}</span>
+      </button>
+      }
+    </div>
+  </div>
+  <div class="col-span-12 bg-white_color p-4 rounded-lg shadow">
+    <div class="head mb-4 flex flex-wrap items-center justify-between">
+      <h2 class="text-lg">{{ selectedMatrix?.name}}</h2>
+      <div class="flex items-center flex-wrap gap-4">
+        <div class="filters custom_filters flex-wrap flex items-center gap-4">
+          @for(filter of customFilters; track filter){
+          <button (click)="handleCustomFilter(filter)" class="rounded-xl px-3 py-1"
+            [ngClass]="{'bg-primary':filter?.isActive , 'text-white_color':filter?.isActive}">
+            {{filter?.name}}
+          </button>
+          }
+        </div>
+
+        <div class="action_btn flex items-center gap-4">
+          <p-button [disabled]="isApplyDisabled()" (onClick)="applyPeriod()" [loading]="loadingFilter"
+            [label]="'DEVICES.APPLY' | translate" />
+
+          @if(!isApplyDisabled()){
+          <button (click)="cancelAllFilters()">
+            <i class="fi text-lg fi-rr-circle-xmark"></i>
+          </button>
+          }
+        </div>
+
+        <button (click)="filterVisiblle = true" class="expand_filter">
+          <i class="fi text-lg fi-rr-calendar"></i>
+        </button>
+        <button (click)="handleExportExcel()" class="expand_filter">
+          <i class="fi fi-rr-file-export"></i>
+        </button>
+      </div>
+    </div>
+    <p-skeleton height="15rem" [class]="{'hidden':!loadingChart()}" styleClass="mb-2" />
+    @if(!loadingChart() && !current_chart_data.length){
+    <div class="w-100 bg-white text-center">
+      <img class="w-40 mx-auto" src="assets/images/nodata.png" alt="">
+      {{"DEVICES.No_Data_Avaliable"|translate}}
+    </div>
+    }
+    <div [class]="{'hidden': loadingChart() || !current_chart_data.length}" class="chart">
+      <p-chart #alarms_chart [width]="chartWidth+'%'" type="line" height="400px" [data]="data_alarms"
+        [options]="optionsAlarm" />
+    </div>
+  </div>
+</section>
+
+
+
+
+
+<p-dialog header="{{ 'DEVICES.REANGE_DATE_FILTER' | translate }}" styleClass="filterDailog" [draggable]="false"
+  [(visible)]="filterVisiblle" [position]="is_arabic ? 'left':'right'" [modal]="true" [dismissableMask]="true"
+  [breakpoints]="{
+        '1920px': '30vw',
+        '768px': '75vw',
+        '576px': '90vw'
+    }">
+  <ng-template pTemplate="header">
+    <p class="text-xl font-medium">{{ 'DEVICES.REANGE_DATE_FILTER' | translate }}</p>
+  </ng-template>
+
+  <div class=" py-4">
+    <form [formGroup]="filterForm" action="">
+      <div class=" mb-4 ">
+        <label for="" class="block mb-2">{{ 'DEVICES.FROM_DATE' | translate }}</label>
+        <p-calendar appendTo="body" [autofocus]="false" [hourFormat]="'12'" [showTime]="true"
+          [placeholder]="'DEVICES.SELECT_FROM_DATE' | translate" formControlName="fromDate" [readonlyInput]="true"
+          inputId="calendar-12h" [iconDisplay]="'input'" [showIcon]="true"
+          [showClear]="filterForm.get('fromDate')?.value ? true :  false" />
+
+        @if(filterForm.get('fromDate')?.invalid && filterForm.get('fromDate')?.touched){
+        @if(filterForm.get('fromDate')?.getError('required')){
+        <p class="text-danger_color">{{ 'DEVICES.FROM_DATE_REQ' | translate }}</p>
+        }
+        }
+      </div>
+      <div class="">
+        <label for="" class="block mb-2">{{ 'DEVICES.TO_DATE' | translate }}</label>
+        <p-calendar appendTo="body" [autofocus]="false" [hourFormat]="'12'" [showTime]="true"
+          [placeholder]="'DEVICES.SELECT_TO_DATE' | translate" formControlName="toDate" [readonlyInput]="true"
+          inputId="calendar-12h" [iconDisplay]="'input'" [showIcon]="true"
+          [showClear]="filterForm.get('toDate')?.value ? true :  false" />
+        @if(filterForm.get('toDate')?.invalid && filterForm.get('toDate')?.touched){
+        @if(filterForm.get('toDate')?.getError('required')){
+        <p class="text-danger_color">{{ 'DEVICES.TO_DATE_REQ' | translate }}</p>
+        }
+        }
+
+        @if(dateRangeError && filterForm.get('toDate')?.touched){
+        <p class="text-danger_color">{{ 'DEVICES.TO_DATE_AFTER_FROM' | translate }}</p>
+        }
+      </div>
+    </form>
+
+  </div>
+  <ng-template pTemplate="footer">
+    <div class="flex justify-start gap-4">
+      <div class="action_btn">
+        <p-button [loading]="loadingFilter" (onClick)="applyFilterDate()" [label]="'DEVICES.APPLY_FILTER' | translate"
+          [disabled]="filterForm.invalid" />
+      </div>
+      <button class="cancel_btn w-fit">{{ 'DEVICES.CANCEL' | translate }}</button>
+    </div>
+  </ng-template>
+</p-dialog>

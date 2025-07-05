@@ -1,3 +1,4 @@
+import { ChartVs330Component } from './../chart-vs330/chart-vs330.component';
 import { ChangeDetectionStrategy, Component, signal, ViewChild, ViewContainerRef } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { switchMap, tap } from 'rxjs';
@@ -6,6 +7,7 @@ import { DevicesService } from '../../../../core/services/devices.service';
 import { GoogleMap } from '@angular/google-maps';
 import { ChartVs350Component } from '../chart-vs350/chart-vs350.component';
 import { ChangeDetectorRef } from '@angular/core';
+import { ChartBOSComponent } from '../chart-bos/chart-bos.component';
 
 @Component({
   selector: 'app-device-details',
@@ -35,8 +37,17 @@ export class DeviceDetailsComponent {
               const comp = this.vcr.createComponent(ChartVs350Component)
               comp.setInput('current_identifier_input', this.deviceId)
               this._ChangeDetectorRef.markForCheck()
-            break;
 
+            break;
+            case 'AW-CO2-SFX':
+              this.vcr.createComponent(ChartVs330Component)
+              this._ChangeDetectorRef.markForCheck()
+              break;
+            case 'BOS-002-LRW':
+              const Comp = this.vcr.createComponent(ChartBOSComponent)
+              Comp.setInput('current_identifier_input', this.deviceId)
+              this._ChangeDetectorRef.markForCheck()
+              break;
           default:
             break;
         }
