@@ -91,7 +91,7 @@ export class DeviceDetailsComponent {
     })
   }
   is_arabic: boolean = false;
-  loadingEx: boolean = false;
+  loadingEx = signal<boolean>(false);
   rangeDates:any= null
   center: google.maps.LatLngLiteral = { lat: 24.713892459748248, lng: 46.66132500714057 };
   zoom = 14;
@@ -101,7 +101,19 @@ export class DeviceDetailsComponent {
     zoom: this.zoom,
   };
 
-  handleExportWithFilter(){}
+  handleExportWithFilter() {
+      this.loadingEx.set(true)
+      const fromUtc = this.rangeDates ? this.rangeDates[0]?.toISOString()?.split('T')[0]:null
+      const toUtc = this.rangeDates ? this.rangeDates[0]?.toISOString()?.split('T')[0] : null;
+
+
+      this._DevicesService.getReadingExport(this.deviceId, this.devceType, fromUtc, toUtc).subscribe((res: any) => {
+        this._SharedService.exportToExcel(res?.data, 'Readings' + this.deviceId)
+        this.loadingEx.set(false)
+      })
+
+
+  }
 
   deviceDetails = signal<any>(null)
 

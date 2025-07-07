@@ -214,7 +214,7 @@
           selectionMode="range" [readonlyInput]="true" [dateFormat]="'mm-dd-yy'" />
       </div>
       <div class="action_btn">
-        <p-button [loading]="loadingEx" (click)="handleExportWithFilter()" label="Export Excel"
+        <p-button [loading]="loadingEx()" (click)="handleExportWithFilter()" label="Export Excel"
           icon="fi fi-rr-file-export text-white_color" />
       </div>
     </div>

@@ -122,4 +122,22 @@ export class DevicesService {
   }
 
 
+  getReadingExport(identifier: any, type: any, fromUtc: any, toUtc:any ):Observable<any> {
+    let query = '?'
+
+    if (identifier) {
+      query[query.length - 1] == '?' ? query += `identifier=${identifier}` : query += `&identifier=${identifier}`
+    }
+    if (type) {
+      query[query.length - 1] == '?' ? query += `type=${type}` : query += `&type=${type}`
+    }
+    if (fromUtc) {
+      query[query.length - 1] == '?' ? query += `fromUtc=${fromUtc}` : query += `&fromUtc=${fromUtc}`
+    }
+    if (toUtc) {
+      query[query.length - 1] == '?' ? query += `toUtc=${toUtc}` : query += `&toUtc=${toUtc}`
+    }
+    return this._HttpClient.get(environment.app_api_url + `DeviceSummariesUnified/DeviceReadingsForExcel`+query)
+  }
+
 }
