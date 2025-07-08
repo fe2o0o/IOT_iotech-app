@@ -2,7 +2,7 @@ import { Component, input, signal, SimpleChanges, ViewChild } from '@angular/cor
 import { FormGroup, FormControl, Validators, AbstractControl, ValidationErrors } from '@angular/forms';
 import { TranslateService } from '@ngx-translate/core';
 import { DevicesService } from '../../../../core/services/devices.service';
-
+import { SharedService } from '../../../../shared/services/shared.service';
 @Component({
   selector: 'app-chart-bos',
   standalone: false,
@@ -10,7 +10,7 @@ import { DevicesService } from '../../../../core/services/devices.service';
   styleUrl: './chart-bos.component.scss'
 })
 export class ChartBOSComponent {
-  constructor(private translate: TranslateService , private _DevicesService:DevicesService) {
+  constructor(private _SharedService:SharedService,private translate: TranslateService , private _DevicesService:DevicesService) {
     this.peopleStatus=[
       {
         id: 1,
@@ -45,6 +45,11 @@ export class ChartBOSComponent {
     if (changes['current_identifier_input'].currentValue) {
         this.current_identifier = changes['current_identifier_input'].currentValue
       }
+  }
+
+
+  handleExportData() {
+    this._SharedService.exportToExcel(this.current_chart_data() , this.current_identifier)
   }
 
   @ViewChild("alarms_chart") alarms_chart!:  any;

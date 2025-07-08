@@ -140,4 +140,10 @@ export class DevicesService {
     return this._HttpClient.get(environment.app_api_url + `DeviceSummariesUnified/DeviceReadingsForExcel`+query)
   }
 
+
+  updateLoacations(type: any, identifair: any, data: any): Observable<any>{
+    delete data.content
+    return this._HttpClient.post(environment.app_api_url + `DeviceSummariesUnified/upsert-location?type=${type}&identifair=${identifair}` , data)
+  }
+
 }

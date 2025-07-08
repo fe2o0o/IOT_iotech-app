@@ -15,6 +15,8 @@ export class AppComponent {
   constructor(private _TranslationsService: TranslationsService) {
     this._TranslationsService.loadTranslations(enLang , arLang)
     this._TranslationsService.selected_lan_sub.subscribe((lang: string) => {
+      console.log("lang" , lang);
+
       if (lang === 'ar') {
         this.dir.set(true)
       } else {

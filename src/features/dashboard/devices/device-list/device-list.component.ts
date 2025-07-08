@@ -1,8 +1,10 @@
+import { TranslationsService } from './../../../../shared/services/translation.service';
 import { ChangeDetectionStrategy, Component, OnInit, signal } from '@angular/core';
 import { TranslateService } from '@ngx-translate/core';
 import { SharedService } from '../../../../shared/services/shared.service';
 import { DevicesService } from '../../../../core/services/devices.service';
 import { Router } from '@angular/router';
+
 @Component({
   selector: 'app-device-list',
   standalone: false,
@@ -11,9 +13,15 @@ import { Router } from '@angular/router';
   changeDetection:ChangeDetectionStrategy.OnPush
 })
 export class DeviceListComponent implements OnInit {
-  constructor(private _Router:Router,private _DevicesService:DevicesService,private _SharedService:SharedService,private _TranslateService: TranslateService) {
+  constructor(private _TranslationsService:TranslationsService,private _Router:Router,private _DevicesService:DevicesService,private _SharedService:SharedService,private _TranslateService: TranslateService) {
     this._SharedService.breadCrumbTitle.next('BREADCRUMB.DEVICE_MANAGEMENT');
-
+    this._TranslationsService.selected_lan_sub.subscribe(res => {
+      if (res == 'ar') {
+        this.is_arabic = true
+      } else {
+        this.is_arabic = false
+      }
+    })
     this.items.set([
       {
         items: [

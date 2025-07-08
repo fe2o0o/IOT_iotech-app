@@ -3,7 +3,8 @@ export const enLang = {
   data: {
     TITLES: {
       "WELCOME": "Welcome to",
-      "IOTECH":"IOTECH",
+      "IOTECH": "IOTECH",
+      LOGOUT:'LogOut'
     },
     AUTH: {
       "DESC": "Need Help or have a question? Our support team is here for you. Contact us at",

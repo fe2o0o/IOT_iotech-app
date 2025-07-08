@@ -15,8 +15,8 @@
           <div class="icon">
             <i class="fi fi-rr-globe text-2xl"></i>
           </div>
-          <p-dropdown [options]="langs" [(ngModel)]="selected_lang" optionValue="code" optionLabel="name"
-            placeholder="" />
+          <p-dropdown [options]="langs" (onChange)="handleSelectedLanguage()" [(ngModel)]="selected_lang"
+            optionValue="code" optionLabel="name" placeholder="" />
         </div>
         <div (click)="menu.toggle($event)" class="flex items-center flex-wrap gap-3">
           <div class="icon">

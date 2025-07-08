@@ -1,6 +1,6 @@
 import { ChangeDetectionStrategy, Component, signal } from '@angular/core';
 import { sidebarLinks } from '../../models/sidebarLinks.model';
-
+import { SharedService } from '../../../shared/services/shared.service';
 @Component({
   selector: 'app-sidebar-main-layout',
   standalone: false,
@@ -9,7 +9,9 @@ import { sidebarLinks } from '../../models/sidebarLinks.model';
   changeDetection:ChangeDetectionStrategy.OnPush
 })
 export class SidebarMainLayoutComponent {
+  constructor(private _SharedService: SharedService) {
 
+  }
   sidebarLinks = signal<sidebarLinks[]>([
     {
       name:'SIDEBAR.DEVICES',
@@ -64,6 +66,8 @@ export class SidebarMainLayoutComponent {
   }
   handleOpenOverlay() { }
   handleExpand() {
-
+    console.log("is closed" , this.isColapsed());
+    this.isColapsed.set(!this.isColapsed())
+    this._SharedService.sidebar_state.next(this.isColapsed())
   }
 }

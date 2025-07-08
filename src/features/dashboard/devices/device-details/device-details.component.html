@@ -163,34 +163,35 @@
         <div class="head mb-6 flex flex-wrap items-center justify-between">
           <h3>{{ 'DEVICES.LOCATION' | translate }}</h3>
 
-          <!--
+
           <div class="flex items-center gap-4 flex-wrap">
             <div class="form_group flex items-center gap-3">
               <label class="text-sm" for="">{{ 'DEVICES.LATITUDE' | translate }}</label>
               <div class="max-w-24 loc">
-                <p-inputNumber [(ngModel)]="location.lat" inputId="locale-us" suffix=" °N" mode="decimal"
+                <p-inputNumber [(ngModel)]="location().lat" inputId="locale-us" suffix=" °N" mode="decimal"
                   [minFractionDigits]="1" />
               </div>
             </div>
             <div class="form_group flex items-center gap-3">
               <label class="text-sm" for="">{{ 'DEVICES.LONGITUDE' | translate }}</label>
               <div class="max-w-24 loc">
-                <p-inputNumber [(ngModel)]="location.lng" inputId="locale-us" suffix=" °N" mode="decimal" />
+                <p-inputNumber [(ngModel)]="location().lng" inputId="locale-us" suffix=" °N" mode="decimal" />
               </div>
             </div>
 
-            <div class="bg-primatext-primary text-white_color px-3 py-1 rounded-lg text-sm">
-              <p-button  [label]="'DEVICES.UPDATE' | translate" />
+            <div class="bg-primary text-white_color px-3 py-1 rounded-lg text-sm">
+              <p-button [loading]="loadLocation()" (onClick)="handleUpdateLocation()"
+                [label]="'DEVICES.UPDATE' | translate" />
             </div>
-          </div> -->
+          </div>
         </div>
 
         <div class="content h-72 lg:flex-1 rounded-lg">
-          <google-map height="100%" width="100%" [options]="options">
+          <google-map height="100%" width="100%" [center]="center" [options]="options">
+            <map-advanced-marker [title]="deviceDetails()?.deviceName" #markerElem="mapAdvancedMarker"
+              [position]="{ lat: location()?.lat, lng: location()?.lng }" />
             <!-- @if(!multipleLocations.length){
 
-            <map-advanced-marker title="Current" #markerElem="mapAdvancedMarker"
-              [position]="{ lat: location.lat, lng: location.lng }" [content]="location.content" />
             }@else {
             @for (item of multipleLocations; track $index) {
             <map-advanced-marker #markerElem="mapAdvancedMarker" [position]="{ lat: item?.lat, lng: item?.lang }"
@@ -208,7 +209,8 @@
   </div>
 
   <div [ngClass]="{'hidden':current_tab() == 1 , 'rtl_dir':is_arabic , 'ltr_dir':!is_arabic}" class="devices_table">
-    <div class="header flex justify-end items-center flex-wrap gap-6">
+    <div [ngClass]="{'justify-end':!is_arabic , 'justify-start' : is_arabic}"
+      class="header flex  items-center flex-wrap gap-6">
       <div class="filter w-64">
         <p-calendar [showClear]="rangeDates != null" placeholder="Filter Export Range" [(ngModel)]="rangeDates"
           selectionMode="range" [readonlyInput]="true" [dateFormat]="'mm-dd-yy'" />

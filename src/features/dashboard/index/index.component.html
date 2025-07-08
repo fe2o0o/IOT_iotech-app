@@ -15,7 +15,7 @@
       <app-breadcrumb></app-breadcrumb>
     </div>
     <div class="app-layout__main-content__inner-pages   p-8 pb-4 ">
-      <div class="mb-12 md:mt-0 mt-16">
+      <div [dir]="is_ar() ? 'rtl':'ltr'" class="mb-12 md:mt-0 mt-16">
         <router-outlet></router-outlet>
       </div>
       <!-- <app-footer></app-footer> -->

@@ -5,7 +5,6 @@ import { TranslateService } from '@ngx-translate/core';
 import { SharedService } from '../../../../shared/services/shared.service';
 import { TranslationsService } from '../../../../shared/services/translation.service';
 import { DevicesService } from '../../../../core/services/devices.service';
-
 @Component({
   selector: 'app-chart-vs330',
   standalone: false,
@@ -55,6 +54,9 @@ export class ChartVs330Component {
       }
     })
   }
+
+
+
 
 
   currentIdentifire: any;

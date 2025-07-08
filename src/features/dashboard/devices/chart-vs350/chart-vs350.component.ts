@@ -2,6 +2,7 @@ import { Component, input, OnChanges, OnInit, signal, SimpleChanges, ViewChild }
 import { TranslateService } from '@ngx-translate/core';
 import { DevicesService } from '../../../../core/services/devices.service';
 import { FormGroup, FormControl, Validators, AbstractControl, ValidationErrors } from '@angular/forms';
+import { SharedService } from '../../../../shared/services/shared.service';
 @Component({
   selector: 'app-chart-vs350',
   standalone: false,
@@ -9,7 +10,7 @@ import { FormGroup, FormControl, Validators, AbstractControl, ValidationErrors }
   styleUrl: './chart-vs350.component.scss'
 })
 export class ChartVs350Component implements OnChanges , OnInit {
-  constructor(private translate: TranslateService , private _DevicesService:DevicesService) {
+  constructor(private _SharedService:SharedService,private translate: TranslateService , private _DevicesService:DevicesService) {
     this.peopleStatus=[
       {
         id: 1,
@@ -38,6 +39,11 @@ export class ChartVs350Component implements OnChanges , OnInit {
         icon: 'fi fi-rr-forward'
       }
     ]
+  }
+
+
+  handleExportExcel() {
+    this._SharedService.exportToExcel(this.current_chart_data() , this.current_identifier)
   }
 
   is_arabic:Boolean = false
