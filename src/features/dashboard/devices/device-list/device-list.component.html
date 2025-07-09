@@ -101,11 +101,11 @@
 
       <div class="flex items-center gap-4 flex-wrap flex-row-reverse">
         <div (click)="showFilter = true"
-          [ngClass]="{'bg-primatext-primary':filterObj.status || filterObj.type , 'text-white_color':filterObj.status || filterObj.type , 'bg-white_color':!filterObj.status && !filterObj.type}"
+          [ngClass]="{'bg-primary':filterObj.status || filterObj.type , 'text-white_color':filterObj.status || filterObj.type , 'bg-white_color':!filterObj.status && !filterObj.type}"
           class="icon_filter relative cursor-pointer  shadow p-4">
-          @if(filterCount){
+          @if(filterCount()){
           <div class="count p-3 shadow rounded-full bg-white_color text-black_color flex items-center justify-center">
-            {{filterCount}}</div>
+            {{filterCount()}}</div>
           }
           <i class="fi fi-rr-settings-sliders text-xl"></i>
         </div>
@@ -286,9 +286,9 @@
 </p-dialog>
 
 <!-- Filter Dialog -->
-<p-dialog header="" styleClass="select_type_popup" [(visible)]="showFilter" [dismissableMask]="true" [modal]="true"
-  [breakpoints]="{ '1199px': '50vw', '575px': '90vw' }" [style]="{ width: '35vw' }" [draggable]="false"
-  [resizable]="false">
+<p-dialog header="" (onHide)="handleFilterList()" styleClass="select_type_popup" [(visible)]="showFilter"
+  [dismissableMask]="true" [modal]="true" [breakpoints]="{ '1199px': '50vw', '575px': '90vw' }"
+  [style]="{ width: '35vw' }" [draggable]="false" [resizable]="false">
   <div class="icon_over_lay flex items-center round justify-center">
     <svg width="50" height="50" viewBox="0 0 50 50" fill="none" xmlns="http://www.w3.org/2000/svg">
       <path d="M45.8335 13.5415H33.3335" stroke="#D51C54" stroke-width="3" stroke-miterlimit="10" stroke-linecap="round"
@@ -330,7 +330,8 @@
   <ng-template pTemplate="footer">
     <div class="flex justify-center">
       <div class="action_btn">
-        <p-button [disabled]="!filterObj.status && !filterObj.type" [label]="'DEVICES.APPLY_FILTER' | translate" />
+        <p-button (onClick)="handleFilterList()" [disabled]="!filterObj.status && !filterObj.type"
+          [label]="'DEVICES.APPLY_FILTER' | translate" />
       </div>
     </div>
   </ng-template>

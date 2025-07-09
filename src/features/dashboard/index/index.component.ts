@@ -47,6 +47,16 @@ export class IndexComponent {
     })
   }
 
+
+    ngOnInit(): void {
+
+    if (window.innerWidth > 640 && window.innerWidth < 960) {
+      this._SharedService.sidebar_state.next(false)
+    } else {
+      this._SharedService.sidebar_state.next(true)
+    }
+  }
+
   handleCloseOverlay() {
     this._SharedService.overlayStatus.next(false)
   }
@@ -62,6 +72,9 @@ export class IndexComponent {
     const windowWidth = event.target.innerWidth
     if (windowWidth < 960 && !this.isOverlay()) {
       this._SharedService.sidebar_state.next(false)
+    }
+    if (windowWidth < 960 && this.isOverlay()) {
+      this._SharedService.sidebar_state.next(true)
     }
 
     if (windowWidth > 960) {

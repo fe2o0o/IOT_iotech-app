@@ -40,8 +40,20 @@ export class BreadcrumbComponent implements OnInit {
     this._TranslationsService.selected_lan_sub.subscribe((res: string) => {
       this.selected_lang = res
     })
+
+
+    this._TranslationsService.selected_lan_sub.subscribe((res) => {
+      if (res == 'ar') {
+        this.is_ar.set(true)
+      } else {
+        this.is_ar.set(false)
+      }
+    })
   }
 
+
+
+  is_ar = signal<boolean>(false)
 
 
   ngOnInit(): void {
@@ -56,6 +68,10 @@ export class BreadcrumbComponent implements OnInit {
 
   }
 
+  handleOverlay() {
+    this._SharedService.overlayStatus.next(true)
+    this._SharedService.sidebar_state.next(true)
+  }
 
   userData = {
     userName:'User Name'

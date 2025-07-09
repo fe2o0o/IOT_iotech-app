@@ -26,3 +26,19 @@
 .sidebar__sidebar-container-links-item a {
   padding: 16px 12px;
 }
+
+@media screen and (max-width:640px) {
+  .logo_container .ac {
+    display: none;
+  }
+
+  .close {
+    display: block;
+  }
+}
+
+.close {
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+}

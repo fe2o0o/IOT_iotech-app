@@ -4,6 +4,7 @@ import { TranslateService } from '@ngx-translate/core';
 import { SharedService } from '../../../../shared/services/shared.service';
 import { DevicesService } from '../../../../core/services/devices.service';
 import { Router } from '@angular/router';
+import { debounceTime, Subject } from 'rxjs';
 
 @Component({
   selector: 'app-device-list',
@@ -51,6 +52,11 @@ export class DeviceListComponent implements OnInit {
         ]
       }
     ]);
+
+
+    this.searchSub.pipe(debounceTime(300)).subscribe((res:string) => {
+      this.getDashboardData()
+    })
   }
   loadingState = signal<boolean>(false)
   allData = signal<any>({});
@@ -84,8 +90,10 @@ export class DeviceListComponent implements OnInit {
     }
   ]
 
-  handleSearch() {
+  private searchSub : Subject<string> = new Subject<string>()
 
+  handleSearch() {
+    this.searchSub.next(this.searchTerm)
   }
 
 
@@ -93,7 +101,7 @@ export class DeviceListComponent implements OnInit {
     this.loadingState.set(true);
     this.devicesList.set([])
     this.devicesListTemp.set([])
-    this._DevicesService.getDevicesDashboard().subscribe({
+    this._DevicesService.getDevicesDashboard(1,15,this.searchTerm).subscribe({
       next: (res: any) => {
         this.allData.set(res?.data)
         this.devicesList.set(res?.data?.items)
@@ -102,6 +110,42 @@ export class DeviceListComponent implements OnInit {
         this.loadingState.set(false)
       }
     })
+  }
+
+  filterCount=signal<number>(0);
+
+  handleFilterList() {
+    this.filterCount.set(0)
+
+    let filter_cartona = []
+
+    if (this.filterObj.type != null) {
+      this.filterCount.set(this.filterCount() + 1);
+      filter_cartona = this.devicesList().filter((item: any) => {
+        return this.filterObj.type == 'SigFox' ? item.connectionType == 'Sigfox' : item.connectionType != 'Sigfox'
+      })
+    }
+
+
+    if (this.filterObj.status != null) {
+      this.filterCount.set(this.filterCount() + 1);
+      if (filter_cartona.length) {
+        this.devicesListTemp.set(filter_cartona.filter((item: any) => {
+          return this.filterObj.status == 'Online' ? item.isOnline : item.isOnline == false
+        }))
+      } else {
+        this.devicesListTemp.set(this.devicesList().filter((item: any) => {
+          return this.filterObj.status == 'Online' ? item.isOnline : item.isOnline == false
+        }))
+      }
+    }
+
+
+    if (!this.filterObj.status && !this.filterObj.type) {
+      this.devicesListTemp.set([...this.devicesList()])
+    }
+
+    this.showFilter  = false
   }
 
 
@@ -121,7 +165,6 @@ export class DeviceListComponent implements OnInit {
   onPageChange(event:any) {
 
   }
-  filterCount: number = 0;
   searchTerm:string =''
 
   filterObj = {

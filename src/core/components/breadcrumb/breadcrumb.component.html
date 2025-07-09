@@ -1,7 +1,10 @@
-<nav class="p-8 py-6">
+<nav [dir]="is_ar() ? 'rtl':'ltr'" class="p-8 py-6">
   <div class="inner flex items-center justify-between flex-wrap">
     <div class="title flex items-center justify-center gap-3">
-      <i class="fi   fi-br-menu-burger text-xl text-primary hidden toggle_menue"></i>
+      <button (click)="handleOverlay()">
+
+        <i class="fi   fi-br-menu-burger text-xl text-primary hidden toggle_menue"></i>
+      </button>
       <h1 class="font-semibold text-lg lg:text-2xl   text-primary">{{title_bread()|translate}}</h1>
     </div>
 

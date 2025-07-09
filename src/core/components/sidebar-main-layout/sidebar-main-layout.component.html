@@ -1,13 +1,17 @@
-<aside class="sidebar_container relative py-8 ">
+<aside [dir]="is_ar() ? 'rtl':'ltr'" class="sidebar_container relative py-8 ">
   <div class="logo_container flex items-center justify-center mb-6">
     @if(isExpand){
-    <button (click)="handleCollapse()">
+    <button class="ac" (click)="handleCollapse()">
       <i class="fi fi-rr-compress-alt"></i>
     </button>
     }@else {
-    <button (click)="handleExpand()">
+    <button class="ac" (click)="handleExpand()">
       <i class="fi fi-rr-expand-arrows-alt"></i>
-    </button> }
+    </button>
+    }
+    <div class="close hidden">
+      <button (click)="handleCloseOver()"><i class="fi text-white_color fi-rr-cross"></i></button>
+    </div>
     <img src="images/logo_main-white.svg" alt="">
   </div>
 

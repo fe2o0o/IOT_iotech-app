@@ -1,10 +1,16 @@
-<section class="h-screen grid grid-cols-12">
-  <div class="lg:col-span-6 col-span-12">
+<section [dir]="is_ar() ? 'rtl':'ltr'" class="min-h-screen  grid grid-cols-12">
+
+  <div class="lg:col-span-6 col-span-12 order-2 lg:order-1 relative">
+    <div class="switch_lang absolute right-8 top-8  flex items-center gap-3">
+      <div class="icon">
+        <i class="fi fi-rr-globe text-xl"></i>
+      </div>
+      <p-dropdown [options]="langs" (onChange)="changeLanguage()" [(ngModel)]="selected_lang" optionValue="code"
+        optionLabel="name" placeholder="" />
+    </div>
     <app-auth-base></app-auth-base>
   </div>
-
-  <div class="lg:col-span-6 col-span-12 h-full bg-primary">
-
+  <div class="lg:col-span-6 col-span-12 h-full bg-primary order-1 lg:order-2">
     <router-outlet></router-outlet>
   </div>
 </section>

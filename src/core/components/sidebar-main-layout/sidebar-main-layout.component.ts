@@ -1,6 +1,7 @@
 import { ChangeDetectionStrategy, Component, signal } from '@angular/core';
 import { sidebarLinks } from '../../models/sidebarLinks.model';
 import { SharedService } from '../../../shared/services/shared.service';
+import { TranslationsService } from '../../../shared/services/translation.service';
 @Component({
   selector: 'app-sidebar-main-layout',
   standalone: false,
@@ -9,9 +10,22 @@ import { SharedService } from '../../../shared/services/shared.service';
   changeDetection:ChangeDetectionStrategy.OnPush
 })
 export class SidebarMainLayoutComponent {
-  constructor(private _SharedService: SharedService) {
+  constructor(private _SharedService: SharedService , private _TranslationsService:TranslationsService) {
+    this._TranslationsService.selected_lan_sub.subscribe((res) => {
+      if (res == 'ar') {
+        this.is_ar.set(true)
+      } else {
+        this.is_ar.set(false)
+      }
+    })
+
+
+    this.getSideStatus()
+
 
   }
+
+  is_ar = signal<boolean>(false)
   sidebarLinks = signal<sidebarLinks[]>([
     {
       name:'SIDEBAR.DEVICES',
@@ -58,11 +72,27 @@ export class SidebarMainLayoutComponent {
 
   ])
 
+  getSideStatus() {
+    this._SharedService.sidebar_state.subscribe({
+      next: () => {
+        if (this._SharedService.sidebar_state.getValue()) {
+          this.isColapsed.set(true)
+        } else {
+          this.isColapsed.set(false)
+        }
+      }
+    })
+  }
+
   isExpand:boolean = false
 
   isColapsed = signal<boolean>(true)
   handleCollapse() {
 
+  }
+
+  handleCloseOver() {
+    this._SharedService.overlayStatus.next(false)
   }
   handleOpenOverlay() { }
   handleExpand() {
