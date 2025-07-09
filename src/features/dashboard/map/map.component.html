@@ -1,12 +1,12 @@
 <div class="map_container  min-h-dvh">
   <google-map style="position: absolute; top: 0px; bottom: 0; left: 0; right: 0;" height="100%" width="100%"
     [options]="options">
-    <!-- @for(location of locations; track location){
+    @for(location of locations(); track location){
     <map-advanced-marker (mapClick)="openInfoWindow(markerElem , location)" #markerElem="mapAdvancedMarker"
-      [position]="{ lat: location?.latitude, lng: location?.longitude }" [title]="location?.deviceName"
+      [position]="{ lat: location.latitude, lng: location.longitude }" [title]="location.deviceName"
       [content]="location.content" />
-    } -->
-    <!-- <map-info-window #infoWindow="mapInfoWindow">
+    }
+    <map-info-window #infoWindow="mapInfoWindow">
       <div *ngIf="selectedLocation" class="info_window p-4 w-60">
         <div class="flex items-center gap-6 mb-6">
           <div>
@@ -33,7 +33,7 @@
           </div>
           <div>
             <h5 class="text-xl font-medium">{{ 'MAP.BEACON_ID' | translate }}</h5>
-            <p class="text-gold_color ">{{selectedLocation?.beaconId}}</p>
+            <p class="text-gold_color ">{{selectedLocation?.identifair}}</p>
           </div>
         </div>
 
@@ -144,6 +144,6 @@
             </div>
         </div>
       </div>
-    </map-info-window> -->
+    </map-info-window>
   </google-map>
 </div>
