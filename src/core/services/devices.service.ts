@@ -63,6 +63,10 @@ export class DevicesService {
   }
 
 
+  editDevice(deviceId: any, deviceName: string): Observable<any> {
+    return this._HttpClient.put(environment.app_api_url + `DeviceSummariesUnified/UpdatedeviceName?deviceId=${deviceId}`, { deviceName })
+  }
+
 
 
   getDOSChart(deviceID: any , period?: any, fromUtc?: any, toUtc?: any ,  filterOccupancy:boolean = true , filterBattery:boolean = true):Observable<any> {

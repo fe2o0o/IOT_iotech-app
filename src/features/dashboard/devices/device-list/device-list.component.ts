@@ -5,6 +5,7 @@ import { SharedService } from '../../../../shared/services/shared.service';
 import { DevicesService } from '../../../../core/services/devices.service';
 import { Router } from '@angular/router';
 import { debounceTime, Subject } from 'rxjs';
+import { MessageService } from 'primeng/api';
 
 @Component({
   selector: 'app-device-list',
@@ -14,7 +15,7 @@ import { debounceTime, Subject } from 'rxjs';
   changeDetection:ChangeDetectionStrategy.OnPush
 })
 export class DeviceListComponent implements OnInit {
-  constructor(private _TranslationsService:TranslationsService,private _Router:Router,private _DevicesService:DevicesService,private _SharedService:SharedService,private _TranslateService: TranslateService) {
+  constructor(private _MessageService:MessageService,private _TranslationsService:TranslationsService,private _Router:Router,private _DevicesService:DevicesService,private _SharedService:SharedService,private _TranslateService: TranslateService) {
     this._SharedService.breadCrumbTitle.next('BREADCRUMB.DEVICE_MANAGEMENT');
     this._TranslationsService.selected_lan_sub.subscribe(res => {
       if (res == 'ar') {
@@ -46,7 +47,8 @@ export class DeviceListComponent implements OnInit {
             label: this._TranslateService.instant('DEVICES.DELETE'),
             icon: 'fi fi-rr-trash',
             command: () => {
-              this.showDeletePopUp = true
+              this.showDeletePopUp = true;
+              this.editName.set(this.selected_device?.deviceName)
             }
           }
         ]
@@ -170,5 +172,30 @@ export class DeviceListComponent implements OnInit {
   filterObj = {
     status: null,
     type:null
+  }
+
+
+  editName = signal<string>('')
+
+  loadingEdit = signal<boolean>(false)
+
+  handleEditDevice() {
+    this.loadingEdit.set(true);
+
+    this._DevicesService.editDevice(this.selected_device?.identifier, this.editName()  ).subscribe({
+      next: (res: any) => {
+        // this.selected_device?.device
+        this.loadingEdit.set(false);
+        this._MessageService.add({ severity: "success", summary: 'Success', detail: 'Device Name Edited Siccessfully!' })
+        this.showEditPopUp = false;
+        this.getDashboardData()
+      },
+      error: (err:any) => {
+        this.loadingEdit.set(false);
+        this.showEditPopUp = false;
+
+      }
+    })
+
   }
 }

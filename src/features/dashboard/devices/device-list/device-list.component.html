@@ -271,7 +271,8 @@
   <div class="devices_types__container ">
     <div class="form-group mb-5">
       <div class="input_group ">
-        <input #confirm_input id="name" class="custom_input" [value]="selected_device?.deviceName" pInputText
+        <input [(ngModel)]="editName" #confirm_input id="name" class="custom_input"
+          [value]="selected_device?.deviceName" pInputText
           [placeholder]="'DEVICES.EDIT_DEVICE_PLACEHOLDER' | translate" />
       </div>
     </div>
@@ -279,7 +280,8 @@
   <ng-template pTemplate="footer">
     <div class="flex justify-center">
       <div class="action_btn">
-        <p-button [label]="'DEVICES.SAVE' | translate" />
+        <p-button (click)="handleEditDevice()" [disabled]="!editName().length" [loading]="loadingEdit()"
+          [label]="'DEVICES.SAVE' | translate" />
       </div>
     </div>
   </ng-template>
