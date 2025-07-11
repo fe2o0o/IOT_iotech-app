@@ -1,0 +1,140 @@
+<section class="p-8 rounded-3xl bg-white_color">
+  <h2 class="mb-6">{{"USERS.PERSONAL"|translate}}</h2>
+  <div class="image_section p-8 flex items-center justify-center">
+    <div class="image_place-holder relative flex items-center justify-center">
+      @if(!imageSrc){
+      <i class="fi fi-sr-picture text-3xl"></i>
+      }@else {
+      <img [src]="imageSrc" alt="">
+      }
+      <div (click)="handleSelectImage()" class="add cursor-pointer flex items-center justify-center">
+        <i class="fi fi-rr-camera text-sm"></i>
+      </div>
+    </div>
+  </div>
+  <div class="devices_types__container grid grid-cols-12 gap-6 ">
+    <form [formGroup]="user_form" class="col-span-12 grid grid-cols-12 gap-6">
+      <div class="form-group input_group col-span-6">
+        <div class=" ">
+          <label class="block mb-2" for="">{{"USERS.USER_NAME"|translate}}</label>
+          <input pInputText formControlName="firstName" [placeholder]="'USERS.USER_NAME' | translate" />
+        </div>
+        @if(user_form.get('firstName')?.errors && user_form.get('firstName')?.touched){
+        <p class="p-2 text-sm text-danger_color m-0">{{"USERS.Name_REQ"|translate}}</p>
+        }
+      </div>
+      <div class="form-group input_group col-span-12 lg:col-span-6">
+        <div class=" ">
+          <label class="block mb-2" for="">{{"USERS.USER_EMAIL"|translate}}</label>
+
+          <input pInputText formControlName="email" [placeholder]="'USERS.USER_EMAIL' | translate" />
+        </div>
+
+        @if(user_form.get('email')?.errors && user_form.get('email')?.touched){
+        @if(user_form.get('email')?.getError('required')){
+        <p class="p-2 text-sm text-danger_color m-0">{{"USERS.EMAIL_REQ"|translate}}</p>
+        }
+        @if(user_form.get('email')?.getError('email')){
+        <p class="p-2 text-sm text-danger_color m-0">{{"USERS.EMAIL_VAILD"|translate}}</p>
+        }
+        }
+      </div>
+      <div class="form-group input_group col-span-12 lg:col-span-6">
+        <div class=" ">
+          <label class="block mb-2" for="">{{"USERS.PHONE_NUMBER"|translate}}</label>
+
+          <input pInputText formControlName="phoneNumber" [placeholder]="'USERS.PHONE_NUMBER' | translate" />
+        </div>
+        @if(user_form.get('phoneNumber')?.errors && user_form.get('phoneNumber')?.touched){
+        <p class="p-2 text-sm text-danger_color m-0">{{"USERS.PHONE_REQ"|translate}}</p>
+        }
+      </div>
+      <div class="form-group input_group col-span-12 lg:col-span-6">
+        <label class="block mb-2" for="">{{"USERS.SELECT_STATUS"|translate}}</label>
+
+        <p-dropdown [options]="status" optionValue="id" [showClear]="user_form.get('isActive')?.value"
+          formControlName="isActive" appendTo="body" optionLabel="name"
+          [placeholder]="'USERS.SELECT_STATUS' | translate" />
+
+
+        @if(user_form.get('isActive')?.errors && user_form.get('isActive')?.touched){
+        <p class="p-2 text-sm text-danger_color m-0">{{"USERS.STATUS_REQ"|translate}}</p> }
+      </div>
+
+      <div class="form-group input_group col-span-12 lg:col-span-12">
+        <label class="block mb-2" for="">{{"USERS.SELECT_ROLE"|translate}}</label>
+
+        <p-dropdown [options]="roles" optionValue="id" [showClear]="user_form.get('roleId')?.value"
+          formControlName="roleId" optionValue="id" appendTo="body" optionLabel="name"
+          [placeholder]="'USERS.SELECT_ROLE' | translate" />
+        @if(user_form.get('roleId')?.errors && user_form.get('roleId')?.touched){
+        <p class="p-2 text-sm text-danger_color m-0">{{"USERS.ROLE_REQ"|translate}}</p> }
+      </div>
+      <!-- @if(!currentUpdateId){
+      <div class="form_group col-span-12 lg:col-span-12">
+        <label class=" block mb-3 " for="">
+          Password
+        </label>
+        <div class="input_icon_group mb-2">
+          <i (click)="isShowPass.set(!isShowPass())"
+            [ngClass]="{'fi-rr-eye': !isShowPass() , 'fi fi-rr-eye-crossed':isShowPass()}"
+            class="fi text-primary cursor-pointer pass_toggle"></i>
+          <input autocomplete="new-password" id="new_password" formControlName="password"
+            [type]="!isShowPass() ? 'password':'text'" pInputText placeholder="***********" />
+          <i class="fi text-primary text-lg fi-rr-lock"></i>
+        </div>
+        @if(user_form.get('password')?.errors && user_form.get('password')?.touched){
+        <div>
+          @if(user_form.get('password')?.getError('required')){
+          <p class="p-2 text-sm text-danger_color m-0">{{ 'AUTH.NEW_PASSWORD_REQ' | translate }}</p>
+          }
+          @if(user_form.get('password')?.getError('inVaild')){
+          @for(error of passwordValidationError ; track error){
+          <p class="p-2 text-sm text-danger_color m-0">{{error}}</p>
+          }
+          }
+        </div>
+        }
+      </div>
+      } -->
+    </form>
+    <div class="col-span-12 permsiions">
+      @if(showPermssionsError){
+
+      <p class="p-2 text-sm text-danger_color m-0">{{"USERS.PER_ERROR"|translate}}</p>
+      }
+
+      <p-accordion [expandIcon]="'fi fi-rr-angle-small-down'" [collapseIcon]="'fi fi-rr-angle-small-up'"
+        [activeIndex]="0">
+        @for(device of devicesTypes ; track device){
+
+        <p-accordionTab tabStyleClass="mb-4" [header]="device.name">
+          <div class="flex items-center justify-between">
+            @for(per of device.permssions ; track per){
+            <div class="input_group flex items-center gap-2 flex-row-reverse">
+              <label for="">{{ per?.name }}</label>
+              <p-checkbox [binary]="true" [(ngModel)]="per.isSelected" inputId="binary" />
+            </div>
+            }
+          </div>
+        </p-accordionTab>
+        }
+      </p-accordion>
+    </div>
+  </div>
+
+
+
+  <div class="actions flex items-center gap-4 justify-end">
+
+    <div class="cancel_btn">
+      <p-button label="Cancel " />
+    </div>
+    <div class="action_btn ">
+      <p-button [loading]="loadAction" [disabled]="user_form.invalid"
+        [label]="currentUpdateId ? 'Update' :'Create User'" (onClick)="userAction()" />
+    </div>
+
+  </div>
+
+</section>

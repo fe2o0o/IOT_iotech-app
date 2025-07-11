@@ -199,3 +199,26 @@ i.pass_toggle {
   padding: 0;
   line-height: .5;
 }
+
+
+.p-checkbox-box {
+  border: 2px solid #A2BACB;
+  box-shadow: none;
+  outline: none;
+}
+
+.p-checkbox .p-checkbox-box.p-highlight{
+  background-color: #D51C54;
+  border: none;
+}
+
+
+.p-accordion {
+  .p-accordion-header-link {
+    flex-direction: row-reverse;
+    background-color: white;
+    justify-content: space-between;
+    @apply  shadow-sm rounded-full;
+    background-color: #FFF5F8;
+  }
+}
