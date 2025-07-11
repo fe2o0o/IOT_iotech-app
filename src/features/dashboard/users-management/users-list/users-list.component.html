@@ -1,0 +1,202 @@
+<section>
+  <div class="cards grid grid-cols-12 gap-5  mb-20">
+    <div
+      class="card col-span-12 md:col-span-5 lg:col-span-4  flex items-center justify-between shadow-md rounded-3xl border-l-4 border-black_color p-6 gap-2">
+      <div class="content">
+        <h2 class="mb-4 text-lg font-medium">{{ 'USERS.TOTAL_USERS' | translate }}</h2>
+        @if(loadingState()){
+        <p-skeleton width="100%" styleClass="mb-2" />
+        }@else {
+        <p class="text-xl font-semibold">{{usersData()?.total}}</p>
+        }
+      </div>
+      <div class="icon">
+        <!-- SVG stays as is -->
+        <svg width="50" height="50" viewBox="0 0 50 50" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path
+            d="M19.0833 22.6459C18.875 22.6251 18.625 22.6251 18.3958 22.6459C13.4375 22.4792 9.5 18.4167 9.5 13.4167C9.5 8.31258 13.625 4.16675 18.75 4.16675C23.8542 4.16675 28.0001 8.31258 28.0001 13.4167C27.9792 18.4167 24.0417 22.4792 19.0833 22.6459Z"
+            stroke="#1A232D" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" />
+          <path
+            d="M34.1873 8.33325C38.229 8.33325 41.479 11.6041 41.479 15.6249C41.479 19.5624 38.354 22.7708 34.4582 22.9166C34.2915 22.8958 34.104 22.8958 33.9165 22.9166"
+            stroke="#1A232D" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" />
+          <path
+            d="M8.6665 30.3333C3.62484 33.7083 3.62484 39.2083 8.6665 42.5624C14.3957 46.3958 23.7916 46.3958 29.5207 42.5624C34.5624 39.1874 34.5624 33.6874 29.5207 30.3333C23.8124 26.5208 14.4165 26.5208 8.6665 30.3333Z"
+            stroke="#1A232D" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" />
+          <path
+            d="M38.2085 41.6667C39.7085 41.3542 41.1252 40.7501 42.2918 39.8542C45.5418 37.4167 45.5418 33.3959 42.2918 30.9584C41.146 30.0834 39.7502 29.5001 38.271 29.1667"
+            stroke="#1A232D" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" />
+        </svg>
+      </div>
+    </div>
+    <div
+      class="card col-span-12 md:col-span-5 lg:col-span-4 border-l-4 border-success_color flex items-center justify-between shadow-md rounded-3xl p-4 px-6 gap-2">
+      <div class="content">
+        <h2 class="mb-4 text-lg text-success_color font-medium">{{ 'USERS.ACTIVE_USERS' | translate }}</h2>
+        @if(loadingState()){
+        <p-skeleton width="100%" styleClass="mb-2" />
+        }@else {
+        <p class="text-xl font-semibold">{{usersData()?.active}}</p>
+        }
+      </div>
+      <div class="icon">
+        <svg width="50" height="50" viewBox="0 0 50 50" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path
+            d="M24.9998 45.8334C36.4582 45.8334 45.8332 36.4584 45.8332 25.0001C45.8332 13.5417 36.4582 4.16675 24.9998 4.16675C13.5415 4.16675 4.1665 13.5417 4.1665 25.0001C4.1665 36.4584 13.5415 45.8334 24.9998 45.8334Z"
+            stroke="#14AB46" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" />
+          <path d="M16.146 25L22.0418 30.8958L33.8543 19.1042" stroke="#14AB46" stroke-width="3" stroke-linecap="round"
+            stroke-linejoin="round" />
+        </svg>
+      </div>
+    </div>
+    <div
+      class="card col-span-12 md:col-span-5 border-l-4 border-danger_color lg:col-span-4  flex items-center justify-between shadow-md rounded-3xl p-4 px-6 gap-2">
+      <div class="content">
+        <h2 class="mb-4 text-lg text-danger_color font-medium">{{ 'USERS.INACTIVE_USERS' | translate }}</h2>
+        @if(loadingState()){
+        <p-skeleton width="100%" styleClass="mb-2" />
+        }@else {
+        <p class="text-xl font-semibold">{{usersData()?.inactive}}</p>
+        }
+      </div>
+      <div class="icon">
+        <svg width="50" height="50" viewBox="0 0 50 50" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path
+            d="M25.0001 45.8334C36.4584 45.8334 45.8334 36.4584 45.8334 25.0001C45.8334 13.5417 36.4584 4.16675 25.0001 4.16675C13.5417 4.16675 4.16675 13.5417 4.16675 25.0001C4.16675 36.4584 13.5417 45.8334 25.0001 45.8334Z"
+            stroke="#FF0004" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" />
+          <path d="M19.104 30.8958L30.8957 19.1042" stroke="#FF0004" stroke-width="3" stroke-linecap="round"
+            stroke-linejoin="round" />
+          <path d="M30.8957 30.8958L19.104 19.1042" stroke="#FF0004" stroke-width="3" stroke-linecap="round"
+            stroke-linejoin="round" />
+        </svg>
+      </div>
+    </div>
+  </div>
+
+
+  <div [ngClass]="{'rtl_dir':is_arabic() , 'ltr_dir':!is_arabic()}" class="devices_table">
+    <div class="table_head m-2 flex flex-wrap items-center justify-between">
+      <div class="flex items-center gap-3">
+        <h2 class="font-medium mb-3 text-2xl">{{ 'USERS.USERS' | translate }}</h2>
+        <div (click)="showFilter.set(true)"
+          [ngClass]="{'bg-primary':filterObj.status || filterObj.type , 'text-white_color':filterObj.status || filterObj.type , 'bg-white_color':!filterObj.status && !filterObj.type}"
+          class="icon_filter relative cursor-pointer  shadow p-4">
+          @if(filterCount){
+          <div class="count p-3 shadow rounded-full bg-white_color text-black_color flex items-center justify-center">
+            {{filterCount}}</div>
+          }
+          <i class="fi fi-rr-settings-sliders text-lg"></i>
+        </div>
+      </div>
+      <div class="flex items-center gap-4 flex-wrap flex-row-reverse">
+        <button [routerLink]="['/alharamain-app/user-managemnet/action']"
+          class="bg-primary px-4 py-3 rounded-xl w-24 text-white_color">
+          {{ 'USERS.ADD' | translate }}
+        </button>
+        <div class="adon-input relative w-80">
+          <input (input)="handleSearch()" [(ngModel)]="searchTerm" pInputText
+            [placeholder]="'USERS.SEARCH_PLACEHOLDER' | translate" />
+          <i class="fi fi-rr-search text-xl flex items-center justify-center text-gray_light"></i>
+        </div>
+      </div>
+    </div>
+    <p-table [paginator]="true" [totalRecords]="usersList.length" (onLazyLoad)="getUsersList()" [lazy]="true"
+      [rows]="per_page" [tableStyle]="{'min-width': '50rem'}" [value]="usersListTemp">
+      <ng-template pTemplate="header" let-columns>
+        <tr>
+          <th>{{ 'USERS.USER_NAME' | translate }}</th>
+          <th>{{ 'USERS.EMAIL' | translate }}</th>
+          <th>{{ 'USERS.PHONE' | translate }}</th>
+          <th>{{ 'USERS.STATUS' | translate }}</th>
+          <th>{{ 'USERS.CREATED_AT' | translate }}</th>
+        </tr>
+      </ng-template>
+      <ng-template pTemplate="body" let-device let-columns="columns">
+        <tr class="rounded-full">
+          <td>{{device?.userName}}</td>
+          <td>{{device?.email}}</td>
+          <td>{{device?.phone}}</td>
+          <td [ngClass]="{'text-success_color':device?.status , 'text-danger_color':!device?.status}">
+            {{device?.status ? ('USERS.ACTIVE' | translate) : ('USERS.INACTIVE' | translate)}}
+          </td>
+          <td>{{device?.createdAt}}</td>
+          <td class="cursor-pointer" (click)="menu.toggle($event);selected_user = device">
+            <svg class="mx-auto" width="25" height="25" viewBox="0 0 25 25" fill="none"
+              xmlns="http://www.w3.org/2000/svg">
+              <path
+                d="M5.20833 10.4167C4.0625 10.4167 3.125 11.3542 3.125 12.5C3.125 13.6458 4.0625 14.5833 5.20833 14.5833C6.35417 14.5833 7.29167 13.6458 7.29167 12.5C7.29167 11.3542 6.35417 10.4167 5.20833 10.4167Z"
+                stroke="#1A232D" stroke-width="1.5" />
+              <path
+                d="M19.7917 10.4167C18.6459 10.4167 17.7084 11.3542 17.7084 12.5C17.7084 13.6458 18.6459 14.5833 19.7917 14.5833C20.9375 14.5833 21.875 13.6458 21.875 12.5C21.875 11.3542 20.9375 10.4167 19.7917 10.4167Z"
+                stroke="#1A232D" stroke-width="1.5" />
+              <path
+                d="M12.5 10.4167C11.3541 10.4167 10.4166 11.3542 10.4166 12.5C10.4166 13.6458 11.3541 14.5833 12.5 14.5833C13.6458 14.5833 14.5833 13.6458 14.5833 12.5C14.5833 11.3542 13.6458 10.4167 12.5 10.4167Z"
+                stroke="#1A232D" stroke-width="1.5" />
+            </svg>
+          </td>
+        </tr>
+      </ng-template>
+      <ng-template pTemplate="emptymessage" let-columns>
+        <tr>
+          <td [attr.colspan]="8">
+            <app-empty-state [loadingState]="loadingState()"></app-empty-state>
+          </td>
+        </tr>
+      </ng-template>
+    </p-table>
+  </div>
+
+</section>
+
+
+<p-menu #menu appendTo="body" styleClass="namespace_action" [model]="items()" [popup]="true" />
+
+
+<p-dialog header="" (onHide)="handleFilterList()" styleClass="select_type_popup" [(visible)]="showFilter"
+  [dismissableMask]="true" [modal]="true" [breakpoints]="{ '1199px': '50vw', '575px': '90vw' }"
+  [style]="{ width: '35vw' }" [draggable]="false" [resizable]="false">
+  <div class="icon_over_lay flex items-center round justify-center">
+    <svg width="40" height="40" viewBox="0 0 50 50" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M45.8333 13.5417H33.3333" stroke="#9F8A60" stroke-width="3" stroke-miterlimit="10" stroke-linecap="round"
+        stroke-linejoin="round" />
+      <path d="M12.5 13.5417H4.16669" stroke="#9F8A60" stroke-width="3" stroke-miterlimit="10" stroke-linecap="round"
+        stroke-linejoin="round" />
+      <path
+        d="M20.8334 20.8333C24.8604 20.8333 28.125 17.5688 28.125 13.5417C28.125 9.51458 24.8604 6.25 20.8334 6.25C16.8063 6.25 13.5417 9.51458 13.5417 13.5417C13.5417 17.5688 16.8063 20.8333 20.8334 20.8333Z"
+        stroke="#9F8A60" stroke-width="3" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round" />
+      <path d="M45.8333 36.4583H37.5" stroke="#9F8A60" stroke-width="3" stroke-miterlimit="10" stroke-linecap="round"
+        stroke-linejoin="round" />
+      <path d="M16.6667 36.4583H4.16669" stroke="#9F8A60" stroke-width="3" stroke-miterlimit="10" stroke-linecap="round"
+        stroke-linejoin="round" />
+      <path
+        d="M29.1667 43.75C33.1938 43.75 36.4583 40.4854 36.4583 36.4583C36.4583 32.4312 33.1938 29.1667 29.1667 29.1667C25.1396 29.1667 21.875 32.4312 21.875 36.4583C21.875 40.4854 25.1396 43.75 29.1667 43.75Z"
+        stroke="#9F8A60" stroke-width="3" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round" />
+    </svg>
+  </div>
+  <div class=" text-center mb-8 flex justify-center">
+    <h5 class="text-2xl flex items-center gap-4 text-gold_color font-medium ">
+      <span>{{ 'USERS.FILTERS' | translate }}</span>
+      <svg width="30" height="31" viewBox="0 0 30 31" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path
+          d="M18.1875 27.5875C23.55 26.175 27.5 21.3 27.5 15.5C27.5 8.6 21.95 3 15 3C6.6625 3 2.5 9.95 2.5 9.95M2.5 9.95V4.25M2.5 9.95H5.0125H8.05"
+          stroke="#1A232D" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+        <path d="M2.5 15.5C2.5 22.4 8.1 28 15 28" stroke="#1A232D" stroke-width="1.5" stroke-linecap="round"
+          stroke-linejoin="round" stroke-dasharray="3 3" />
+      </svg>
+    </h5>
+  </div>
+  <div class="devices_types__container py-8 ">
+    <div class="custom_input mb-6">
+      <label for="" class="mb-2 block">{{ 'USERS.STATUS' | translate }}</label>
+      <p-dropdown [options]="status" appendTo="body" [(ngModel)]="filterObj.status" optionValue="name"
+        [showClear]="filterObj.status" optionLabel="name" [placeholder]="'USERS.SELECT_STATUS' | translate" />
+    </div>
+  </div>
+  <ng-template pTemplate="footer">
+    <div class="flex justify-center">
+      <div class="action_btn">
+        <p-button (click)="handleFilterList()" [disabled]="!filterObj.status && !filterObj.type"
+          [label]="'USERS.APPLY_FILTER' | translate" />
+      </div>
+    </div>
+  </ng-template>
+</p-dialog>

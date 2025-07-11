@@ -48,7 +48,7 @@ export class SidebarMainLayoutComponent {
     {
       name:'SIDEBAR.USER_MANAGEMENT' ,
       icon:'fi fi-rr-users',
-      link:'/alharamain-app/user-managemnet',
+      link:'/iotech_app/users-management',
       visible:true,
     },
     {
