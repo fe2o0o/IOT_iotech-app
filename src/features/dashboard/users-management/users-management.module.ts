@@ -5,12 +5,14 @@ import { UsersManagementRoutingModule } from './users-management-routing.module'
 import { UsersListComponent } from './users-list/users-list.component';
 import { SharedModule } from '../../../shared/modules/shared/shared.module';
 import { UserActionComponent } from './user-action/user-action.component';
+import { ViewComponent } from './view/view.component';
 
 
 @NgModule({
   declarations: [
     UsersListComponent,
-    UserActionComponent
+    UserActionComponent,
+    ViewComponent
   ],
   imports: [
     CommonModule,

@@ -1,0 +1,75 @@
+<section>
+  <div class="container p-8 rounded-3xl bg-white_color shadow-sm">
+    <div class="head flex items-center gap-4 mb-8">
+      <div class="icon">
+        <i class="fi fi-rr-circle-user text-4xl"></i>
+      </div>
+      <div class="content">
+        @if(loading_data){
+        <p-skeleton width="10rem" />
+        <p-skeleton width="10rem" />
+        }@else {
+        <h2 class="font-bold text-base">{{userDataShow?.firstName}}</h2>
+        <p>{{userDataShow?.email}}</p>
+        }
+      </div>
+    </div>
+
+    <div class="content grid grid-cols-12 gap-8 mb-8">
+      <div class=" col-span-12 md:col-span-6 flex items-center gap-12">
+        <span class="text-xl font-semibold">{{"USERS.Role"|translate}}</span>
+        @if(loading_data){
+        <p-skeleton width="10rem" />
+        }@else {
+        <span class="text-base">{{userDataShow?.roles[0]}}</span>
+        }
+      </div>
+      <div class=" col-span-12 md:col-span-6 flex items-center gap-12">
+        <span class="text-xl font-semibold">{{"USERS.Status"|translate}}</span>
+        @if(loading_data){
+        <p-skeleton width="10rem" />
+        }@else {
+        <span [class]="userDataShow?.isActive ? 'text-success_color':'text-danger_color'"
+          class="text-base">{{userDataShow?.isActive ? "Active":"inActive"}}</span>
+        }
+      </div>
+      <div class=" col-span-12 md:col-span-6 flex items-center gap-12">
+        <span class="text-xl font-semibold">{{"USERS.PHONE"|translate}}</span>
+        @if(loading_data){
+        <p-skeleton width="10rem" />
+        }@else {
+        <span class="text-base">{{userDataShow?.phoneNumber}}</span>
+        }
+      </div>
+      <div class=" col-span-12 md:col-span-6 flex items-center gap-12">
+        <span class="text-xl font-semibold">{{"USERS.CREATED_AT"|translate}}</span>
+        @if(loading_data){
+        <p-skeleton width="10rem" />
+        }@else {
+        <span class="text-base">{{userDataShow?.createdDate}}</span>
+        }
+      </div>
+    </div>
+
+
+    <div>
+      <h2 class="text-lg mb-6">Permission Categories</h2>
+      <p-accordion [expandIcon]="'fi fi-rr-angle-small-down'" [collapseIcon]="'fi fi-rr-angle-small-up'"
+        [activeIndex]="0">
+        @for(device of devicesTypes ; track device){
+
+        <p-accordionTab tabStyleClass="mb-4" [header]="device.name">
+          <div class="flex items-center justify-between">
+            @for(per of device.permssions ; track per){
+            <div class="input_group flex items-center gap-2 flex-row-reverse">
+              <label for="">{{ per?.name }}</label>
+              <p-checkbox [disabled]="true" [binary]="true" [(ngModel)]="per.isSelected" inputId="binary" />
+            </div>
+            }
+          </div>
+        </p-accordionTab>
+        }
+      </p-accordion>
+    </div>
+  </div>
+</section>
