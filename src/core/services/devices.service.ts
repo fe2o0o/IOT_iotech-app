@@ -121,8 +121,26 @@ export class DevicesService {
 
 
 
-  getDevicesDashboard(page_number:number = 1 , page_size:number = 15 , searchTerms:string = ''):Observable<any> {
-    return this._HttpClient.get(environment.app_api_url + `DeviceSummariesUnified/GetAllDeviceSummaries?PageNumber=${page_number}&PageSize=${page_size}&search=${searchTerms}`)
+  getDevicesDashboard(page_number:number = 1 , page_size:number = 15 , searchTerms:any = '',status
+    : any = '', Type: any = ''): Observable<any> {
+      let query = '?'
+
+      if (page_number) {
+        query[query.length - 1] == '?' ? query += `PageNumber=${page_number}` : query += `&PageNumber=${page_number}`
+      }
+      if (page_size) {
+        query[query.length - 1] == '?' ? query += `PageSize=${page_size}` : query += `&PageSize=${page_size}`
+      }
+      if (searchTerms) {
+        query[query.length - 1] == '?' ? query += `search=${searchTerms}` : query += `&search=${searchTerms}`
+      }
+      if (status) {
+        query[query.length - 1] == '?' ? query += `status=${status}` : query += `&status=${status}`
+      }
+      if (Type) {
+        query[query.length - 1] == '?' ? query += `Type=${Type}` : query += `&Type=${Type}`
+      }
+    return this._HttpClient.get(environment.app_api_url + `DeviceSummariesUnified/GetAllDeviceSummaries` + query)
   }
 
 
@@ -148,6 +166,26 @@ export class DevicesService {
   updateLoacations(type: any, identifair: any, data: any): Observable<any>{
     delete data.content
     return this._HttpClient.post(environment.app_api_url + `DeviceSummariesUnified/upsert-location?type=${type}&identifair=${identifair}` , data)
+  }
+
+
+  getEWSChart(deviceID: any , period?: any, fromUtc?: any, toUtc?: any):Observable<any> {
+    let query = '?'
+
+    if (deviceID) {
+      query[query.length - 1] == '?' ? query += `deviceId=${deviceID}` : query += `&deviceId=${deviceID}`
+    }
+    if (period) {
+      query[query.length - 1] == '?' ? query += `period=${period}` : query += `&period=${period}`
+    }
+    if (fromUtc) {
+      query[query.length - 1] == '?' ? query += `fromUtc=${fromUtc}` : query += `&fromUtc=${fromUtc}`
+    }
+    if (toUtc) {
+      query[query.length - 1] == '?' ? query += `toUtc=${toUtc}` : query += `&toUtc=${toUtc}`
+    }
+
+    return this._HttpClient.get(environment.app_api_url + `SigFoxEvvos/chart-data` + query)
   }
 
 }

@@ -73,6 +73,10 @@ export class DeviceListComponent implements OnInit {
     {
       id: 2,
       name:'SigFox'
+    },
+    {
+      id: 3,
+      name:'LP-WAN'
     }
   ]
 
@@ -116,41 +120,68 @@ export class DeviceListComponent implements OnInit {
 
   filterCount=signal<number>(0);
 
+  // handleFilterList() {
+  //   this.filterCount.set(0)
+
+  //   let filter_cartona = []
+
+  //   if (this.filterObj.type != null) {
+  //     this.filterCount.set(this.filterCount() + 1);
+  //     filter_cartona = this.devicesList().filter((item: any) => {
+  //       return this.filterObj.type == 'SigFox' ? item.connectionType == 'Sigfox' : item.connectionType != 'Sigfox'
+  //     })
+  //   }
+
+
+  //   if (this.filterObj.status != null) {
+  //     this.filterCount.set(this.filterCount() + 1);
+  //     if (filter_cartona.length) {
+  //       this.devicesListTemp.set(filter_cartona.filter((item: any) => {
+  //         return this.filterObj.status == 'Online' ? item.isOnline : item.isOnline == false
+  //       }))
+  //     } else {
+  //       this.devicesListTemp.set(this.devicesList().filter((item: any) => {
+  //         return this.filterObj.status == 'Online' ? item.isOnline : item.isOnline == false
+  //       }))
+  //     }
+  //   }
+
+
+  //   if (!this.filterObj.status && !this.filterObj.type) {
+  //     this.devicesListTemp.set([...this.devicesList()])
+  //   }
+
+  //   this.showFilter  = false
+  // }
+
+
   handleFilterList() {
-    this.filterCount.set(0)
-
-    let filter_cartona = []
-
+    this.filterCount.set(0);
     if (this.filterObj.type != null) {
       this.filterCount.set(this.filterCount() + 1);
-      filter_cartona = this.devicesList().filter((item: any) => {
-        return this.filterObj.type == 'SigFox' ? item.connectionType == 'Sigfox' : item.connectionType != 'Sigfox'
-      })
     }
-
-
     if (this.filterObj.status != null) {
       this.filterCount.set(this.filterCount() + 1);
-      if (filter_cartona.length) {
-        this.devicesListTemp.set(filter_cartona.filter((item: any) => {
-          return this.filterObj.status == 'Online' ? item.isOnline : item.isOnline == false
-        }))
-      } else {
-        this.devicesListTemp.set(this.devicesList().filter((item: any) => {
-          return this.filterObj.status == 'Online' ? item.isOnline : item.isOnline == false
-        }))
+    }
+
+    this.loadingState.set(true);
+    this.devicesList.set([])
+    this.devicesListTemp.set([])
+    this._DevicesService.getDevicesDashboard(1,15,this.searchTerm , this.filterObj.status , this.filterObj.type).subscribe({
+      next: (res: any) => {
+        this.allData.set(res?.data)
+        this.devicesList.set(res?.data?.items)
+        this.devicesListTemp.set(this.devicesList())
+
+        this.loadingState.set(false)
       }
-    }
+    })
 
-
-    if (!this.filterObj.status && !this.filterObj.type) {
-      this.devicesListTemp.set([...this.devicesList()])
-    }
 
     this.showFilter  = false
+
+
   }
-
-
 
   showEditPopUp:boolean = false
   showDeletePopUp:boolean = false

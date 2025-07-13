@@ -12,6 +12,7 @@ import { ChartVs341Component } from '../chart-vs341/chart-vs341.component';
 import { TranslationsService } from '../../../../shared/services/translation.service';
 import { MessageService } from 'primeng/api';
 import moment from 'moment';
+import { ChartEwsComponent } from '../chart-ews/chart-ews.component';
 @Component({
   selector: 'app-device-details',
   standalone: false,
@@ -65,6 +66,11 @@ export class DeviceDetailsComponent {
               this.vcr.clear()
               const ref = this.vcr.createComponent(ChartVs341Component)
               ref.setInput('current_identifier_input', this.deviceId)
+              this._ChangeDetectorRef.markForCheck()
+              break;
+            case 'EWS-3 LW':
+              this.vcr.clear()
+              const refEws = this.vcr.createComponent(ChartEwsComponent)
               this._ChangeDetectorRef.markForCheck()
               break;
           default:
