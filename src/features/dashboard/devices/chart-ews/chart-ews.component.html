@@ -54,16 +54,13 @@
       {{"DEVICES.No_Data_Avaliable"|translate}}
     </div>
     }
-    <div [class]="{'hidden': loadingChart() || !current_chart_data.length}" class="chart">
+    <div [class]="{'hidden': loadingChart() || !current_chart_data.length}" class="chart overflow-x-auto">
       <p-chart #alarms_chart [width]="chartWidth+'%'" type="line" height="400px" [data]="data_alarms"
         [options]="optionsAlarm" />
     </div>
   </div>
 </section>
 
-<app-chart-ews-child1></app-chart-ews-child1>
-
-<app-chart-ews-child2></app-chart-ews-child2>
 
 
 

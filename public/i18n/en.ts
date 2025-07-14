@@ -69,6 +69,11 @@ export const enLang = {
     },
 
     DEVICES: {
+      "temperatureMetrics": "Temperature Metrics",
+      "windMetrics": "Wind Metrics",
+      "humidityMetrics": "Humidity Metrics",
+      "EnergyMetrics": "Energy Metrics",
+      "pressureMetrics": "Pressure Metrics",
         relativeHumidity: 'Relative Humidity',
   absoluteHumidity: 'Absolute Humidity',
   specificHumidity: 'Specific Humidity',
