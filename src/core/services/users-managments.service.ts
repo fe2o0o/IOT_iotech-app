@@ -28,6 +28,11 @@ export class UsersManagmentsService {
   }
 
 
+    getUserById(id: any):Observable<any> {
+    return this._HttpClient.get(environment.app_api_url + `Auth/GetUserById/${id}`);
+  }
+
+
   getDevicesTypes():Observable<any> {
     return this._HttpClient.get(environment.app_api_url + `Auth/GetAllDeviceTypes`)
   }
@@ -35,5 +40,8 @@ export class UsersManagmentsService {
 
   addUser(req: any): Observable<any>{
     return this._HttpClient.post(environment.app_api_url + `Auth/register`, req);
+  }
+  updateUser(req: any): Observable<any>{
+    return this._HttpClient.put(environment.app_api_url + `Auth/update`, req);
   }
 }

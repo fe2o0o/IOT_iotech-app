@@ -35,7 +35,7 @@ export class UsersListComponent implements OnInit {
             label: this._TranslateService.instant('DEVICES.EDIT'),
             icon: 'fi fi-rr-edit',
             command: () => {
-              this._Router.navigate(['/alharamain-app/user-managemnet/action' , this.selected_user.id])
+              this._Router.navigate(['/iotech_app/users-management/action' , this.selected_user.id])
             }
 
           },

@@ -6,6 +6,8 @@ import { UsersManagmentsService } from '../../../../core/services/users-managmen
 import { forkJoin } from 'rxjs';
 import { MessageService } from 'primeng/api';
 import { Router } from '@angular/router';
+import { ActivatedRoute } from '@angular/router';
+import { ChangeDetectorRef } from '@angular/core';
 @Component({
   selector: 'app-user-action',
   standalone: false,
@@ -14,8 +16,55 @@ import { Router } from '@angular/router';
   changeDetection:ChangeDetectionStrategy.OnPush
 })
 export class UserActionComponent implements OnInit {
-  constructor(private _Router:Router,private _MessageService:MessageService,private _UsersManagmentsService:UsersManagmentsService,private _SharedService: SharedService , private _PasswordValidatorService:PasswordValidatorService) {
+  constructor(private _ChangeDetectorRef:ChangeDetectorRef,private _ActivatedRoute:ActivatedRoute ,private _Router:Router,private _MessageService:MessageService,private _UsersManagmentsService:UsersManagmentsService,private _SharedService: SharedService , private _PasswordValidatorService:PasswordValidatorService) {
     this._SharedService.breadCrumbTitle.next('SIDEBAR.USER_MANAGEMENT');
+    this.initUserForm()
+        this._ActivatedRoute.paramMap.subscribe((res) => {
+      if (res.get('id')) {
+        this.currentUpdateId = res.get('id')
+        // this._UsersManagmentsService.getUserById(res.get('id')).subscribe((res: any) => {
+        //   this.handleDevicesRoles();
+        //   this.initUserForm(res?.data)
+        // })
+
+        forkJoin([
+          this._UsersManagmentsService.getAllRoles(),
+          this._UsersManagmentsService.getPermssionsTypes(),
+          this._UsersManagmentsService.getDevicesTypes(),
+          this._UsersManagmentsService.getUserById(res.get('id')),
+        ]).subscribe((res: any[]) => {
+          this.roles = res[0]?.data;
+          const permssions = res[1]?.data;
+          const devicesTypes = res[2]?.data;
+          const user = res[3]?.data;
+
+          // Map device types and permissions, mark selected
+          const userDevicePermissions = user?.devicePermissions || [];
+          this.devicesTypes.set(
+            devicesTypes.map((device: any) => {
+              // Find user permissions for this device type
+              const userDevice = userDevicePermissions.find((d: any) => d.deviceTypeId === device.id);
+              return {
+                ...device,
+                permssions: permssions.map((perm: any) => ({
+                  ...perm,
+                  isSelected: userDevice
+                    ? userDevice.permissions.some((p: any) => p.id === perm.id)
+                    : false
+                }))
+              };
+            })
+          );
+
+          this.initUserForm(user);
+          this._ChangeDetectorRef.markForCheck()
+        })
+      } else {
+        this.handleDevicesRoles()
+        this.getAllRoles()
+        this.initUserForm()
+      }
+    })
   }
 
   imageSrc: any;
@@ -36,6 +85,9 @@ export class UserActionComponent implements OnInit {
 
     };
   }
+
+
+
 
 
 
@@ -63,9 +115,7 @@ export class UserActionComponent implements OnInit {
 
 
   ngOnInit(): void {
-    this.handleDevicesRoles()
-    this.getAllRoles()
-    this.initUserForm()
+
   }
 
 
@@ -129,16 +179,30 @@ export class UserActionComponent implements OnInit {
 
     this.loadAction.set(true)
 
-    this._UsersManagmentsService.addUser(req).subscribe({
-      next: (res: any) => {
-        this.loadAction.set(false);
-        this._MessageService.add({ severity: 'success', summary: 'Success', detail: 'User added successfully!' }); 4
-        this._Router.navigate(['/iotech_app/users-management/list']);
-      },
-      error: (err: any) => {
-        this.loadAction.set(false);
-      }
-    })
+    if (!this.currentUpdateId) {
+      this._UsersManagmentsService.addUser(req).subscribe({
+        next: (res: any) => {
+          this.loadAction.set(false);
+          this._MessageService.add({ severity: 'success', summary: 'Success', detail: 'User added successfully!' }); 4
+          this._Router.navigate(['/iotech_app/users-management/list']);
+        },
+        error: (err: any) => {
+          this.loadAction.set(false);
+        }
+      })
+    } else {
+      req.id = this.currentUpdateId;
+         this._UsersManagmentsService.updateUser(req).subscribe({
+        next: (res: any) => {
+          this.loadAction.set(false);
+          this._MessageService.add({ severity: 'success', summary: 'Success', detail: 'User Updated successfully!' }); 4
+          this._Router.navigate(['/iotech_app/users-management/list']);
+        },
+        error: (err: any) => {
+          this.loadAction.set(false);
+        }
+      })
+    }
   }
   roles: any[] = [];
   loadAction = signal<boolean>(false);
@@ -172,7 +236,7 @@ export class UserActionComponent implements OnInit {
       email: new FormControl(data ? data?.email: null, [Validators.required, Validators.email]),
       phoneNumber: new FormControl(data ? data?.phoneNumber: null, Validators.required),
       isActive: new FormControl(data ? data.isActive ? 1:2 :null , [Validators.required]),
-      roleId: new FormControl(data ? data?.roleId : null, [Validators.required]),
+      roleId: new FormControl(data ? data?.roles[0]?.id : null, [Validators.required]),
       password: new FormControl(null, !data ? Validators.required : null),
 
     })

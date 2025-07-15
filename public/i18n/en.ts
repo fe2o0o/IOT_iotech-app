@@ -286,7 +286,8 @@ export const enLang = {
       "PER_ERROR": "Please Select At Least 1 Permssion",
       "VIEW_USERS": "View User",
       "Role": "Role",
-      "Status":"Status"
+      "Status": "Status",
+      "PERMISSIONS":"Permission Categories"
 
     },
     ROLES_PERMISSIONS: {

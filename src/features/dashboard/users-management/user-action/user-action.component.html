@@ -1,5 +1,5 @@
 <section class="p-8 rounded-3xl bg-white_color">
-  <h2 class="mb-6">{{"USERS.PERSONAL"|translate}}</h2>
+  <h2 class="mb-6 text-xl font-semibold">{{"USERS.PERSONAL"|translate}}</h2>
   <div class="image_section p-8 flex items-center justify-center">
     <div class="image_place-holder relative flex items-center justify-center">
       @if(!imageSrc){
@@ -103,6 +103,8 @@
 
       <p class="p-2 text-sm text-danger_color m-0">{{"USERS.PER_ERROR"|translate}}</p>
       }
+
+      <h2 class="mb-6 text-xl font-semibold">{{"USERS.PERMISSIONS"|translate}}</h2>
 
       <p-accordion [expandIcon]="'fi fi-rr-angle-small-down'" [collapseIcon]="'fi fi-rr-angle-small-up'"
         [activeIndex]="0">
