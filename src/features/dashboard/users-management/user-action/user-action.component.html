@@ -14,7 +14,7 @@
   </div>
   <div class="devices_types__container grid grid-cols-12 gap-6 ">
     <form [formGroup]="user_form" class="col-span-12 grid grid-cols-12 gap-6">
-      <div class="form-group input_group col-span-6">
+      <div class="form-group input_group col-span-12 lg:col-span-6">
         <div class=" ">
           <label class="block mb-2" for="">{{"USERS.USER_NAME"|translate}}</label>
           <input pInputText formControlName="firstName" [placeholder]="'USERS.USER_NAME' | translate" />
@@ -70,7 +70,7 @@
         @if(user_form.get('roleId')?.errors && user_form.get('roleId')?.touched){
         <p class="p-2 text-sm text-danger_color m-0">{{"USERS.ROLE_REQ"|translate}}</p> }
       </div>
-      <!-- @if(!currentUpdateId){
+      @if(!currentUpdateId){
       <div class="form_group col-span-12 lg:col-span-12">
         <label class=" block mb-3 " for="">
           Password
@@ -96,7 +96,7 @@
         </div>
         }
       </div>
-      } -->
+      }
     </form>
     <div class="col-span-12 permsiions">
       @if(showPermssionsError){
@@ -106,7 +106,7 @@
 
       <p-accordion [expandIcon]="'fi fi-rr-angle-small-down'" [collapseIcon]="'fi fi-rr-angle-small-up'"
         [activeIndex]="0">
-        @for(device of devicesTypes ; track device){
+        @for(device of devicesTypes() ; track device){
 
         <p-accordionTab tabStyleClass="mb-4" [header]="device.name">
           <div class="flex items-center justify-between">
@@ -131,7 +131,7 @@
       <p-button label="Cancel " />
     </div>
     <div class="action_btn ">
-      <p-button [loading]="loadAction" [disabled]="user_form.invalid"
+      <p-button [loading]="loadAction()" [disabled]="user_form.invalid"
         [label]="currentUpdateId ? 'Update' :'Create User'" (onClick)="userAction()" />
     </div>
 

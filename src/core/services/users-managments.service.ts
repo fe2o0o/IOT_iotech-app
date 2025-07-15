@@ -23,4 +23,17 @@ export class UsersManagmentsService {
   }
 
 
+  getPermssionsTypes():Observable<any> {
+    return this._HttpClient.get(environment.app_api_url + `Auth/GetPermissionTypes`)
+  }
+
+
+  getDevicesTypes():Observable<any> {
+    return this._HttpClient.get(environment.app_api_url + `Auth/GetAllDeviceTypes`)
+  }
+
+
+  addUser(req: any): Observable<any>{
+    return this._HttpClient.post(environment.app_api_url + `Auth/register`, req);
+  }
 }
