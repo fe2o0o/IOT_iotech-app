@@ -68,6 +68,15 @@ export const arLang = {
       "ALARMS": "الإنذارات"
     },
     DEVICES: {
+      Distance: "المسافة",
+Occupancy: "الإشغال",
+      Calibration: "المعايرة",
+"Chart_Analysis":"الرسم البياني ",
+"temperatureMetrics": "مقاييس درجة الحرارة",
+"windMetrics": "مقاييس الرياح",
+"humidityMetrics": "مقاييس الرطوبة",
+"EnergyMetrics": "مقاييس الطاقة",
+"pressureMetrics": "مقاييس الضغط",
       "IMAGE_LOADING_MSG1": "جارٍ تجهيز صورة عملك...",
       "IMAGE_LOADING_MSG2": "لا زلنا نعمل، يرجى الانتظار قليلاً...",
       "IMAGE_LOADING_MSG3": "اقتربنا، بضع ثوانٍ فقط...",

@@ -5,6 +5,7 @@ import { TranslateService } from '@ngx-translate/core';
 import { UsersManagmentsService } from '../../../../core/services/users-managments.service';
 import { Router } from '@angular/router';
 import { debounceTime, Subject } from 'rxjs';
+import { MessageService } from 'primeng/api';
 @Component({
   selector: 'app-users-list',
   standalone: false,
@@ -13,7 +14,7 @@ import { debounceTime, Subject } from 'rxjs';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class UsersListComponent implements OnInit {
-  constructor(private _UsersManagmentsService:UsersManagmentsService,private _Router:Router,private _TranslateService:TranslateService,private _TranslationsService:TranslationsService,private _SharedService:SharedService) {
+  constructor(private _MessageService:MessageService,private _UsersManagmentsService:UsersManagmentsService,private _Router:Router,private _TranslateService:TranslateService,private _TranslationsService:TranslationsService,private _SharedService:SharedService) {
     this._SharedService.breadCrumbTitle.next('SIDEBAR.USER_MANAGEMENT');
     this._TranslationsService.selected_lan_sub.subscribe((lang) => {
       if(lang === 'ar') {
@@ -68,9 +69,25 @@ export class UsersListComponent implements OnInit {
     })
   }
 
+  loadDelete = signal<boolean>(false);
 
   handleDeleteUser() {
+    this.loadDelete.set(true);
+    this._UsersManagmentsService.deleteUser(this.selected_user.id).subscribe({
+      next: (res: any) => {
 
+        this.showDeletePopUp.set(false);
+        this.getUsersList();
+        this._MessageService.add({
+          severity: 'success',
+          summary: 'Success',
+          detail: 'User deleted successfully',
+        });
+      },
+      error: (err:any) => {
+        console.error(err);
+      }
+    });
   }
 
   showFilter = signal<boolean>(false);

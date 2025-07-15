@@ -14,20 +14,20 @@ export class ChartBOSComponent {
     this.peopleStatus=[
       {
         id: 1,
-        name: 'Distance',
+        name: this.translate.instant('DEVICES.Distance'),
         selected: true,
         icon: 'fi fi-rr-distribute-spacing-vertical'
       },
       {
         id: 2,
-        name: 'Occupancy',
+        name: this.translate.instant('DEVICES.Occupancy'),
         selected: true,
         icon: 'fi fi-rr-users-alt'
       }
       ,
       {
         id: 3,
-        name: 'Calibration',
+        name: this.translate.instant('DEVICES.Calibration'),
         selected: true,
         icon: 'fi fi-rr-rewind'
       }

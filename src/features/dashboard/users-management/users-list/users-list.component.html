@@ -245,8 +245,8 @@
   <ng-template pTemplate="footer">
     <div class="flex justify-center">
       <div class="action_btn">
-        <p-button (onClick)="handleDeleteUser()" [disabled]="confirm_input.value.toLocaleLowerCase() !== 'delete'"
-          [label]="'DEVICES.DELETE' | translate" />
+        <p-button [loading]="loadDelete()" (onClick)="handleDeleteUser()"
+          [disabled]="confirm_input.value.toLocaleLowerCase() !== 'delete'" [label]="'DEVICES.DELETE' | translate" />
       </div>
     </div>
   </ng-template>

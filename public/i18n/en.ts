@@ -69,6 +69,9 @@ export const enLang = {
     },
 
     DEVICES: {
+      Distance: "Distance",
+Occupancy: "Occupancy",
+Calibration: "Calibration",
       "temperatureMetrics": "Temperature Metrics",
       "windMetrics": "Wind Metrics",
       "humidityMetrics": "Humidity Metrics",
@@ -150,6 +153,7 @@ export const enLang = {
       "DOUBLE_CLICK_TOOLTIP": "Double Click To Show Details !",
       "IDENTIFIER": "Identifier",
       "DETAILS": "Details",
+      "Chart_Analysis":"Chart Analysis",
       "READINGS": "Readings",
       "COMUN_TYPE":"Communication Type",
       "HEART_RATE_BLOOD_OXYGEN": "Heart Rate & Blood Oxygen",
