@@ -1,5 +1,8 @@
-import { Component } from '@angular/core';
+import { Component, signal } from '@angular/core';
 import { SharedService } from '../../../../shared/services/shared.service';
+import { ActivatedRoute } from '@angular/router';
+import { forkJoin, switchMap } from 'rxjs';
+import { UsersManagmentsService } from '../../../../core/services/users-managments.service';
 @Component({
   selector: 'app-view',
   standalone: false,
@@ -7,23 +10,42 @@ import { SharedService } from '../../../../shared/services/shared.service';
   styleUrl: './view.component.scss'
 })
 export class ViewComponent {
-  constructor(private sharedService: SharedService) {
+  constructor(private _UsersManagmentsService:UsersManagmentsService,private _ActivatedRoute:ActivatedRoute,private sharedService: SharedService) {
     this.sharedService.breadCrumbTitle.next('View User');
+    this._ActivatedRoute.paramMap.subscribe((res) => {
+      forkJoin([
+              this._UsersManagmentsService.getPermssionsTypes(),
+          this._UsersManagmentsService.getDevicesTypes(),
+          this._UsersManagmentsService.getUserById(res.get('id')),
+      ]).subscribe((res: any[]) => {
+          const permssions = res[0]?.data;
+        const devicesTypes = res[1]?.data;
+        this.userDataShow = res[2]?.data;
+                 const userDevicePermissions = this.userDataShow?.devicePermissions || [];
+          this.devicesTypes.set(
+            devicesTypes.map((device: any) => {
+              // Find user permissions for this device type
+              const userDevice = userDevicePermissions.find((d: any) => d.deviceTypeId === device.id);
+              return {
+                ...device,
+                permssions: permssions.map((perm: any) => ({
+                  ...perm,
+                  isSelected: userDevice
+                    ? userDevice.permissions.some((p: any) => p.id === perm.id)
+                    : false
+                }))
+              };
+            })
+        );
+
+        this.loading_data.set(false);
+      })
+    })
   }
 
-  devicesTypes: any[] = [
-    {
-      name: 'PLS-001-SFX',
-      permssions: [
-        { name: 'View', isSelected: true },
-        { name: 'Edit', isSelected: false },
-        { name: 'Delete', isSelected: true },
-        { name: 'Add', isSelected: false },
-      ]
-    }
-  ]
+  devicesTypes= signal<any[]>([])
 
   userDataShow: any;
 
-  loading_data: boolean = false;
+  loading_data = signal<boolean>(true);
 }

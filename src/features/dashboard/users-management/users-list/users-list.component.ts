@@ -43,7 +43,7 @@ export class UsersListComponent implements OnInit {
             label: this._TranslateService.instant('DEVICES.VIEW'),
             icon: 'fi fi-rr-eye',
             command: () => {
-              this._Router.navigate(['/alharamain-app/user-managemnet/user' , this.selected_user.id ])
+              this._Router.navigate(['/iotech_app/users-management/view' , this.selected_user.id ])
             }
           },
           {
