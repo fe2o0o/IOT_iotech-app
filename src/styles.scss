@@ -222,3 +222,8 @@ i.pass_toggle {
     background-color: #FFF5F8;
   }
 }
+
+
+.p-link.p-highlight{
+  @apply bg-primary text-white_color;
+}

@@ -2,7 +2,9 @@ import { Component, ChangeDetectionStrategy, signal, OnInit } from '@angular/cor
 import { SharedService } from '../../../../shared/services/shared.service';
 import { TranslationsService } from '../../../../shared/services/translation.service';
 import { TranslateService } from '@ngx-translate/core';
+import { UsersManagmentsService } from '../../../../core/services/users-managments.service';
 import { Router } from '@angular/router';
+import { debounceTime, Subject } from 'rxjs';
 @Component({
   selector: 'app-users-list',
   standalone: false,
@@ -11,7 +13,7 @@ import { Router } from '@angular/router';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class UsersListComponent implements OnInit {
-  constructor(private _Router:Router,private _TranslateService:TranslateService,private _TranslationsService:TranslationsService,private _SharedService:SharedService) {
+  constructor(private _UsersManagmentsService:UsersManagmentsService,private _Router:Router,private _TranslateService:TranslateService,private _TranslationsService:TranslationsService,private _SharedService:SharedService) {
     this._SharedService.breadCrumbTitle.next('SIDEBAR.USER_MANAGEMENT');
     this._TranslationsService.selected_lan_sub.subscribe((lang) => {
       if(lang === 'ar') {
@@ -54,8 +56,22 @@ export class UsersListComponent implements OnInit {
         ]
       }
     ])
+
+
+
+
+
+
+
+    this.searchSubject.pipe(debounceTime(300)).subscribe((res: string) => {
+      this.getUsersList()
+    })
   }
 
+
+  handleDeleteUser() {
+
+  }
 
   showFilter = signal<boolean>(false);
 
@@ -103,14 +119,35 @@ export class UsersListComponent implements OnInit {
   usersList:any[]=[]
 
 
-  getUsersList() {
+  getUsersList(event?: any) {
+    console.log("event" , event);
 
+    this.loadingState.set(true);
+    this.usersListTemp = [];
+    this.usersList = [];
+    this._UsersManagmentsService.getAllUsers(event?.first+1 || 1, event?.rows || 15, this.searchTerm).subscribe({
+      next: (res) => {
+        this.usersData.set(res?.data);
+        this.usersList = res?.data?.items;
+        this.usersListTemp = res?.data?.items;
+        this.loadingState.set(false);
+      },
+      error: (err) => {
+        console.error(err);
+        this.loadingState.set(false);
+      }
+    });
   }
+
+
 
 
   handleSearch() {
-
+    this.searchSubject.next(this.searchTerm);
   }
+
+
+  private searchSubject = new Subject<string>()
 
   searchTerm = ''
   filterCount: number = 0;
