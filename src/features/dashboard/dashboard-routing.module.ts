@@ -6,7 +6,8 @@ const routes: Routes = [
   { path: '', redirectTo: 'devices-management', pathMatch: 'full' },
   { path: 'devices-management', loadChildren: () => import('./devices/devices.module').then(m => m.DevicesModule) },
   { path: 'map', component: MapComponent },
-  {path:'users-management' , loadChildren:()=> import('./users-management/users-management.module').then(m => m.UsersManagementModule)}
+  {path:'users-management' , loadChildren:()=> import('./users-management/users-management.module').then(m => m.UsersManagementModule)},
+  {path:'roles-management' , loadChildren:()=> import('./roles-managment/roles-managment.module').then(m => m.RolesManagmentModule)},
 ];
 
 @NgModule({

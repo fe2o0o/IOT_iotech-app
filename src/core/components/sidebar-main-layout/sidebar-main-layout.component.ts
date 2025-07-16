@@ -54,7 +54,7 @@ export class SidebarMainLayoutComponent {
     {
       name:'SIDEBAR.ROLE_MANAGEMENT' ,
       icon:'fi fi-ss-shield-keyhole',
-      link:'/alharamain-app/role-managemnet',
+      link:'/iotech_app/roles-management',
       visible:true,
     },
     {
