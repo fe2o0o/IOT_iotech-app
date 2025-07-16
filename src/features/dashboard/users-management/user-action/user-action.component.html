@@ -110,13 +110,17 @@
         [activeIndex]="0">
         @for(device of devicesTypes() ; track device){
 
-        <p-accordionTab tabStyleClass="mb-4" [header]="device.name">
-          <div class="flex items-center justify-between">
-            @for(per of device.permssions ; track per){
+        <p-accordionTab tabStyleClass="mb-4" [header]="device.deviceType">
+          <div class="flex items-center flex-wrap justify-between">
+            @for(dev of device?.devices ; track dev){
+            <h3 class="font-bold text-lg">{{dev?.deviceName}}</h3>
+            @for(per of dev?.permissions ; track per){
+
             <div class="input_group flex items-center gap-2 flex-row-reverse">
               <label for="">{{ per?.name }}</label>
               <p-checkbox [binary]="true" [(ngModel)]="per.isSelected" inputId="binary" />
             </div>
+            }
             }
           </div>
         </p-accordionTab>

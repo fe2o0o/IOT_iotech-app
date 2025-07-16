@@ -47,4 +47,9 @@ export class UsersManagmentsService {
   updateUser(req: any): Observable<any>{
     return this._HttpClient.put(environment.app_api_url + `Auth/update`, req);
   }
+
+
+  getPermsionsDevices():Observable<any> {
+    return this._HttpClient.get(environment.app_api_url + 'Auth/GetDeviceTypesWithDevicesAndPermissions')
+  }
 }

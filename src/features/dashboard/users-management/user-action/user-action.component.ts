@@ -13,48 +13,40 @@ import { ChangeDetectorRef } from '@angular/core';
   standalone: false,
   templateUrl: './user-action.component.html',
   styleUrl: './user-action.component.scss',
-  changeDetection:ChangeDetectionStrategy.OnPush
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class UserActionComponent implements OnInit {
-  constructor(private _ChangeDetectorRef:ChangeDetectorRef,private _ActivatedRoute:ActivatedRoute ,private _Router:Router,private _MessageService:MessageService,private _UsersManagmentsService:UsersManagmentsService,private _SharedService: SharedService , private _PasswordValidatorService:PasswordValidatorService) {
+  constructor(private _ChangeDetectorRef: ChangeDetectorRef, private _ActivatedRoute: ActivatedRoute, private _Router: Router, private _MessageService: MessageService, private _UsersManagmentsService: UsersManagmentsService, private _SharedService: SharedService, private _PasswordValidatorService: PasswordValidatorService) {
     this._SharedService.breadCrumbTitle.next('SIDEBAR.USER_MANAGEMENT');
     this.initUserForm()
-        this._ActivatedRoute.paramMap.subscribe((res) => {
+    this._ActivatedRoute.paramMap.subscribe((res) => {
       if (res.get('id')) {
         this.currentUpdateId = res.get('id')
-        // this._UsersManagmentsService.getUserById(res.get('id')).subscribe((res: any) => {
-        //   this.handleDevicesRoles();
-        //   this.initUserForm(res?.data)
-        // })
+
 
         forkJoin([
           this._UsersManagmentsService.getAllRoles(),
-          this._UsersManagmentsService.getPermssionsTypes(),
-          this._UsersManagmentsService.getDevicesTypes(),
+          this._UsersManagmentsService.getPermsionsDevices(),
           this._UsersManagmentsService.getUserById(res.get('id')),
         ]).subscribe((res: any[]) => {
           this.roles = res[0]?.data;
-          const permssions = res[1]?.data;
-          const devicesTypes = res[2]?.data;
-          const user = res[3]?.data;
+          const user = res[2]?.data;
 
-          // Map device types and permissions, mark selected
-          const userDevicePermissions = user?.devicePermissions || [];
-          this.devicesTypes.set(
-            devicesTypes.map((device: any) => {
-              // Find user permissions for this device type
-              const userDevice = userDevicePermissions.find((d: any) => d.deviceTypeId === device.id);
-              return {
-                ...device,
-                permssions: permssions.map((perm: any) => ({
-                  ...perm,
-                  isSelected: userDevice
-                    ? userDevice.permissions.some((p: any) => p.id === perm.id)
-                    : false
-                }))
-              };
-            })
-          );
+          const deviceTypes = res[1]?.data?.deviceTypes || [];
+          const permissions = res[1]?.data?.permissions || [];
+
+          const structured = deviceTypes.map((type: any) => ({
+            deviceType: type.deviceType,
+            devices: (type.devices || []).map((dev: any) => ({
+              ...dev,
+              permissions: permissions.map((perm: any) => ({
+                ...perm,
+                isSelected: false
+              }))
+            }))
+          }));
+          this.devicesTypes.set(structured);
+
 
           this.initUserForm(user);
           this._ChangeDetectorRef.markForCheck()
@@ -75,7 +67,7 @@ export class UserActionComponent implements OnInit {
     input.click()
     input.onchange = (event: Event) => {
       const target = event.target as HTMLInputElement;
-      const files:any = target.files;
+      const files: any = target.files;
 
       const file: File = files[0];
       const reader = new FileReader();
@@ -91,21 +83,27 @@ export class UserActionComponent implements OnInit {
 
 
 
-    handleDevicesRoles() {
-    forkJoin([this._UsersManagmentsService.getPermssionsTypes(), this._UsersManagmentsService.getDevicesTypes()]).subscribe((res: any[]) => {
-      const permssions = res[0]?.data
+  handleDevicesRoles() {
+    this._UsersManagmentsService.getPermsionsDevices().subscribe((res: any) => {
+      const deviceTypes = res?.data?.deviceTypes || [];
+      const permissions = res?.data?.permissions || [];
 
-      this.devicesTypes.set(res[1]?.data?.map((ele: any) => {
-        return {
-          ...ele,
-          permssions: permssions.map((res:any)=>{ return {...res , isSelected:false}})
-        }
-      }))
+      const structured = deviceTypes.map((type: any) => ({
+        deviceType: type.deviceType,
+        devices: (type.devices || []).map((dev: any) => ({
+          ...dev,
+          permissions: permissions.map((perm: any) => ({
+            ...perm,
+            isSelected: false
+          }))
+        }))
+      }));
+
+      this.devicesTypes.set(structured);
+      console.log("devicesTypes" , this.devicesTypes());
 
 
-      console.log("Devices Types Dispalay " , this.devicesTypes());
-
-    })
+    });
   }
 
 
@@ -129,12 +127,12 @@ export class UserActionComponent implements OnInit {
     {
       id: 1,
       name: 'Active',
-      value:true
+      value: true
     },
     {
       id: 2,
       name: 'InActive',
-      value:false
+      value: false
     },
   ];
 
@@ -146,113 +144,112 @@ export class UserActionComponent implements OnInit {
       next: (res: any) => {
         this.roles = res.data;
       }
-  } )
+    })
   }
 
 
-  userAction() {
+userAction() {
+  const selected_devices = this.devicesTypes()
+    .flatMap((type: any) =>
+      (type.devices || []).map((dev: any) => {
+        const selectedPermssions = (dev.permissions || [])
+          .filter((per: any) => per.isSelected)
+          .map((per: any) => per.id);
 
-        const selected_device = this.devicesTypes()
-      .map((dev: any): any => {
-        const isSelected = dev.permssions.some((per: any) => per.isSelected);
-
-        if (isSelected) {
-          const selectedPermssions = dev.permssions
-            .filter((per: any) => per?.isSelected)
-            .map((per: any) => per.id);
-
+        if (selectedPermssions.length > 0) {
           return {
-            deviceTypeId: dev.id,
+            deviceId: dev.id,
             permissionTypeIds: selectedPermssions
           };
         }
+        return null;
       })
-      .filter(Boolean);
+    )
+    .filter(Boolean);
 
+  const req = {
+    ...this.user_form.value,
+    isActive: this.user_form.get('isActive')?.value == 1 ? true : false,
+    devices: selected_devices,
+    profileImageUrl: this.imageSrc || null
+  };
 
-        const req = {
-      ...this.user_form.value,
-      isActive: this.user_form.get('isActive')?.value == 1 ? true : false,
-          devicePermissions: selected_device,
-      deviceIds:[]
-    }
+  this.loadAction.set(true);
 
-    this.loadAction.set(true)
-
-    if (!this.currentUpdateId) {
-      this._UsersManagmentsService.addUser(req).subscribe({
-        next: (res: any) => {
-          this.loadAction.set(false);
-          this._MessageService.add({ severity: 'success', summary: 'Success', detail: 'User added successfully!' }); 4
-          this._Router.navigate(['/iotech_app/users-management/list']);
-        },
-        error: (err: any) => {
-          this.loadAction.set(false);
-        }
-      })
-    } else {
-      req.id = this.currentUpdateId;
-         this._UsersManagmentsService.updateUser(req).subscribe({
-        next: (res: any) => {
-          this.loadAction.set(false);
-          this._MessageService.add({ severity: 'success', summary: 'Success', detail: 'User Updated successfully!' }); 4
-          this._Router.navigate(['/iotech_app/users-management/list']);
-        },
-        error: (err: any) => {
-          this.loadAction.set(false);
-        }
-      })
-    }
+  if (!this.currentUpdateId) {
+    this._UsersManagmentsService.addUser(req).subscribe({
+      next: (res: any) => {
+        this.loadAction.set(false);
+        this._MessageService.add({ severity: 'success', summary: 'Success', detail: 'User added successfully!' });
+        this._Router.navigate(['/iotech_app/users-management/list']);
+      },
+      error: (err: any) => {
+        this.loadAction.set(false);
+      }
+    });
+  } else {
+    req.id = this.currentUpdateId;
+    this._UsersManagmentsService.updateUser(req).subscribe({
+      next: (res: any) => {
+        this.loadAction.set(false);
+        this._MessageService.add({ severity: 'success', summary: 'Success', detail: 'User Updated successfully!' });
+        this._Router.navigate(['/iotech_app/users-management/list']);
+      },
+      error: (err: any) => {
+        this.loadAction.set(false);
+      }
+    });
   }
+}
   roles: any[] = [];
   loadAction = signal<boolean>(false);
 
-  passwordValidationError:any[] = []
+  passwordValidationError: any[] = []
   user_form !: FormGroup;
 
   // {
-//   "firstName": "string",
-//   "email": "user@example.com",
-//   "phoneNumber": "string",
-//   "isActive": true,
-//   "roleId": "string",
-//   "password": "string",
-//   "deviceIds": [
-//     0
-//   ],
-//   "devicePermissions": [
-//     {
-//       "deviceTypeId": 0,
-//       "permissionTypeIds": [
-//         0
-//       ]
-//     }
-//   ]
-// }
+  //   "firstName": "string",
+  //   "email": "user@example.com",
+  //   "phoneNumber": "string",
+  //   "isActive": true,
+  //   "roleId": "string",
+  //   "password": "string",
+  //   "deviceIds": [
+  //     0
+  //   ],
+  //   "devicePermissions": [
+  //     {
+  //       "deviceTypeId": 0,
+  //       "permissionTypeIds": [
+  //         0
+  //       ]
+  //     }
+  //   ]
+  // }
 
-  initUserForm(data?:any) {
+  initUserForm(data?: any) {
     this.user_form = new FormGroup({
       firstName: new FormControl(data ? data?.firstName : null, Validators.required),
-      email: new FormControl(data ? data?.email: null, [Validators.required, Validators.email]),
-      phoneNumber: new FormControl(data ? data?.phoneNumber: null, Validators.required),
-      isActive: new FormControl(data ? data.isActive ? 1:2 :null , [Validators.required]),
+      email: new FormControl(data ? data?.email : null, [Validators.required, Validators.email]),
+      phoneNumber: new FormControl(data ? data?.phoneNumber : null, Validators.required),
+      isActive: new FormControl(data ? data.isActive ? 1 : 2 : null, [Validators.required]),
       roleId: new FormControl(data ? data?.roles[0]?.id : null, [Validators.required]),
       password: new FormControl(null, !data ? Validators.required : null),
 
     })
 
 
-    this.user_form.get('password')?.valueChanges.subscribe((value:string) => {
+    this.user_form.get('password')?.valueChanges.subscribe((value: string) => {
       const validaResult = this._PasswordValidatorService.validatePassword(value);
       if (!validaResult.isValid) {
-        this.user_form.get('password')?.setErrors({inVaild:true})
+        this.user_form.get('password')?.setErrors({ inVaild: true })
         this.passwordValidationError = validaResult.errors
       } else {
         this.user_form.get('password')?.setErrors(null)
         this.passwordValidationError = []
 
       }
-      console.log("validation_res" , validaResult);
+      console.log("validation_res", validaResult);
 
     })
   }
