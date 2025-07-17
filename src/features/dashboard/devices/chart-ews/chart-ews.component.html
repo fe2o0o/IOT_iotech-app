@@ -54,8 +54,8 @@
       {{"DEVICES.No_Data_Avaliable"|translate}}
     </div>
     }
-    <div [class]="{'hidden': loadingChart() || !current_chart_data.length}" class="chart overflow-x-auto">
-      <p-chart #alarms_chart [width]="chartWidth+'%'" type="line" height="400px" [data]="data_alarms"
+    <div dir="ltr" [class]="{'hidden': loadingChart() || !current_chart_data.length}" class="chart overflow-x-auto">
+      <p-chart #alarms_chart [width]="chartWidth+'%'" type="line" height="400px" [data]="data_alarms()"
         [options]="optionsAlarm" />
     </div>
   </div>

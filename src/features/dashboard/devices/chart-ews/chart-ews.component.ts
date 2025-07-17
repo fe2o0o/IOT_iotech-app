@@ -6,6 +6,7 @@ import { TranslateService } from '@ngx-translate/core';
 import { DevicesService } from '../../../../core/services/devices.service';
 import moment from 'moment';
 import { SharedService } from '../../../../shared/services/shared.service';
+import { ChangeDetectorRef } from '@angular/core';
 @Component({
   selector: 'app-chart-ews',
   standalone: false,
@@ -26,10 +27,10 @@ export class ChartEwsComponent {
   }
   loadingChart = signal<boolean>(true);
   current_chart_data: any[] = [];
-  chartWidth:number = 100;
+  chartWidth: number = 100;
   is_arabic: any;
   handleExportExcel() {
-    this._SharedService.exportToExcel(this.current_chart_data , this.current_id())
+    this._SharedService.exportToExcel(this.current_chart_data, this.current_id())
 
   }
   filterVisiblle = signal<boolean>(false);
@@ -58,7 +59,7 @@ export class ChartEwsComponent {
   @ViewChild("alarms_chart") alarms_chart!: any;
 
   current_id = signal<string>('')
-  constructor(private _SharedService:SharedService,private _DevicesService: DevicesService, private translate: TranslateService, private _TranslationsService: TranslationsService, private route: ActivatedRoute) {
+  constructor(private _ChangeDetectorRef:ChangeDetectorRef,private _SharedService: SharedService, private _DevicesService: DevicesService, private translate: TranslateService, private _TranslationsService: TranslationsService, private route: ActivatedRoute) {
     this.initFilterForm()
     this.matrixFilters = [
       {
@@ -100,6 +101,8 @@ export class ChartEwsComponent {
       } else {
         this.is_arabic = false
       }
+      // this.alarms_chart?.chart?.update()
+      this._ChangeDetectorRef.markForCheck()
     })
 
     this.selectedMatrix = this.matrixFilters[0]
@@ -108,72 +111,72 @@ export class ChartEwsComponent {
       this.current_id.set(params['id'] || '');
       this._DevicesService.getEWSChart(this.current_id()).subscribe((res: any) => {
         this.current_chart_data = res?.data?.temperatureMetrics;
-        this.data_alarms.labels = this.current_chart_data.map(item => item.lastSeen);
-        this.data_alarms.datasets = [
-          {
-            label: 'Ambient Temperature',
-            backgroundColor: '#1A232D',
-            borderColor: '#1A232D',
-            data: this.current_chart_data.map(item => item.ambientTemperature),
-            borderRadius: 6,
-            fill: false,
-            tension: 0.4,
-            borderCapStyle: 'round',
-            borderJoinStyle: 'round',
-            pointRadius: 5,
-          },
-          {
-            label: 'Heat Index',
-            backgroundColor: '#FF9500',
-            borderColor: '#FF9500',
-            data: this.current_chart_data.map(item => item.heatIndex),
-            borderRadius: 6,
-            fill: false,
-            tension: 0.4,
-            borderCapStyle: 'round',
-            borderJoinStyle: 'round',
-            pointRadius: 5,
-          },
-          {
-            label: 'Dew Point',
-            backgroundColor: '#9F8A60',
-            borderColor: '#9F8A60',
-            data: this.current_chart_data.map(item => item.dewPoint),
-            borderRadius: 6,
-            fill: false,
-            tension: 0.4,
-            borderCapStyle: 'round',
-            borderJoinStyle: 'round',
-            pointRadius: 5,
-          },
-          {
-            label: 'Frost Point',
-            backgroundColor: '#14AB46',
-            borderColor: '#14AB46',
-            data: this.current_chart_data.map(item => item.frostPoint),
-            borderRadius: 6,
-            fill: false,
-            tension: 0.4,
-            borderCapStyle: 'round',
-            borderJoinStyle: 'round',
-            pointRadius: 5,
-          },
-          {
-            label: 'wet Bulb Temperature',
-            backgroundColor: '#007bff',
-            borderColor: '#007bff',
-            data: this.current_chart_data.map(item => item.wetBulbTemperature),
-            borderRadius: 6,
-            fill: false,
-            tension: 0.4,
-            borderCapStyle: 'round',
-            borderJoinStyle: 'round',
-            pointRadius: 5,
-          }
-        ]
-           if (this.current_chart_data.length > 10) {
-          this.chartWidth += this.current_chart_data.length * 2.5;
-          console.log("width chart" , this.chartWidth);
+        this.data_alarms().labels = this.current_chart_data.map(item => item.lastSeen);
+    this.data_alarms().datasets = [
+              {
+                label: this.translate.instant('LABELS.Ambient_Temperature'),
+                backgroundColor: '#1A232D',
+                borderColor: '#1A232D',
+                data: this.current_chart_data.map(item => item.ambientTemperature),
+                borderRadius: 6,
+                fill: false,
+                tension: 0.4,
+                borderCapStyle: 'round',
+                borderJoinStyle: 'round',
+                pointRadius: 5,
+              },
+              {
+                label: this.translate.instant('LABELS.Heat_Index'),
+                backgroundColor: '#FF9500',
+                borderColor: '#FF9500',
+                data: this.current_chart_data.map(item => item.heatIndex),
+                borderRadius: 6,
+                fill: false,
+                tension: 0.4,
+                borderCapStyle: 'round',
+                borderJoinStyle: 'round',
+                pointRadius: 5,
+              },
+              {
+                label: this.translate.instant('LABELS.Dew_Point'),
+                backgroundColor: '#9F8A60',
+                borderColor: '#9F8A60',
+                data: this.current_chart_data.map(item => item.dewPoint),
+                borderRadius: 6,
+                fill: false,
+                tension: 0.4,
+                borderCapStyle: 'round',
+                borderJoinStyle: 'round',
+                pointRadius: 5,
+              },
+              {
+                label: this.translate.instant('LABELS.Frost_Point'),
+                backgroundColor: '#14AB46',
+                borderColor: '#14AB46',
+                data: this.current_chart_data.map(item => item.frostPoint),
+                borderRadius: 6,
+                fill: false,
+                tension: 0.4,
+                borderCapStyle: 'round',
+                borderJoinStyle: 'round',
+                pointRadius: 5,
+              },
+              {
+                label: this.translate.instant('LABELS.Wet_Bulb_Temperature'),
+                backgroundColor: '#007bff',
+                borderColor: '#007bff',
+                data: this.current_chart_data.map(item => item.wetBulbTemperature),
+                borderRadius: 6,
+                fill: false,
+                tension: 0.4,
+                borderCapStyle: 'round',
+                borderJoinStyle: 'round',
+                pointRadius: 5,
+              }
+            ]
+        if (this.current_chart_data.length > 10) {
+          this.chartWidth += this.current_chart_data.length * 2;
+          console.log("width chart", this.chartWidth);
 
         } else {
           this.chartWidth = 100;
@@ -230,10 +233,10 @@ export class ChartEwsComponent {
         switch (this.selectedMatrix.id) {
           case 1:
             this.current_chart_data = res?.data?.temperatureMetrics;
-            this.data_alarms.labels = this.current_chart_data.map(item => item.lastSeen);
-            this.data_alarms.datasets = [
+            this.data_alarms().labels = this.current_chart_data.map(item => item.lastSeen);
+            this.data_alarms().datasets = [
               {
-                label: 'Ambient Temperature',
+                label: this.translate.instant('LABELS.Ambient_Temperature'),
                 backgroundColor: '#1A232D',
                 borderColor: '#1A232D',
                 data: this.current_chart_data.map(item => item.ambientTemperature),
@@ -245,7 +248,7 @@ export class ChartEwsComponent {
                 pointRadius: 5,
               },
               {
-                label: 'Heat Index',
+                label: this.translate.instant('LABELS.Heat_Index'),
                 backgroundColor: '#FF9500',
                 borderColor: '#FF9500',
                 data: this.current_chart_data.map(item => item.heatIndex),
@@ -257,7 +260,7 @@ export class ChartEwsComponent {
                 pointRadius: 5,
               },
               {
-                label: 'Dew Point',
+                label: this.translate.instant('LABELS.Dew_Point'),
                 backgroundColor: '#9F8A60',
                 borderColor: '#9F8A60',
                 data: this.current_chart_data.map(item => item.dewPoint),
@@ -269,7 +272,7 @@ export class ChartEwsComponent {
                 pointRadius: 5,
               },
               {
-                label: 'Frost Point',
+                label: this.translate.instant('LABELS.Frost_Point'),
                 backgroundColor: '#14AB46',
                 borderColor: '#14AB46',
                 data: this.current_chart_data.map(item => item.frostPoint),
@@ -281,7 +284,7 @@ export class ChartEwsComponent {
                 pointRadius: 5,
               },
               {
-                label: 'wet Bulb Temperature',
+                label: this.translate.instant('LABELS.Wet_Bulb_Temperature'),
                 backgroundColor: '#007bff',
                 borderColor: '#007bff',
                 data: this.current_chart_data.map(item => item.wetBulbTemperature),
@@ -296,10 +299,10 @@ export class ChartEwsComponent {
             break;
           case 2:
             this.current_chart_data = res?.data?.windMetrics;
-            this.data_alarms.labels = this.current_chart_data.map(item => item.lastSeen);
-            this.data_alarms.datasets = [
+            this.data_alarms().labels = this.current_chart_data.map(item => item.lastSeen);
+            this.data_alarms().datasets = [
               {
-                label: 'Wind Speed',
+                label: this.translate.instant('LABELS.Wind_Speed'),
                 backgroundColor: '#1A232D',
                 borderColor: '#1A232D',
                 data: this.current_chart_data.map(item => item.windSpeed),
@@ -311,7 +314,7 @@ export class ChartEwsComponent {
                 pointRadius: 5,
               },
               {
-                label: 'Wind Gusts',
+                label: this.translate.instant('LABELS.Wind_Gusts'),
                 backgroundColor: '#FF9500',
                 borderColor: '#FF9500',
                 data: this.current_chart_data.map(item => item.windGusts),
@@ -323,7 +326,7 @@ export class ChartEwsComponent {
                 pointRadius: 5,
               },
               {
-                label: 'Wind Direction',
+                label: this.translate.instant('LABELS.Wind_Direction'),
                 backgroundColor: '#9F8A60',
                 borderColor: '#9F8A60',
                 data: this.current_chart_data.map(item => item.windDirection),
@@ -335,7 +338,7 @@ export class ChartEwsComponent {
                 pointRadius: 5,
               },
               {
-                label: 'Beaufort Number',
+                label: this.translate.instant('LABELS.Beaufort_Number'),
                 backgroundColor: '#14AB46',
                 borderColor: '#14AB46',
                 data: this.current_chart_data.map(item => item.beaufortNumber),
@@ -347,7 +350,7 @@ export class ChartEwsComponent {
                 pointRadius: 5,
               },
               {
-                label: 'Wind Chill',
+                label: this.translate.instant('LABELS.Wind_Chill'),
                 backgroundColor: '#007bff',
                 borderColor: '#007bff',
                 data: this.current_chart_data.map(item => item.windChill),
@@ -359,7 +362,7 @@ export class ChartEwsComponent {
                 pointRadius: 5,
               },
               {
-                label: 'Wind Chill Index',
+                label: this.translate.instant('LABELS.Wind_Chill_Index'),
                 backgroundColor: '#e83e8c',
                 borderColor: '#e83e8c',
                 data: this.current_chart_data.map(item => item.windChillIndex),
@@ -374,10 +377,10 @@ export class ChartEwsComponent {
             break;
           case 3:
             this.current_chart_data = res?.data?.humidityMetrics;
-            this.data_alarms.labels = this.current_chart_data.map(item => item.lastSeen);
-            this.data_alarms.datasets = [
+            this.data_alarms().labels = this.current_chart_data.map(item => item.lastSeen);
+            this.data_alarms().datasets = [
               {
-                label: 'Relative Humidity',
+                label: this.translate.instant('LABELS.Relative_Humidity'),
                 backgroundColor: '#1A232D',
                 borderColor: '#1A232D',
                 data: this.current_chart_data.map(item => item.relativeHumidity),
@@ -389,7 +392,7 @@ export class ChartEwsComponent {
                 pointRadius: 5,
               },
               {
-                label: 'Absolute Humidity',
+                label: this.translate.instant('LABELS.Absolute_Humidity'),
                 backgroundColor: '#FF9500',
                 borderColor: '#FF9500',
                 data: this.current_chart_data.map(item => item.absoluteHumidity),
@@ -401,7 +404,7 @@ export class ChartEwsComponent {
                 pointRadius: 5,
               },
               {
-                label: 'Specific Humidity',
+                label: this.translate.instant('LABELS.Specific_Humidity'),
                 backgroundColor: '#9F8A60',
                 borderColor: '#9F8A60',
                 data: this.current_chart_data.map(item => item.specificHumidity),
@@ -413,7 +416,7 @@ export class ChartEwsComponent {
                 pointRadius: 5,
               },
               {
-                label: 'Mixing Ratio',
+                label: this.translate.instant('LABELS.Mixing_Ratio'),
                 backgroundColor: '#14AB46',
                 borderColor: '#14AB46',
                 data: this.current_chart_data.map(item => item.mixingRatio),
@@ -425,7 +428,7 @@ export class ChartEwsComponent {
                 pointRadius: 5,
               },
               {
-                label: 'Sat. Water Vapor Pressure',
+                label: this.translate.instant('LABELS.Sat_Water_Vapor_Pressure'),
                 backgroundColor: '#007bff',
                 borderColor: '#007bff',
                 data: this.current_chart_data.map(item => item.satWaterVaporPressure),
@@ -437,7 +440,7 @@ export class ChartEwsComponent {
                 pointRadius: 5,
               },
               {
-                label: 'Water Vapor Pressure',
+                label: this.translate.instant('LABELS.Water_Vapor_Pressure'),
                 backgroundColor: '#e83e8c',
                 borderColor: '#e83e8c',
                 data: this.current_chart_data.map(item => item.waterVaporPressure),
@@ -452,10 +455,10 @@ export class ChartEwsComponent {
             break;
           case 4:
             this.current_chart_data = res?.data?.moistureEnergyMetrics;
-            this.data_alarms.labels = this.current_chart_data.map(item => item.lastSeen);
-            this.data_alarms.datasets = [
+            this.data_alarms().labels = this.current_chart_data.map(item => item.lastSeen);
+            this.data_alarms().datasets = [
               {
-                label: 'Atmos Moisture By Volume',
+                label: this.translate.instant('LABELS.Atmos_Moisture_By_Volume'),
                 backgroundColor: '#1A232D',
                 borderColor: '#1A232D',
                 data: this.current_chart_data.map(item => item.atmosMoistureByVolume),
@@ -467,7 +470,7 @@ export class ChartEwsComponent {
                 pointRadius: 5,
               },
               {
-                label: 'Atmos Moisture By Weight',
+                label: this.translate.instant('LABELS.Atmos_Moisture_By_Weight'),
                 backgroundColor: '#FF9500',
                 borderColor: '#FF9500',
                 data: this.current_chart_data.map(item => item.atmosMoistureByWeight),
@@ -479,7 +482,7 @@ export class ChartEwsComponent {
                 pointRadius: 5,
               },
               {
-                label: 'Specific Enthalpy',
+                label: this.translate.instant('LABELS.Specific_Enthalpy'),
                 backgroundColor: '#9F8A60',
                 borderColor: '#9F8A60',
                 data: this.current_chart_data.map(item => item.specificEnthalpy),
@@ -491,7 +494,7 @@ export class ChartEwsComponent {
                 pointRadius: 5,
               },
               {
-                label: 'Speed Of Sound',
+                label: this.translate.instant('LABELS.Speed_Of_Sound'),
                 backgroundColor: '#14AB46',
                 borderColor: '#14AB46',
                 data: this.current_chart_data.map(item => item.speedOfSound),
@@ -506,10 +509,10 @@ export class ChartEwsComponent {
             break;
           case 5:
             this.current_chart_data = res?.data?.deviceStatusPressureMetrics;
-            this.data_alarms.labels = this.current_chart_data.map(item => item.lastSeen);
-            this.data_alarms.datasets = [
+            this.data_alarms().labels = this.current_chart_data.map(item => item.lastSeen);
+            this.data_alarms().datasets = [
               {
-                label: 'Battery Voltage',
+                label: this.translate.instant('LABELS.Battery_Voltage'),
                 backgroundColor: '#1A232D',
                 borderColor: '#1A232D',
                 data: this.current_chart_data.map(item => item.batteryVoltage),
@@ -521,7 +524,7 @@ export class ChartEwsComponent {
                 pointRadius: 5,
               },
               {
-                label: 'Pulse Counter',
+                label: this.translate.instant('LABELS.Pulse_Counter'),
                 backgroundColor: '#FF9500',
                 borderColor: '#FF9500',
                 data: this.current_chart_data.map(item => item.pulseCounter),
@@ -533,7 +536,7 @@ export class ChartEwsComponent {
                 pointRadius: 5,
               },
               {
-                label: 'Use Case',
+                label: this.translate.instant('LABELS.Use_Case'),
                 backgroundColor: '#9F8A60',
                 borderColor: '#9F8A60',
                 data: this.current_chart_data.map(item => item.useCase),
@@ -545,7 +548,7 @@ export class ChartEwsComponent {
                 pointRadius: 5,
               },
               {
-                label: 'Barometric Pressure',
+                label: this.translate.instant('LABELS.Barometric_Pressure'),
                 backgroundColor: '#14AB46',
                 borderColor: '#14AB46',
                 data: this.current_chart_data.map(item => item.barometricPressure),
@@ -557,7 +560,7 @@ export class ChartEwsComponent {
                 pointRadius: 5,
               },
               {
-                label: 'Boiling PointOfWater',
+                label: this.translate.instant('LABELS.Boiling_Point_Of_Water'),
                 backgroundColor: '#007bff',
                 borderColor: '#007bff',
                 data: this.current_chart_data.map(item => item.boilingPointOfWater),
@@ -576,9 +579,9 @@ export class ChartEwsComponent {
 
 
 
-           if (this.current_chart_data.length > 10) {
-          this.chartWidth += this.current_chart_data.length * 2.5;
-          console.log("width chart" , this.chartWidth);
+        if (this.current_chart_data.length > 10) {
+          this.chartWidth += this.current_chart_data.length * 2;
+          console.log("width chart", this.chartWidth);
 
         } else {
           this.chartWidth = 100;
@@ -589,6 +592,7 @@ export class ChartEwsComponent {
         this.alarms_chart?.chart?.update();
         this.loadingFilter = false;
         this.filterVisiblle.set(false);
+        this._ChangeDetectorRef.markForCheck()
       },
       error: (err: any) => {
         this.loadingChart.set(false);
@@ -601,7 +605,7 @@ export class ChartEwsComponent {
 
 
 
-  data_alarms: any = {
+  data_alarms= signal<any>( {
     labels: ['January', 'February', 'March', 'April', 'May', 'June', 'July'],
     datasets: [
       {
@@ -677,71 +681,79 @@ export class ChartEwsComponent {
         pointRadius: 5,
       }
     ]
-  };
+  })
 
 
-  optionsAlarm = {
-    stacked: false,
-    maintainAspectRatio: false,
-    aspectRatio: 0.6,
-    plugins: {
-      legend: {
-        display: true,
-        labels: {
-          color: ''
-        }
+optionsAlarm = {
+  stacked: false,
+  maintainAspectRatio: false,
+  aspectRatio: 0.6,
+
+  plugins: {
+    legend: {
+      display: true,
+      position: 'top',
+      align: 'start',
+      padding: {
+        top: 10,
+        bottom: 10,
+        left: 10,
+        right: 10
       },
-      tooltip: {
-        callbacks: {
-          label: (context: any) => {
-            let label = context.dataset.label || '';
-            let value = context.parsed.y;
-            // Add units based on dataset index or label
-            if (context.dataset.label?.toLowerCase().includes('temp')) {
-              return `${label}: ${value} ˚C`;
-            }
-            if (context.dataset.label?.toLowerCase().includes('humid')) {
-              return `${label}: ${value} %`;
-            }
-            if (context.dataset.label == 'CO₂ Level') {
-              return `${label}: ${value} ppm`;
-            }
-            return `${label}: ${value}`;
-          }
-        }
+      labels: {
+         padding: 20
       }
     },
-    scales: {
-      x: {
-        ticks: {
-          color: '#9F8A60',
-          font: {
-            weight: 500
+    tooltip: {
+      callbacks: {
+        label: (context: any) => {
+          let label = context.dataset.label || '';
+          let value = context.parsed.y;
+          if (context.dataset.label?.toLowerCase().includes('temp')) {
+            return `${label}: ${value} ˚C`;
           }
-        },
-        grid: {
-          color: '',
-          drawBorder: true,
-          lineWidth: 0
-        },
-        border: {
-          width: 3
-        }
-      },
-      y: {
-        ticks: {
-          color: '#9F8A60'
-        },
-        grid: {
-          color: '',
-          drawBorder: false
-        },
-        border: {
-          width: 3
+          if (context.dataset.label?.toLowerCase().includes('humid')) {
+            return `${label}: ${value} %`;
+          }
+          if (context.dataset.label == 'CO₂ Level') {
+            return `${label}: ${value} ppm`;
+          }
+          return `${label}: ${value}`;
         }
       }
     }
-  };
+  },
+  scales: {
+    x: {
+      ticks: {
+        color: '#9F8A60',
+        font: {
+          weight: 500
+        }
+      },
+      grid: {
+        color: '',
+        drawBorder: true,
+        lineWidth: 0
+      },
+      border: {
+        width: 3
+      }
+    },
+    y: {
+      ticks: {
+        color: '#9F8A60'
+      },
+      grid: {
+        color: '',
+        drawBorder: false
+      },
+      border: {
+        width: 3
+      }
+    }
+  }
+};
 
   handleCustomFilter(filter: any) {
     this.customFilters.map((fil: any) => {

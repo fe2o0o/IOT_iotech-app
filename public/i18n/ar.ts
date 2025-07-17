@@ -311,6 +311,36 @@ Occupancy: "الإشغال",
       "EN_DESC": "أدخل الوصف",
       "DEVICES": "الأجهزة",
       "SEARCH_DEV": "ابحث عن اسم الجهاز ..."
-    }
+    },
+
+  "LABELS": {
+    "Ambient_Temperature": "درجة الحرارة المحيطة",
+    "Heat_Index": "مؤشر الحرارة",
+    "Dew_Point": "نقطة الندى",
+    "Frost_Point": "نقطة الصقيع",
+    "Wet_Bulb_Temperature": "درجة حرارة البصيلة الرطبة",
+    "Wind_Speed": "سرعة الرياح",
+    "Wind_Gusts": "هبات الرياح",
+    "Wind_Direction": "اتجاه الرياح",
+    "Beaufort_Number": "رقم بوفورت",
+    "Wind_Chill": "برودة الرياح",
+    "Wind_Chill_Index": "مؤشر برودة الرياح",
+    "Relative_Humidity": "الرطوبة النسبية",
+    "Absolute_Humidity": "الرطوبة المطلقة",
+    "Specific_Humidity": "الرطوبة النوعية",
+    "Mixing_Ratio": "نسبة الخلط",
+    "Sat_Water_Vapor_Pressure": "ضغط بخار الماء المشبع",
+    "Water_Vapor_Pressure": "ضغط بخار الماء",
+    "Atmos_Moisture_By_Volume": "رطوبة الغلاف الجوي حسب الحجم",
+    "Atmos_Moisture_By_Weight": "رطوبة الغلاف الجوي حسب الوزن",
+    "Specific_Enthalpy": "الإنثالبي النوعي",
+    "Speed_Of_Sound": "سرعة الصوت",
+    "Battery_Voltage": "جهد البطارية",
+    "Pulse_Counter": "عداد النبضات",
+    "Use_Case": "حالة الاستخدام",
+    "Barometric_Pressure": "الضغط الجوي",
+    "Boiling_Point_Of_Water": "نقطة غليان الماء"
+  }
+
   }
 }

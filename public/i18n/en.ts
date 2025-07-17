@@ -333,6 +333,36 @@ Calibration: "Calibration",
       "EN_DESC": "Enter Description",
       "DEVICES": "Devices",
       "SEARCH_DEV":"Search Device Name ..."
-    }
+    },
+
+  "LABELS": {
+    "Ambient_Temperature": "Ambient Temperature",
+    "Heat_Index": "Heat Index",
+    "Dew_Point": "Dew Point",
+    "Frost_Point": "Frost Point",
+    "Wet_Bulb_Temperature": "Wet Bulb Temperature",
+    "Wind_Speed": "Wind Speed",
+    "Wind_Gusts": "Wind Gusts",
+    "Wind_Direction": "Wind Direction",
+    "Beaufort_Number": "Beaufort Number",
+    "Wind_Chill": "Wind Chill",
+    "Wind_Chill_Index": "Wind Chill Index",
+    "Relative_Humidity": "Relative Humidity",
+    "Absolute_Humidity": "Absolute Humidity",
+    "Specific_Humidity": "Specific Humidity",
+    "Mixing_Ratio": "Mixing Ratio",
+    "Sat_Water_Vapor_Pressure": "Sat. Water Vapor Pressure",
+    "Water_Vapor_Pressure": "Water Vapor Pressure",
+    "Atmos_Moisture_By_Volume": "Atmos Moisture By Volume",
+    "Atmos_Moisture_By_Weight": "Atmos Moisture By Weight",
+    "Specific_Enthalpy": "Specific Enthalpy",
+    "Speed_Of_Sound": "Speed Of Sound",
+    "Battery_Voltage": "Battery Voltage",
+    "Pulse_Counter": "Pulse Counter",
+    "Use_Case": "Use Case",
+    "Barometric_Pressure": "Barometric Pressure",
+    "Boiling_Point_Of_Water": "Boiling PointOfWater"
   }
+}
+
 }
