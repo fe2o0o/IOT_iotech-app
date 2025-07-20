@@ -8,6 +8,7 @@ import { MessageService } from 'primeng/api';
 import { Router } from '@angular/router';
 import { ActivatedRoute } from '@angular/router';
 import { ChangeDetectorRef } from '@angular/core';
+import { CheckboxChangeEvent } from 'primeng/checkbox';
 @Component({
   selector: 'app-user-action',
   standalone: false,
@@ -34,18 +35,52 @@ export class UserActionComponent implements OnInit {
 
           const deviceTypes = res[1]?.data?.deviceTypes || [];
           const permissions = res[1]?.data?.permissions || [];
+          const userDevices = user?.devices || [];
 
-          const structured = deviceTypes.map((type: any) => ({
-            deviceType: type.deviceType,
-            devices: (type.devices || []).map((dev: any) => ({
-              ...dev,
-              permissions: permissions.map((perm: any) => ({
-                ...perm,
-                isSelected: false
-              }))
-            }))
-          }));
-          this.devicesTypes.set(structured);
+          const structured = deviceTypes.map((type: any) => {
+  const devices = (type.devices || []).map((dev: any) => {
+    const userDevice = userDevices.find((ud: any) => ud.deviceId === dev.id);
+
+    const devPerms = permissions.map((perm: any) => ({
+      ...perm,
+      isSelected: !!userDevice?.permissions.some((p: any) => p.id === perm.id)
+    }));
+
+    const is_selected_all = devPerms.every((perm: any) => perm.isSelected);
+
+    return {
+      ...dev,
+      permissions: devPerms,
+      is_selected_all
+    };
+  });
+
+  const all_devices_selected = devices.every((d: any) => d.is_selected_all);
+  const all_add_perm = devices.every((d: any) =>
+    d.permissions.find((p: any) => p.name === 'Add')?.isSelected
+  );
+  const all_view_perm = devices.every((d: any) =>
+    d.permissions.find((p: any) => p.name === 'View')?.isSelected
+  );
+  const all_edit_perm = devices.every((d: any) =>
+    d.permissions.find((p: any) => p.name === 'Edit')?.isSelected
+  );
+  const all_delete_perm = devices.every((d: any) =>
+    d.permissions.find((p: any) => p.name === 'Delete')?.isSelected
+  );
+
+  return {
+    deviceType: type.deviceType,
+    devices,
+    all_devices_selected,
+    all_add_perm,
+    all_edit_perm,
+    all_view_perm,
+    all_delete_perm
+  };
+});
+
+this.devicesTypes.set(structured);
 
 
           this.initUserForm(user);
@@ -80,7 +115,86 @@ export class UserActionComponent implements OnInit {
 
 
 
+  handleSelectedAll(event:CheckboxChangeEvent,dev:any , type:any){
+    dev?.permissions?.map((ele: any) => {
+      ele.isSelected = event.checked
+    })
 
+    const isAllDevicesSelected = type.devices.filter((ele: any) => { return !ele.is_selected_all })
+
+
+    if (isAllDevicesSelected.length) {
+          type.all_add_perm = false
+    type.all_edit_perm = false
+        type.all_view_perm = false
+      type.all_delete_perm = false
+      type.all_devices_selected = false
+    } else if (isAllDevicesSelected.length == 0) {
+                type.all_add_perm = true
+    type.all_edit_perm = true
+        type.all_view_perm = true
+      type.all_delete_perm = true
+      type.all_devices_selected = true
+    }
+
+
+  }
+
+  handleSelectSingle(event: CheckboxChangeEvent, dev: any , type:any) {
+
+
+
+  dev.is_selected_all = dev.permissions.every((perm: any) => perm.isSelected);
+
+  type.all_devices_selected = type.devices.every((d: any) => d.is_selected_all);
+
+  type.all_add_perm = type.devices.every((d: any) =>
+    d.permissions.find((p: any) => p.name === 'Add')?.isSelected
+  );
+  type.all_view_perm = type.devices.every((d: any) =>
+    d.permissions.find((p: any) => p.name === 'View')?.isSelected
+  );
+  type.all_edit_perm = type.devices.every((d: any) =>
+    d.permissions.find((p: any) => p.name === 'Edit')?.isSelected
+  );
+  type.all_delete_perm = type.devices.every((d: any) =>
+    d.permissions.find((p: any) => p.name === 'Delete')?.isSelected
+  );
+
+  }
+
+
+  handleSelectAllPermissionForType(type: any, permName: string, checked: boolean) {
+  type.devices.forEach((dev: any) => {
+    dev.permissions.forEach((perm: any) => {
+      if (perm.name === permName) {
+        perm.isSelected = checked;
+      }
+    });
+    dev.is_selected_all = dev.permissions.every((perm: any) => perm.isSelected);
+  });
+
+    if (type.all_add_perm && type.all_edit_perm && type.all_view_perm &&  type.all_delete_perm) {
+    type.all_devices_selected = true
+    } else {
+      type.all_devices_selected = false
+  }
+}
+
+
+
+  handleSelectAllForType(event: CheckboxChangeEvent, type: any) {
+    console.log("exsiting type" , type);
+    type?.devices?.map((dev: any) => {
+      dev.is_selected_all = event.checked
+      this.handleSelectedAll(event , dev , type)
+    })
+
+    type.all_add_perm = event.checked
+    type.all_edit_perm = event.checked
+        type.all_view_perm = event.checked
+        type.all_delete_perm = event.checked
+  }
 
 
   handleDevicesRoles() {
@@ -90,19 +204,23 @@ export class UserActionComponent implements OnInit {
 
       const structured = deviceTypes.map((type: any) => ({
         deviceType: type.deviceType,
+        all_devices_selected: false,
+        all_add_perm:false,
+        all_edit_perm:false,
+        all_view_perm:false,
+        all_delete_perm:false,
         devices: (type.devices || []).map((dev: any) => ({
           ...dev,
           permissions: permissions.map((perm: any) => ({
             ...perm,
             isSelected: false
-          }))
+          })),
+          is_selected_all:false
         }))
       }));
 
       this.devicesTypes.set(structured);
       console.log("devicesTypes" , this.devicesTypes());
-
-
     });
   }
 

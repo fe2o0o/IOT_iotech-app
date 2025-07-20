@@ -111,14 +111,52 @@
         @for(device of devicesTypes() ; track device){
 
         <p-accordionTab tabStyleClass="mb-4" [header]="device.deviceType">
+          <div class="flex flex-wrap items-center justify-between pb-6 mb-6 border-b border-gray_light">
+            <div class="flex flex-wrap items-center gap-4">
+              <p-checkbox [binary]="true" (onChange)="handleSelectAllForType($event , device)"
+                [(ngModel)]="device.all_devices_selected" inputId="binary" />
+
+              <h3 class="font-bold text-lg">Select All Devices & Permssions</h3>
+            </div>
+
+            <div class="flex items-center gap-16 flex-wrap ">
+              <div class="input_group flex items-center gap-2 flex-row-reverse">
+                <label for="">Add All</label>
+                <p-checkbox [binary]="true"
+                  (onChange)="handleSelectAllPermissionForType(device, 'Add', device.all_add_perm)"
+                  [(ngModel)]="device.all_add_perm" inputId="binary" />
+              </div>
+              <div class="input_group flex items-center gap-2 flex-row-reverse">
+                <label for="">View All</label>
+                <p-checkbox (onChange)="handleSelectAllPermissionForType(device, 'View', device.all_view_perm)"
+                  [binary]="true" [(ngModel)]="device.all_view_perm" inputId="binary" />
+              </div>
+              <div class="input_group flex items-center gap-2 flex-row-reverse">
+                <label for="">Delete All</label>
+                <p-checkbox (onChange)="handleSelectAllPermissionForType(device, 'Delete', device.all_delete_perm)"
+                  [binary]="true" [(ngModel)]="device.all_delete_perm" inputId="binary" />
+              </div>
+              <div class="input_group flex items-center gap-2 flex-row-reverse">
+                <label for="">Edit All</label>
+                <p-checkbox (onChange)="handleSelectAllPermissionForType(device, 'Edit', device.all_edit_perm)"
+                  [binary]="true" [(ngModel)]="device.all_edit_perm" inputId="binary" />
+              </div>
+            </div>
+          </div>
           <div class="flex items-center flex-wrap justify-between">
             @for(dev of device?.devices ; track dev){
-            <h3 class="font-bold text-lg">{{dev?.deviceName}}</h3>
+            <div class="flex items-center gap-4">
+              <p-checkbox (onChange)="handleSelectedAll($event,dev , device)" [binary]="true"
+                [(ngModel)]="dev.is_selected_all" inputId="binary" />
+
+              <h3 class="font-bold text-lg">{{dev?.deviceName}}</h3>
+            </div>
             @for(per of dev?.permissions ; track per){
 
             <div class="input_group flex items-center gap-2 flex-row-reverse">
               <label for="">{{ per?.name }}</label>
-              <p-checkbox [binary]="true" [(ngModel)]="per.isSelected" inputId="binary" />
+              <p-checkbox (onChange)="handleSelectSingle($event , dev , device)" [binary]="true"
+                [(ngModel)]="per.isSelected" inputId="binary" />
             </div>
             }
             }
