@@ -24,13 +24,14 @@
       </p>
 
       <div class="auth_btn">
-        <p-button [loading]="isLoading()" [label]="'AUTH.VERIFY_OTP' | translate" [disabled]="otp_form.invalid" />
+        <p-button [loading]="isLoading()" (onClick)="handleOTPVerfication()" [label]="'AUTH.VERIFY_OTP' | translate"
+          [disabled]="otp_form.invalid" />
       </div>
     </form>
   </div>
   <p class="text-white_color text-center">
     {{ 'AUTH.DIDNT_GET_CODE' | translate }}
-    <button
+    <button (click)="resendOTP()"
       [ngClass]="{ 'text-white_color/50': !isTimerExpired , 'pointer-events-none':!isTimerExpired , 'pointer-events-auto':isTimerExpired , 'text-white_color':isTimerExpired}">
       {{ 'AUTH.RESEND_CODE' | translate }}
     </button>

@@ -75,7 +75,7 @@ public refreshSubscription: Subscription | any;
 
 
   changePassword(data: any): Observable<any>{
-    return this._HttpClient.post(environment.app_api_url + '/Auth/reset-password' , data)
+    return this._HttpClient.post(environment.app_api_url + 'Auth/reset-password' , data)
   }
 
 
