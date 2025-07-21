@@ -1,58 +1,97 @@
 <section class="bg-white_color rounded-3xl p-8">
+  <h2></h2>
+  <form [formGroup]="role_form" class="devices_types__container grid grid-cols-12 gap-6 mb-8">
 
-  <div class="devices_types__container grid grid-cols-12 gap-6 ">
     <div class="form-group col-span-12">
       <div class=" ">
         <label class="block mb-2" for="">{{ 'ROLES_PERMISSIONS.ROLE_NAME' | translate }}</label>
-        <input pInputText [placeholder]="'ROLES_PERMISSIONS.ROLE_NAME' | translate" />
+        <input pInputText formControlName="roleName" [placeholder]="'ROLES_PERMISSIONS.ROLE_NAME' | translate" />
       </div>
+      @if(role_form.get('roleName')?.errors && role_form.get('roleName')?.touched){
+      <p class="p-2 text-sm text-danger_color m-0">Role Name is Required</p>
+      }
     </div>
     <div class="form-group col-span-12">
       <div class=" ">
         <label class="block mb-2" for="">{{ 'ROLES_PERMISSIONS.DESCRIPTION' | translate }}</label>
-        <input pInputText [placeholder]="'ROLES_PERMISSIONS.DESCRIPTION' | translate" />
+        <input pInputText formControlName="description" [placeholder]="'ROLES_PERMISSIONS.DESCRIPTION' | translate" />
       </div>
+      @if(role_form.get('description')?.errors && role_form.get('description')?.touched){
+      <p class="p-2 text-sm text-danger_color m-0">Role Description is Required</p>
+      }
     </div>
-    <div class="col-span-12 permsiions mb-8">
-      <p-accordion [expandIcon]="'fi fi-rr-angle-small-down'" [collapseIcon]="'fi fi-rr-angle-small-up'"
-        [activeIndex]="0">
-        @for(device of devicesTypes ; track device){
+  </form>
 
-        <p-accordionTab tabStyleClass="mb-4" [header]="device.name">
-          <div class="flex items-center justify-between">
-            @for(per of device.permssions ; track per){
-            <div class="input_group flex items-center gap-2 flex-row-reverse">
-              <label for="">{{ per?.name }}</label>
-              <p-checkbox [binary]="true" [(ngModel)]="per.isSelected" inputId="binary" />
-            </div>
-            }
-            <!-- <div class="input_group flex items-center gap-2 flex-row-reverse">
-                    <label for="">{{ 'USERS.ADD' | translate }}</label>
-                    <p-checkbox [binary]="true" inputId="binary" />
-                  </div>
-                  <div class="input_group flex items-center gap-2 flex-row-reverse">
-                    <label for="">{{ 'USERS.UPDATE' | translate }}</label>
-                    <p-checkbox [binary]="true" inputId="binary" />
-                  </div>
-                  <div class="input_group flex items-center gap-2 flex-row-reverse">
-                    <label for="">{{ 'USERS.VIEW' | translate }}</label>
-                    <p-checkbox [binary]="true" inputId="binary" />
-                  </div>
-                  <div class="input_group flex items-center gap-2 flex-row-reverse">
-                    <label for="">{{ 'USERS.DELETE' | translate }}</label>
-                    <p-checkbox [binary]="true" inputId="binary" />
-                  </div> -->
+
+  <div>
+
+    <h2 class="mb-6 text-xl font-semibold">{{"USERS.PERMISSIONS"|translate}}</h2>
+
+    <p-accordion [expandIcon]="'fi fi-rr-angle-small-down'" [collapseIcon]="'fi fi-rr-angle-small-up'"
+      [activeIndex]="0">
+      @for(device of devicesTypes() ; track device){
+
+      <p-accordionTab tabStyleClass="mb-4" [header]="device.deviceType">
+        <div class="flex flex-wrap items-center justify-between pb-6 mb-6 border-b border-gray_light">
+          <div class="flex flex-wrap items-center gap-4">
+            <p-checkbox [binary]="true" (onChange)="handleSelectAllForType($event , device)"
+              [(ngModel)]="device.all_devices_selected" inputId="binary" />
+
+            <h3 class="font-bold text-lg">Select All Devices & Permssions</h3>
           </div>
-        </p-accordionTab>
-        }
-      </p-accordion>
-    </div>
+
+          <div class="flex items-center gap-16 flex-wrap ">
+            <div class="input_group flex items-center gap-2 flex-row-reverse">
+              <label for="">Add All</label>
+              <p-checkbox [binary]="true"
+                (onChange)="handleSelectAllPermissionForType(device, 'Add', device.all_add_perm)"
+                [(ngModel)]="device.all_add_perm" inputId="binary" />
+            </div>
+            <div class="input_group flex items-center gap-2 flex-row-reverse">
+              <label for="">View All</label>
+              <p-checkbox (onChange)="handleSelectAllPermissionForType(device, 'View', device.all_view_perm)"
+                [binary]="true" [(ngModel)]="device.all_view_perm" inputId="binary" />
+            </div>
+            <div class="input_group flex items-center gap-2 flex-row-reverse">
+              <label for="">Delete All</label>
+              <p-checkbox (onChange)="handleSelectAllPermissionForType(device, 'Delete', device.all_delete_perm)"
+                [binary]="true" [(ngModel)]="device.all_delete_perm" inputId="binary" />
+            </div>
+            <div class="input_group flex items-center gap-2 flex-row-reverse">
+              <label for="">Edit All</label>
+              <p-checkbox (onChange)="handleSelectAllPermissionForType(device, 'Edit', device.all_edit_perm)"
+                [binary]="true" [(ngModel)]="device.all_edit_perm" inputId="binary" />
+            </div>
+          </div>
+        </div>
+        <div class="flex items-center flex-wrap justify-between">
+          @for(dev of device?.devices ; track dev){
+          <div class="flex items-center gap-4">
+            <p-checkbox (onChange)="handleSelectedAll($event,dev , device)" [binary]="true"
+              [(ngModel)]="dev.is_selected_all" inputId="binary" />
+
+            <h3 class="font-bold text-lg">{{dev?.deviceName}}</h3>
+          </div>
+          @for(per of dev?.permissions ; track per){
+
+          <div class="input_group flex items-center gap-2 flex-row-reverse">
+            <label for="">{{ per?.name }}</label>
+            <p-checkbox (onChange)="handleSelectSingle($event , dev , device)" [binary]="true"
+              [(ngModel)]="per.isSelected" inputId="binary" />
+          </div>
+          }
+          }
+        </div>
+      </p-accordionTab>
+      }
+    </p-accordion>
   </div>
 
 
   <div class="flex justify-end">
     <div class="action_btn">
-      <p-button [label]="'ROLES_PERMISSIONS.SAVE' | translate" />
+      <p-button [loading]="loading_action()" (onClick)="handleAction()"
+        [label]="'ROLES_PERMISSIONS.SAVE' | translate" />
     </div>
   </div>
 </section>

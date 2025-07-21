@@ -83,6 +83,9 @@ export class UsersListComponent implements OnInit {
           summary: 'Success',
           detail: 'User deleted successfully',
         });
+
+
+        this.loadDelete.set(false)
       },
       error: (err:any) => {
         console.error(err);

@@ -208,9 +208,9 @@
 
 
 
-<p-dialog header="" styleClass="select_type_popup" [(visible)]="showDeletePopUp" [dismissableMask]="true" [modal]="true"
-  [breakpoints]="{ '1199px': '50vw', '575px': '90vw' }" [style]="{ width: '40vw' }" [draggable]="false"
-  [resizable]="false">
+<p-dialog header="" (onHide)="confirm_input.value = ''" styleClass="select_type_popup" [(visible)]="showDeletePopUp"
+  [dismissableMask]="true" [modal]="true" [breakpoints]="{ '1199px': '50vw', '575px': '90vw' }"
+  [style]="{ width: '40vw' }" [draggable]="false" [resizable]="false">
   <div class="icon_over_lay flex items-center round justify-center">
     <svg width="40" height="40" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
       <path d="M35 9.96663C29.45 9.41663 23.8667 9.1333 18.3 9.1333C15 9.1333 11.7 9.29997 8.4 9.6333L5 9.96663"

@@ -52,4 +52,10 @@ export class UsersManagmentsService {
   getPermsionsDevices():Observable<any> {
     return this._HttpClient.get(environment.app_api_url + 'Auth/GetDeviceTypesWithDevicesAndPermissions')
   }
+
+
+
+  createRole(req: any): Observable<any>{
+    return this._HttpClient.post(environment.app_api_url + 'Auth/CreateRoleWithPermissions' , req)
+  }
 }
