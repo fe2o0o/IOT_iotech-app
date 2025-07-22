@@ -6,7 +6,8 @@ import { RoleActionComponent } from './role-action/role-action.component';
 const routes: Routes = [
   { path: '', redirectTo: 'list', pathMatch: 'full' },
   { path: "list", component: ListComponent },
-  {path:'action' , component:RoleActionComponent}
+  { path: 'action', component: RoleActionComponent },
+  {path:'action/:id' , component :RoleActionComponent}
 ];
 
 @NgModule({

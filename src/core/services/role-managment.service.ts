@@ -16,8 +16,19 @@ export class RoleManagmentService {
 
 
 
-  deleteRole(id:any) {
+  getSingleRole(id: any): Observable<any>{
+    return this._HttpClient.get(environment.app_api_url + `Auth/GetRoleAndPermissionWithDeviceById/${id}`)
+  }
+
+
+  deleteRole(id:any):Observable<any> {
     return this._HttpClient.delete(environment.app_api_url + `Auth/DeleteRole/${id}`)
+  }
+
+
+
+  updateRole(req: any , id:any): Observable<any>{
+    return this._HttpClient.put(environment.app_api_url + `Auth/UpdateRoleWithPermissions/${id}` , req)
   }
 
 }

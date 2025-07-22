@@ -44,7 +44,7 @@ export class ListComponent implements OnInit {
             label: this._TranslateService.instant('DEVICES.EDIT'),
             icon: 'fi fi-rr-edit',
             command: () => {
-              this._Router.navigate(['alharamain-app/role-managemnet/role-action', 7])
+              this._Router.navigate(['iotech_app/roles-management/action', this.current_id_selected])
             }
 
           },
