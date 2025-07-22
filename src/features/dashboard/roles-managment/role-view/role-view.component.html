@@ -1,0 +1,120 @@
+<section>
+
+  <div class="header mb-8 flex items-center justify-between flex-wrap">
+    @if(loading_data()){
+    <p-skeleton width="10rem" styleClass="mb-2" />
+    }@else {
+    <h2 class="capitalize text-2xl font-semibold">{{current_role_data?.roleName}}</h2>
+    }
+
+
+    <div class="actions flex items-center gap-6 ">
+      <button [routerLink]="['/iotech_app/roles-management/action' , current_role_id]" class="action_icon">
+        <i class="fi fi-rr-edit text-xl"></i>
+      </button>
+      <button (click)="showDeletePopUp = true" class="action_icon">
+        <i class="fi fi-rr-trash text-xl"></i>
+      </button>
+    </div>
+  </div>
+
+
+  <div class="desc p-6 rounded-xl bg-white_color mb-8">
+    <h3 class="text-xl font-semibold mb-4">Description</h3>
+
+    @if(loading_data()){
+    <p-skeleton width="100%" styleClass="mb-2" />
+    }@else{
+    <p>
+      {{current_role_data?.description}}
+    </p>
+    }
+
+  </div>
+
+
+
+  <div class="grid grid-cols-12">
+    <!-- <div class=" col-span-12 lg:col-span-6 p-6 rounded-xl bg-white_color">
+      <h3 class="text-xl font-semibold mb-4">Selected User</h3>
+
+    </div> -->
+    <div class=" col-span-12 lg:col-span-12 p-6 rounded-xl bg-white_color">
+      <h3 class="text-xl font-semibold mb-4">Permission Categories</h3>
+
+      <p-accordion [expandIcon]="'fi fi-rr-angle-small-down'" [collapseIcon]="'fi fi-rr-angle-small-up'"
+        [activeIndex]="0">
+        @for(device of devicesTypes() ; track device){
+
+        <p-accordionTab tabStyleClass="mb-4" [header]="device.deviceType">
+          <div class="flex items-center flex-wrap justify-between">
+            @for(dev of device?.devices ; track dev){
+            <div class="flex items-center gap-4">
+              <p-checkbox [disabled]="true" [binary]="true" [(ngModel)]="dev.is_selected_all" inputId="binary" />
+
+              <h3 class="font-bold text-lg">{{dev?.deviceName}}</h3>
+            </div>
+            @for(per of dev?.permissions ; track per){
+
+            <div class="input_group flex items-center gap-2 flex-row-reverse">
+              <label for="">{{ per?.name }}</label>
+              <p-checkbox [disabled]="true" [binary]="true" [(ngModel)]="per.isSelected" inputId="binary" />
+            </div>
+            }
+            }
+          </div>
+        </p-accordionTab>
+        }
+      </p-accordion>
+
+    </div>
+  </div>
+</section>
+
+
+
+
+<p-dialog (onHide)="confirm_input.value = ''" header="" styleClass="select_type_popup" [(visible)]="showDeletePopUp"
+  [dismissableMask]="true" [modal]="true" [breakpoints]="{ '1199px': '50vw', '575px': '90vw' }"
+  [style]="{ width: '40vw' }" [draggable]="false" [resizable]="false">
+  <div class="icon_over_lay flex items-center round justify-center">
+    <svg width="40" height="40" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M35 9.96663C29.45 9.41663 23.8667 9.1333 18.3 9.1333C15 9.1333 11.7 9.29997 8.4 9.6333L5 9.96663"
+        stroke="#D51C54" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+      <path
+        d="M14.167 8.2835L14.5337 6.10016C14.8003 4.51683 15.0003 3.3335 17.817 3.3335H22.1837C25.0003 3.3335 25.217 4.5835 25.467 6.11683L25.8337 8.2835"
+        stroke="#D51C54" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+      <path
+        d="M31.4163 15.2334L30.333 32.0167C30.1496 34.6334 29.9996 36.6667 25.3496 36.6667H14.6497C9.99967 36.6667 9.84967 34.6334 9.66634 32.0167L8.58301 15.2334"
+        stroke="#D51C54" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+      <path d="M17.2168 27.5H22.7668" stroke="#D51C54" stroke-width="2" stroke-linecap="round"
+        stroke-linejoin="round" />
+      <path d="M15.833 20.8335H24.1663" stroke="#D51C54" stroke-width="2" stroke-linecap="round"
+        stroke-linejoin="round" />
+    </svg>
+
+
+  </div>
+  <div class=" text-center mb-8">
+    <h5 class="text-2xl  text-primary font-medium ">Delete Role</h5>
+    <p class="text-primary/50">{{ 'DEVICES.DELETE_CONFIRM_MSG' | translate }} <strong>{{ 'DEVICES.DELETE' | translate
+        }}</strong> </p>
+  </div>
+  <div class="devices_types__container ">
+    <div class="form-group mb-5">
+      <div class="custom_input ">
+        <input #confirm_input id="name" class="custom_input" pInputText
+          [placeholder]="'DEVICES.DELETE_PLACEHOLDER' | translate" />
+      </div>
+    </div>
+  </div>
+  <ng-template pTemplate="footer">
+    <div class="flex justify-center">
+      <div class="action_btn">
+        <p-button [loading]="loading_delete()" (onClick)="handleDelete()"
+          [disabled]="confirm_input.value.toLocaleLowerCase().trim() != 'delete'"
+          [label]="'DEVICES.DELETE' | translate" />
+      </div>
+    </div>
+  </ng-template>
+</p-dialog>

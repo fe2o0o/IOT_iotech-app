@@ -52,7 +52,7 @@ export class ListComponent implements OnInit {
             label: this._TranslateService.instant('DEVICES.VIEW'),
             icon: 'fi fi-rr-eye',
             command: () => {
-              this._Router.navigate(['alharamain-app/role-managemnet/view', 5])
+              this._Router.navigate(['iotech_app/roles-management/view', this.current_id_selected])
             }
           },
           {
