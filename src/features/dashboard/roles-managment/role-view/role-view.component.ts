@@ -98,5 +98,14 @@ export class RoleViewComponent {
       this._Router.navigate(['/iotech_app/roles-management/list'])
       this.showDeletePopUp = false;
     })
+
+
+  }
+
+
+  searchTerm:string = ''
+
+  handleSearch() {
+
   }
 }
