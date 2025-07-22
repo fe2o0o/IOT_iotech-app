@@ -7,7 +7,7 @@
         @if(loadingState()){
         <p-skeleton width="100%" styleClass="mb-2" />
         }@else {
-        <p class="text-xl font-semibold">{{roles_permsiionsData?.total_roles}}</p>
+        <p class="text-xl font-semibold">{{role_summary()?.totalRoles}}</p>
         }
       </div>
       <div class="icon">
@@ -41,7 +41,7 @@
         @if(loadingState()){
         <p-skeleton width="100%" styleClass="mb-2" />
         }@else {
-        <p class="text-xl font-semibold">{{roles_permsiionsData?.total_permssions}}</p>
+        <p class="text-xl font-semibold">{{role_summary()?.totalPermissions}}</p>
         }
       </div>
       <div class="icon">
@@ -65,9 +65,9 @@
         @if(loadingState()){
         <p-skeleton width="100%" styleClass="mb-2" />
         }@else {
-        <p class="text-xl font-semibold">{{roles_permsiionsData?.Roles_Growth}}%</p>
+        <p class="text-sm  text-success_color font-semibold">{{role_summary()?.rolesGrowth}}</p>
         }
-        <p class="text-success_color">+ 8% {{ 'ROLES_PERMISSIONS.FROM_LAST_MONTH' | translate }}</p>
+        <!-- <p class="text-success_color">+ 8% {{ 'ROLES_PERMISSIONS.FROM_LAST_MONTH' | translate }}</p> -->
       </div>
       <div class="icon">
         <svg width="50" height="50" viewBox="0 0 50 50" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -117,8 +117,8 @@
           <td>{{device?.description ?? 'N/A'}}</td>
           <td>{{device?.permissionCount}}</td>
           <td>{{device?.userCount}}</td>
-          <td>{{device?.Created_at ?? 'N/A'}}</td>
-          <td class="cursor-pointer" (click)="menu.toggle($event);">
+          <td>{{device?.createdAt ?? 'N/A'}}</td>
+          <td class="cursor-pointer" (click)="menu.toggle($event); current_id_selected = device?.id">
             <svg class="mx-auto" width="25" height="25" viewBox="0 0 25 25" fill="none"
               xmlns="http://www.w3.org/2000/svg">
               <path
@@ -147,91 +147,48 @@
 
 <p-menu #menu appendTo="body" styleClass="namespace_action" [model]="items" [popup]="true" />
 
-<p-dialog header="" styleClass="select_type_popup user" [(visible)]="showRoleAction" [dismissableMask]="true"
-  [modal]="true" [breakpoints]="{ '1199px': '50vw', '575px': '90vw' }" [style]="{ width: '40vw' }" [draggable]="false"
+
+<p-dialog (onHide)="confirm_input.value = '' ; current_id_selected = null" header="" styleClass="select_type_popup"
+  [(visible)]="showDeletePopUp" [dismissableMask]="true" [modal]="true"
+  [breakpoints]="{ '1199px': '50vw', '575px': '90vw' }" [style]="{ width: '40vw' }" [draggable]="false"
   [resizable]="false">
   <div class="icon_over_lay flex items-center round justify-center">
-    <svg width="40" height="40" viewBox="0 0 50 50" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <svg width="40" height="40" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M35 9.96663C29.45 9.41663 23.8667 9.1333 18.3 9.1333C15 9.1333 11.7 9.29997 8.4 9.6333L5 9.96663"
+        stroke="#D51C54" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
       <path
-        d="M19.0836 22.6459C18.8752 22.6251 18.6252 22.6251 18.3961 22.6459C13.4377 22.4792 9.50024 18.4167 9.50024 13.4167C9.50024 8.31258 13.6252 4.16675 18.7502 4.16675C23.8545 4.16675 28.0003 8.31258 28.0003 13.4167C27.9795 18.4167 24.042 22.4792 19.0836 22.6459Z"
-        stroke="#9F8A60" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" />
+        d="M14.167 8.2835L14.5337 6.10016C14.8003 4.51683 15.0003 3.3335 17.817 3.3335H22.1837C25.0003 3.3335 25.217 4.5835 25.467 6.11683L25.8337 8.2835"
+        stroke="#D51C54" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
       <path
-        d="M34.1876 8.33325C38.2292 8.33325 41.4792 11.6041 41.4792 15.6249C41.4792 19.5624 38.3542 22.7708 34.4584 22.9166C34.2917 22.8958 34.1042 22.8958 33.9167 22.9166"
-        stroke="#9F8A60" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" />
-      <path
-        d="M8.6665 30.3333C3.62484 33.7083 3.62484 39.2083 8.6665 42.5624C14.3957 46.3958 23.7916 46.3958 29.5207 42.5624C34.5624 39.1874 34.5624 33.6874 29.5207 30.3333C23.8124 26.5208 14.4165 26.5208 8.6665 30.3333Z"
-        stroke="#9F8A60" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" />
-      <path
-        d="M38.2085 41.6667C39.7085 41.3542 41.1252 40.7501 42.2918 39.8542C45.5418 37.4167 45.5418 33.3959 42.2918 30.9584C41.146 30.0834 39.7502 29.5001 38.271 29.1667"
-        stroke="#9F8A60" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" />
+        d="M31.4163 15.2334L30.333 32.0167C30.1496 34.6334 29.9996 36.6667 25.3496 36.6667H14.6497C9.99967 36.6667 9.84967 34.6334 9.66634 32.0167L8.58301 15.2334"
+        stroke="#D51C54" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+      <path d="M17.2168 27.5H22.7668" stroke="#D51C54" stroke-width="2" stroke-linecap="round"
+        stroke-linejoin="round" />
+      <path d="M15.833 20.8335H24.1663" stroke="#D51C54" stroke-width="2" stroke-linecap="round"
+        stroke-linejoin="round" />
     </svg>
+
+
   </div>
   <div class=" text-center mb-8">
-    <h5 class="text-2xl  text-primary font-medium ">{{ 'ROLES_PERMISSIONS.ADD_ROLE' | translate }}</h5>
+    <h5 class="text-2xl  text-primary font-medium ">Delete Role</h5>
+    <p class="text-primary/50">{{ 'DEVICES.DELETE_CONFIRM_MSG' | translate }} <strong>{{ 'DEVICES.DELETE' | translate
+        }}</strong> </p>
   </div>
-  <div class="devices_types__container grid grid-cols-12 gap-6 ">
-    <div class="form-group col-span-12">
-      <div class=" ">
-        <label class="block mb-2" for="">{{ 'ROLES_PERMISSIONS.ROLE_NAME' | translate }}</label>
-        <input pInputText [placeholder]="'ROLES_PERMISSIONS.ROLE_NAME' | translate" />
+  <div class="devices_types__container ">
+    <div class="form-group mb-5">
+      <div class="custom_input ">
+        <input #confirm_input id="name" class="custom_input" pInputText
+          [placeholder]="'DEVICES.DELETE_PLACEHOLDER' | translate" />
       </div>
-    </div>
-    <div class="form-group col-span-12">
-      <div class=" ">
-        <label class="block mb-2" for="">{{ 'ROLES_PERMISSIONS.DESCRIPTION' | translate }}</label>
-        <input pInputText [placeholder]="'ROLES_PERMISSIONS.DESCRIPTION' | translate" />
-      </div>
-    </div>
-    <div class="col-span-12 permsiions">
-      <p-accordion [expandIcon]="'fi fi-rr-angle-small-down'" [collapseIcon]="'fi fi-rr-angle-small-up'"
-        [activeIndex]="0">
-        <p-accordionTab header="HKT Smart Wristband">
-          <div class="flex items-center justify-between">
-            <div class="input_group flex items-center gap-2 flex-row-reverse">
-              <label for="">{{ 'ROLES_PERMISSIONS.ADD' | translate }}</label>
-              <p-checkbox [binary]="true" inputId="binary" />
-            </div>
-            <div class="input_group flex items-center gap-2 flex-row-reverse">
-              <label for="">{{ 'ROLES_PERMISSIONS.UPDATE' | translate }}</label>
-              <p-checkbox [binary]="true" inputId="binary" />
-            </div>
-            <div class="input_group flex items-center gap-2 flex-row-reverse">
-              <label for="">{{ 'ROLES_PERMISSIONS.VIEW' | translate }}</label>
-              <p-checkbox [binary]="true" inputId="binary" />
-            </div>
-            <div class="input_group flex items-center gap-2 flex-row-reverse">
-              <label for="">{{ 'ROLES_PERMISSIONS.DELETE' | translate }}</label>
-              <p-checkbox [binary]="true" inputId="binary" />
-            </div>
-          </div>
-        </p-accordionTab>
-        <p-accordionTab header="Smart Badge">
-          <div class="flex items-center justify-between">
-            <div class="input_group flex items-center gap-2 flex-row-reverse">
-              <label for="">{{ 'ROLES_PERMISSIONS.ADD' | translate }}</label>
-              <p-checkbox [binary]="true" inputId="binary" />
-            </div>
-            <div class="input_group flex items-center gap-2 flex-row-reverse">
-              <label for="">{{ 'ROLES_PERMISSIONS.UPDATE' | translate }}</label>
-              <p-checkbox [binary]="true" inputId="binary" />
-            </div>
-            <div class="input_group flex items-center gap-2 flex-row-reverse">
-              <label for="">{{ 'ROLES_PERMISSIONS.VIEW' | translate }}</label>
-              <p-checkbox [binary]="true" inputId="binary" />
-            </div>
-            <div class="input_group flex items-center gap-2 flex-row-reverse">
-              <label for="">{{ 'ROLES_PERMISSIONS.DELETE' | translate }}</label>
-              <p-checkbox [binary]="true" inputId="binary" />
-            </div>
-          </div>
-        </p-accordionTab>
-      </p-accordion>
     </div>
   </div>
   <ng-template pTemplate="footer">
     <div class="flex justify-center">
-      <div class="action_btn w-1/4">
-        <p-button [label]="'ROLES_PERMISSIONS.SAVE' | translate" />
+      <div class="action_btn">
+        <p-button [loading]="loading_delete()" (onClick)="handleDelete()"
+          [disabled]="confirm_input.value.toLocaleLowerCase().trim() != 'delete'"
+          [label]="'DEVICES.DELETE' | translate" />
       </div>
     </div>
   </ng-template>

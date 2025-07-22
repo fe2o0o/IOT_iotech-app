@@ -14,4 +14,10 @@ export class RoleManagmentService {
     return this._HttpClient.get(environment.app_api_url + 'Auth/GetAllRolesWithPermitionAndUserCount')
   }
 
+
+
+  deleteRole(id:any) {
+    return this._HttpClient.delete(environment.app_api_url + `Auth/DeleteRole/${id}`)
+  }
+
 }

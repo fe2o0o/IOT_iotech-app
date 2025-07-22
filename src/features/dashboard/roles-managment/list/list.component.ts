@@ -4,6 +4,7 @@ import { TranslateService } from '@ngx-translate/core';
 import { SharedService } from '../../../../shared/services/shared.service';
 import { TranslationsService } from '../../../../shared/services/translation.service';
 import { RoleManagmentService } from '../../../../core/services/role-managment.service';
+import { MessageService } from 'primeng/api';
 @Component({
   selector: 'app-list',
   standalone: false,
@@ -11,7 +12,7 @@ import { RoleManagmentService } from '../../../../core/services/role-managment.s
   styleUrl: './list.component.scss'
 })
 export class ListComponent implements OnInit {
-  constructor(private _RoleManagmentService:RoleManagmentService,private _Router: Router, private _TranslateService: TranslateService, private _TranslationsService: TranslationsService, private _SharedService: SharedService) {
+  constructor(private _MessageService:MessageService,private _RoleManagmentService:RoleManagmentService,private _Router: Router, private _TranslateService: TranslateService, private _TranslationsService: TranslationsService, private _SharedService: SharedService) {
 
     this._TranslationsService.selected_lan_sub.subscribe((lan: string) => {
       if (lan == 'ar') {
@@ -33,6 +34,7 @@ export class ListComponent implements OnInit {
     Roles_Growth: 36,
   }
 
+  current_id_selected: any;
 
   ngOnInit(): void {
     this.items = [
@@ -57,6 +59,7 @@ export class ListComponent implements OnInit {
             label: this._TranslateService.instant('DEVICES.DELETE'),
             icon: 'fi fi-rr-trash',
             command: () => {
+              this.showDeletePopUp = true;
             }
           }
         ]
@@ -106,12 +109,15 @@ export class ListComponent implements OnInit {
   ]
 
 
+  role_summary = signal<any>(null)
+
   getRolesList() {
     this.roles_list = []
     this.loadingState.set(true);
 
     this._RoleManagmentService.getRoleList().subscribe((res:any) => {
-      this.roles_list = res?.data
+      this.roles_list = res?.data?.roles;
+      this.role_summary.set(res?.data?.summary)
       this.loadingState.set(false)
     })
   }
@@ -121,7 +127,21 @@ export class ListComponent implements OnInit {
   }
 
 
+  showDeletePopUp: boolean = false;
 
 
   items: any = []
+
+
+  loading_delete = signal<boolean>(false);
+
+  handleDelete() {
+    this.loading_delete.set(true)
+    this._RoleManagmentService.deleteRole(this.current_id_selected).subscribe((res: any) => {
+      this.loading_delete.set(false)
+      this._MessageService.add({severity:'success' , summary:'Success' , detail:"Role Deleted Successfully"})
+      this.getRolesList();
+      this.showDeletePopUp = false;
+    })
+  }
 }
