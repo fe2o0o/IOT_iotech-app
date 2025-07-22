@@ -5,6 +5,7 @@ import { CheckboxChangeEvent } from 'primeng/checkbox';
 import { ActivatedRoute } from '@angular/router';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { MessageService } from 'primeng/api';
+import { Router } from '@angular/router';
 @Component({
   selector: 'app-role-action',
   standalone: false,
@@ -15,7 +16,7 @@ import { MessageService } from 'primeng/api';
 
 })
 export class RoleActionComponent {
-  constructor(private _MessageService:MessageService,private _ActivatedRoute:ActivatedRoute,private _UsersManagmentsService:UsersManagmentsService,private _SharedService: SharedService) {
+  constructor(private _Router:Router,private _MessageService:MessageService,private _ActivatedRoute:ActivatedRoute,private _UsersManagmentsService:UsersManagmentsService,private _SharedService: SharedService) {
     this.initRoleForm()
     this._SharedService.breadCrumbTitle.next('SIDEBAR.ROLE_MANAGEMENT');
     this._ActivatedRoute.paramMap.subscribe((res) => {
@@ -150,7 +151,7 @@ export class RoleActionComponent {
 
         if (selectedPermssions.length > 0) {
           return {
-            deviceTypeId: dev.id,
+            deviceId: dev.id,
             permissionTypeIds: selectedPermssions
           };
         }
@@ -170,6 +171,7 @@ export class RoleActionComponent {
       next: (res: any) => {
         this._MessageService.add({severity:'success' , summary:'Success' , detail:'Role Created Successfully !'})
         this.loading_action.set(false)
+        this._Router.navigate(['/iotech_app/roles-management/list'])
       },
       error: (err: any) => {
         this.loading_action.set(false)

@@ -90,7 +90,7 @@
 
   <div class="flex justify-end">
     <div class="action_btn">
-      <p-button [loading]="loading_action()" (onClick)="handleAction()"
+      <p-button [disabled]="role_form.invalid" [loading]="loading_action()" (onClick)="handleAction()"
         [label]="'ROLES_PERMISSIONS.SAVE' | translate" />
     </div>
   </div>
