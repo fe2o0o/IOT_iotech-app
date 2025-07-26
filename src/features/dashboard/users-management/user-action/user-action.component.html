@@ -64,9 +64,9 @@
       <div class="form-group input_group col-span-12 lg:col-span-12">
         <label class="block mb-2" for="">{{"USERS.SELECT_ROLE"|translate}}</label>
 
-        <p-dropdown [options]="roles" optionValue="id" [showClear]="user_form.get('roleId')?.value"
-          formControlName="roleId" optionValue="id" appendTo="body" optionLabel="name"
-          [placeholder]="'USERS.SELECT_ROLE' | translate" />
+        <p-dropdown (onChange)="handleSetPermssions($event)" [options]="roles" optionValue="id"
+          [showClear]="user_form.get('roleId')?.value" formControlName="roleId" optionValue="id" appendTo="body"
+          optionLabel="name" [placeholder]="'USERS.SELECT_ROLE' | translate" />
         @if(user_form.get('roleId')?.errors && user_form.get('roleId')?.touched){
         <p class="p-2 text-sm text-danger_color m-0">{{"USERS.ROLE_REQ"|translate}}</p> }
       </div>

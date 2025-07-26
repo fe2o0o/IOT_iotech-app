@@ -94,6 +94,63 @@ export class UserActionComponent implements OnInit {
     })
   }
 
+
+
+  handleSetPermssions(event: any) {
+  event.value = this.roles.find((role:any)=> {return role.id == event.value})
+  const selectedPermissions = event.value.permissions || [];
+
+
+  const updatedDevicesTypes = this.devicesTypes().map((type: any) => {
+    const updatedDevices = (type.devices || []).map((dev: any) => {
+      const selectedDevice = selectedPermissions.find((sd: any) => sd.deviceId === dev.id);
+
+      const updatedPerms = (dev.permissions || []).map((perm: any) => ({
+        ...perm,
+        isSelected: !!selectedDevice?.permissionTypes.some((p: any) => p.id === perm.id)
+      }));
+
+      const is_selected_all = updatedPerms.every((perm: any) => perm.isSelected);
+
+      return {
+        ...dev,
+        permissions: updatedPerms,
+        is_selected_all
+      };
+    });
+
+    const all_devices_selected = updatedDevices.every((d: any) => d.is_selected_all);
+    const all_add_perm = updatedDevices.every((d: any) =>
+      d.permissions.find((p: any) => p.name === 'Add')?.isSelected
+    );
+    const all_view_perm = updatedDevices.every((d: any) =>
+      d.permissions.find((p: any) => p.name === 'View')?.isSelected
+    );
+    const all_edit_perm = updatedDevices.every((d: any) =>
+      d.permissions.find((p: any) => p.name === 'Edit')?.isSelected
+    );
+    const all_delete_perm = updatedDevices.every((d: any) =>
+      d.permissions.find((p: any) => p.name === 'Delete')?.isSelected
+    );
+
+    return {
+      ...type,
+      devices: updatedDevices,
+      all_devices_selected,
+      all_add_perm,
+      all_edit_perm,
+      all_view_perm,
+      all_delete_perm
+    };
+  });
+
+  this.devicesTypes.set(updatedDevicesTypes);
+  this._ChangeDetectorRef.markForCheck();
+
+  console.log("selectedPermissions" ,selectedPermissions);
+
+}
+
   imageSrc: any;
   handleSelectImage() {
     const input = document.createElement('input');
