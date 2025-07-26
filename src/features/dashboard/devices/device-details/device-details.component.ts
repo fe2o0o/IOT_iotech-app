@@ -98,6 +98,9 @@ export class DeviceDetailsComponent {
     this._SharedService.breadCrumbTitle.next('BREADCRUMB.DEVICE_MANAGEMENT');
   }
 
+    keepOrder = (a: any, b: any) => {
+    return 0;
+  }
 
   handleUpdateLocation() {
     this.loadLocation.set(true)

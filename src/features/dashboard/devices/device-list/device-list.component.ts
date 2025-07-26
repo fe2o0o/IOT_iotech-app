@@ -63,6 +63,7 @@ export class DeviceListComponent implements OnInit {
 
 
 
+
   navigatetoView(dev: any) {
     this._Router.navigate(['iotech_app/devices-management/device' , dev?.identifier , dev?.type])
   }

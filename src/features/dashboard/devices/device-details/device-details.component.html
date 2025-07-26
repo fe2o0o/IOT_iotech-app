@@ -225,7 +225,7 @@
       [rowsPerPageOptions]="[5, 10,15 ,20]">
       <ng-template pTemplate="header">
         <tr>
-          @for (item of tableData()[0]|keyvalue; track $index) {
+          @for (item of tableData()[0]|keyvalue:keepOrder; track $index) {
           <th class="capitalize">{{item.key}}</th>
           }
         </tr>
