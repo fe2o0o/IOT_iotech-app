@@ -232,7 +232,7 @@
       </ng-template>
       <ng-template pTemplate="body" let-device>
         <tr>
-          @for (item of device|keyvalue; track $index) {
+          @for (item of device|keyvalue:keepOrder; track $index) {
           @if(item.key == 'batteryVoltage'){
           <td>
             @if(device?.batteryVoltage >= 50){
