@@ -1,4 +1,4 @@
-import { Component, input, signal, SimpleChanges, ViewChild } from '@angular/core';
+import { ChangeDetectionStrategy, Component, input, signal, SimpleChanges, ViewChild } from '@angular/core';
 import { FormGroup, FormControl, Validators, AbstractControl, ValidationErrors } from '@angular/forms';
 import { TranslateService } from '@ngx-translate/core';
 import { DevicesService } from '../../../../core/services/devices.service';
@@ -7,7 +7,8 @@ import { SharedService } from '../../../../shared/services/shared.service';
   selector: 'app-chart-vs341',
   standalone: false,
   templateUrl: './chart-vs341.component.html',
-  styleUrl: './chart-vs341.component.scss'
+  styleUrl: './chart-vs341.component.scss',
+  changeDetection:ChangeDetectionStrategy.OnPush
 })
 export class ChartVs341Component {
   constructor(private _SharedService:SharedService,private translate: TranslateService , private _DevicesService:DevicesService) {
@@ -52,7 +53,8 @@ export class ChartVs341Component {
     this.getChartData();
     this.getChartData_bars()
   }
-  chartWidth:number = 100
+  chartWidth = signal<number>(100)
+  chartWidthBar = signal<number>(100)
   ngOnChanges(changes: SimpleChanges): void {
     if (changes['current_identifier_input'].currentValue) {
         this.current_identifier = changes['current_identifier_input'].currentValue
@@ -74,11 +76,10 @@ export class ChartVs341Component {
       this.current_chart_data.set(res?.data)
       console.log("data chart", this.current_chart_data());
       if (this.current_chart_data().length > 10) {
-        this.chartWidth += this.current_chart_data.length * 4;
-        console.log("width chart", this.chartWidth);
+        this.chartWidth.set(this.current_chart_data.length * 4);
 
       } else {
-        this.chartWidth = 100;
+        this.chartWidth.set(100);
       }
       this.data_alarms.labels = res?.data?.map((item: any) => {
         return item?.lastSeen
@@ -104,12 +105,11 @@ export class ChartVs341Component {
     this._DevicesService.getDOSChart(this.current_identifier, period, fromUtc, toUtc,this.peopleStatus[0]?.selected , this.peopleStatus[1]?.selected   ).subscribe((res: any) => {
       this.current_chart_data_bars.set(res?.data)
       console.log("data chart bars", this.current_chart_data_bars());
-      if (this.current_chart_data().length > 10) {
-        this.chartWidth += this.current_chart_data.length * 4;
-        console.log("width chart", this.chartWidth);
+      if (this.current_chart_data_bars().length > 10) {
+       this.chartWidthBar.set(  this.current_chart_data_bars().length * 4)
 
       } else {
-        this.chartWidth = 100;
+        this.chartWidthBar.set(100);
       }
       this.data_alarms_1.labels = res?.data?.map((item: any) => {
         return item?.lastSeen
@@ -123,6 +123,11 @@ export class ChartVs341Component {
       this.data_alarms_1.datasets[2].data = res?.data?.map((item: any) => {
         return item?.occupancy == "occupied" ? .5:0
       })
+
+
+      this.data_alarms_1.datasets[0].data = Array(this.data_alarms_1.datasets[1].data.length).fill(50)
+
+
 
       this.alarms_chart_1?.chart?.update()
       this.loadingChart_bars.set(false);
@@ -403,6 +408,13 @@ export class ChartVs341Component {
     })
 
     this.getChartData()
+  }
+  cancelAllFiltersBars() {
+    this.customFilters_1.map((fil: any) => {
+      fil.isActive = false
+    })
+
+    this.getChartData_bars()
   }
   applyPeriod() {
     this.loadingFilter = true;
