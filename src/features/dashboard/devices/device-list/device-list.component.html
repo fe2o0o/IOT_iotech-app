@@ -131,8 +131,8 @@
         </tr>
       </ng-template>
       <ng-template pTemplate="body" let-device let-columns="columns">
-        <tr pTooltip="{{ 'DEVICES.DOUBLE_CLICK_TOOLTIP' | translate }}" tooltipPosition="top"
-          class="rounded-full cursor-pointer">
+        <tr (dblclick)="navigatetoView(device)" pTooltip="{{ 'DEVICES.DOUBLE_CLICK_TOOLTIP' | translate }}"
+          tooltipPosition="top" class="rounded-full cursor-pointer">
           <td class="text-sm">
             {{device?.deviceName}}
           </td>

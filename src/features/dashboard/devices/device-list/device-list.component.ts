@@ -60,6 +60,12 @@ export class DeviceListComponent implements OnInit {
       this.getDashboardData()
     })
   }
+
+
+
+  navigatetoView(dev: any) {
+    this._Router.navigate(['iotech_app/devices-management/device' , dev?.identifier , dev?.type])
+  }
   loadingState = signal<boolean>(false)
   allData = signal<any>({});
 

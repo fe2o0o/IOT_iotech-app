@@ -313,7 +313,9 @@ Calibration: "Calibration",
       "DELETE": "Delete",
       "SAVE": "Save",
       "EDIT_ROLE": "Edit Role",
-      "VIEW_ROLE":"View Role"
+      "VIEW_ROLE": "View Role",
+      "ADD_NEW_ROLE": "Add New Role",
+      "UPDATE_ROLE":"Update Role"
     },
     FOOTER: {
       "HELP_TEXT": "Need Help or have a question? Our support team is here for you. Contact us at",
