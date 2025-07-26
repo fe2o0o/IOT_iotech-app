@@ -186,7 +186,7 @@
           </div>
         </div>
 
-        <div class="content h-72 lg:flex-1 rounded-lg">
+        <div class="content min-h-64 lg:flex-1 rounded-lg">
           <google-map height="100%" width="100%" [center]="center" [options]="options">
             <map-advanced-marker [title]="deviceDetails()?.deviceName" #markerElem="mapAdvancedMarker"
               [position]="{ lat: location()?.lat, lng: location()?.lng }" />
