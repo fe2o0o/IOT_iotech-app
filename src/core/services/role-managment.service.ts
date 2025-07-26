@@ -10,8 +10,12 @@ export class RoleManagmentService {
   constructor(private _HttpClient: HttpClient) { }
 
 
-  getRoleList():Observable<any> {
-    return this._HttpClient.get(environment.app_api_url + 'Auth/GetAllRolesWithPermitionAndUserCount')
+  getRoleList(searchTerm: string = ''): Observable<any> {
+    let query = '?'
+    if (searchTerm) {
+      query += `searchTerm=${searchTerm}`
+    }
+    return this._HttpClient.get(environment.app_api_url + 'Auth/GetAllRolesWithPermitionAndUserCount' + query)
   }
 
 

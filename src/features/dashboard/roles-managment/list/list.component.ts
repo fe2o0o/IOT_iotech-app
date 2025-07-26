@@ -5,6 +5,7 @@ import { SharedService } from '../../../../shared/services/shared.service';
 import { TranslationsService } from '../../../../shared/services/translation.service';
 import { RoleManagmentService } from '../../../../core/services/role-managment.service';
 import { MessageService } from 'primeng/api';
+import { debounceTime, Subject } from 'rxjs';
 @Component({
   selector: 'app-list',
   standalone: false,
@@ -14,6 +15,11 @@ import { MessageService } from 'primeng/api';
 export class ListComponent implements OnInit {
   constructor(private _MessageService:MessageService,private _RoleManagmentService:RoleManagmentService,private _Router: Router, private _TranslateService: TranslateService, private _TranslationsService: TranslationsService, private _SharedService: SharedService) {
 
+    this.searchSubject.pipe(
+      debounceTime(300)
+    ).subscribe((res: any) => {
+      this.getRolesList(this.searchTerm)
+    })
     this._TranslationsService.selected_lan_sub.subscribe((lan: string) => {
       if (lan == 'ar') {
         this.is_arabic.set(true);
@@ -111,19 +117,20 @@ export class ListComponent implements OnInit {
 
   role_summary = signal<any>(null)
 
-  getRolesList() {
+  getRolesList(searchTerm:string = '') {
     this.roles_list = []
     this.loadingState.set(true);
 
-    this._RoleManagmentService.getRoleList().subscribe((res:any) => {
+    this._RoleManagmentService.getRoleList(searchTerm).subscribe((res:any) => {
       this.roles_list = res?.data?.roles;
       this.role_summary.set(res?.data?.summary)
       this.loadingState.set(false)
     })
   }
   searchTerm: string = '';
+  private searchSubject = new Subject<string>()
   handleSearch() {
-
+    this.searchSubject.next(this.searchTerm)
   }
 
 
