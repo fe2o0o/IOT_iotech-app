@@ -19,13 +19,7 @@ export class ChartVs341Component {
         selected: true,
         icon: 'fi fi-rr-users-alt'
       }
-      ,
-      {
-        id: 3,
-        name: 'Battery',
-        selected: false,
-        icon: 'fi fi-rr-rewind'
-      }
+
     ]
     this.peopleStatus_1=[
       {
