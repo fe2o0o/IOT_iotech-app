@@ -59,15 +59,15 @@ export class SidebarMainLayoutComponent {
     },
     {
       name:'SIDEBAR.NOTIFICATIONS' ,
-      icon:'fi fi-rr-bells',
+      icon:'fi fi-rr-light-emergency-on',
       link:'/alharamain-app/notification-managment',
       visible:false,
     },
     {
       name:'SIDEBAR.ALARMS' ,
       icon:'fi fi-rr-alarm-exclamation',
-      link:'/alharamain-app/alarms',
-      visible:false,
+      link:'/iotech_app/alarms',
+      visible:true,
     },
 
   ])

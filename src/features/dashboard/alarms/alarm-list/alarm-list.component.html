@@ -1,0 +1,190 @@
+<section>
+  <!-- <div class="cards grid grid-cols-12 gap-5  mb-20">
+    <div
+      class="card col-span-12 md:col-span-5 lg:col-span-4 flex items-center justify-between shadow-md rounded-3xl border-l-4 border-black_color p-6 gap-2">
+      <div class="content">
+        <h2 class="mb-4 text-lg font-medium">{{ 'ALARMS.TOTAL_ROLES' | translate }}</h2>
+        @if(loadingState()){
+        <p-skeleton width="100%" styleClass="mb-2" />
+        }@else {
+        <p class="text-xl font-semibold">{{role_summary()?.totalRoles}}</p>
+        }
+      </div>
+      <div class="icon">
+        <svg width="50" height="50" viewBox="0 0 50 50" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path
+            d="M37.5 14.9165C37.375 14.8957 37.2292 14.8957 37.1042 14.9165C34.2292 14.8123 31.9375 12.4582 31.9375 9.5415C31.9375 6.56234 34.3333 4.1665 37.3125 4.1665C40.2917 4.1665 42.6875 6.58317 42.6875 9.5415C42.6667 12.4582 40.375 14.8123 37.5 14.9165Z"
+            stroke="#1A232D" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" />
+          <path
+            d="M35.354 30.0834C38.2082 30.5626 41.354 30.0626 43.5623 28.5834C46.4998 26.6251 46.4998 23.4168 43.5623 21.4584C41.3332 19.9794 38.1457 19.4793 35.2915 19.9793"
+            stroke="#1A232D" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" />
+          <path
+            d="M12.4375 14.9165C12.5625 14.8957 12.7083 14.8957 12.8333 14.9165C15.7083 14.8123 18 12.4582 18 9.5415C18 6.56234 15.6042 4.1665 12.625 4.1665C9.64583 4.1665 7.25 6.58317 7.25 9.5415C7.27083 12.4582 9.5625 14.8123 12.4375 14.9165Z"
+            stroke="#1A232D" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" />
+          <path
+            d="M14.5833 30.0834C11.7292 30.5626 8.58333 30.0626 6.375 28.5834C3.4375 26.6251 3.4375 23.4168 6.375 21.4584C8.60417 19.9794 11.7917 19.4793 14.6458 19.9793"
+            stroke="#1A232D" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" />
+          <path
+            d="M25.0001 30.4791C24.8751 30.4582 24.7293 30.4582 24.6043 30.4791C21.7293 30.3749 19.4375 28.0207 19.4375 25.1041C19.4375 22.1249 21.8334 19.729 24.8126 19.729C27.7917 19.729 30.1876 22.1457 30.1876 25.1041C30.1667 28.0207 27.8751 30.3957 25.0001 30.4791Z"
+            stroke="#1A232D" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" />
+          <path
+            d="M18.9375 37.0415C16 38.9998 16 42.2082 18.9375 44.1665C22.2709 46.3957 27.7292 46.3957 31.0626 44.1665C34.0001 42.2082 34.0001 38.9998 31.0626 37.0415C27.7501 34.8332 22.2709 34.8332 18.9375 37.0415Z"
+            stroke="#1A232D" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" />
+        </svg>
+      </div>
+    </div>
+    <div
+      class="card col-span-12 md:col-span-5 lg:col-span-4 border-l-4 border-primary flex items-center justify-between shadow-md rounded-3xl p-4 px-6 gap-2">
+      <div class="content">
+        <h2 class="mb-4 text-lg text-black_color font-medium">{{ 'ALARMS.TOTAL_PERMISSIONS' | translate }}
+        </h2>
+        @if(loadingState()){
+        <p-skeleton width="100%" styleClass="mb-2" />
+        }@else {
+        <p class="text-xl font-semibold">{{role_summary()?.totalPermissions}}</p>
+        }
+      </div>
+      <div class="icon">
+        <svg width="50" height="50" viewBox="0 0 50 50" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path
+            d="M43.5624 23.1667C43.5624 33.3542 36.1666 42.8958 26.0624 45.6875C25.3749 45.875 24.6249 45.875 23.9374 45.6875C13.8332 42.8958 6.43738 33.3542 6.43738 23.1667V14.0208C6.43738 12.3124 7.72907 10.375 9.33323 9.72912L20.9374 4.97919C23.5416 3.91669 26.4791 3.91669 29.0833 4.97919L40.6874 9.72912C42.2708 10.375 43.5833 12.3124 43.5833 14.0208L43.5624 23.1667Z"
+            stroke="#D51C54" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" />
+          <path
+            d="M25 26.0416C27.3013 26.0416 29.1667 24.1762 29.1667 21.875C29.1667 19.5738 27.3013 17.7083 25 17.7083C22.6988 17.7083 20.8334 19.5738 20.8334 21.875C20.8334 24.1762 22.6988 26.0416 25 26.0416Z"
+            stroke="#D51C54" stroke-width="3" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round" />
+          <path d="M25 26.0417V32.2917" stroke="#D51C54" stroke-width="3" stroke-miterlimit="10" stroke-linecap="round"
+            stroke-linejoin="round" />
+        </svg>
+
+      </div>
+    </div>
+    <div
+      class="card col-span-12 md:col-span-5 border-l-4 border-success_color lg:col-span-4 flex items-center justify-between shadow-md rounded-3xl p-4 px-6 gap-2">
+      <div class="content">
+        <h2 class="mb-4 text-lg text-black_color font-medium">{{ 'ALARMS.ROLES_GROWTH' | translate }}</h2>
+        @if(loadingState()){
+        <p-skeleton width="100%" styleClass="mb-2" />
+        }@else {
+        <p class="text-sm  text-success_color font-semibold">{{role_summary()?.rolesGrowth}}</p>
+        }
+      </div>
+      <div class="icon">
+        <svg width="50" height="50" viewBox="0 0 50 50" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M15 19.6665V27.6665" stroke="#14AB46" stroke-width="3" stroke-linecap="round"
+            stroke-linejoin="round" />
+          <path d="M25 15.6665V32.6665" stroke="#14AB46" stroke-width="3" stroke-linecap="round"
+            stroke-linejoin="round" />
+          <path d="M35 19.6665V27.6665" stroke="#14AB46" stroke-width="3" stroke-linecap="round"
+            stroke-linejoin="round" />
+        </svg>
+      </div>
+    </div>
+  </div> -->
+
+  <div [ngClass]="{'rtl_dir':is_arabic() , 'ltr_dir':!is_arabic()}" class="devices_table">
+    <div class="table_head m-2 flex flex-wrap items-center justify-between">
+      <div class="flex items-center gap-3">
+        <h2 class="font-medium mb-3 text-2xl">{{ 'ALARMS.ALARM' | translate }}</h2>
+      </div>
+      <div class="flex items-center gap-4 flex-wrap flex-row-reverse">
+        <button [routerLink]="['/iotech_app/roles-management/action']"
+          class="bg-primary px-4 py-3 rounded-xl w-32 text-white_color">
+          {{ 'ALARMS.ADD' | translate }}
+        </button>
+        <div class="adon-input relative w-80">
+          <input (input)="handleSearch()" [(ngModel)]="searchTerm" pInputText
+            [placeholder]="'ALARMS.SEARCH_PLC' | translate" />
+          <i class="fi fi-rr-search text-xl flex items-center justify-center text-gray_light"></i>
+        </div>
+      </div>
+    </div>
+    <p-table [paginator]="true" [totalRecords]="alarm_list.length" [lazy]="true" [rows]="per_page"
+      [tableStyle]="{'min-width': '50rem'}" [value]="alarm_list">
+      <ng-template pTemplate="header" let-columns>
+        <tr>
+          <th>{{ 'ALARMS.NAME' | translate }}</th>
+          <th>{{ 'ALARMS.Assigned_Devices' | translate }}</th>
+          <th>{{ 'ALARMS.CREATED_AT' | translate }}</th>
+          <th></th>
+        </tr>
+      </ng-template>
+      <ng-template pTemplate="body" let-device let-columns="columns">
+        <tr class="rounded-full">
+          <td>{{device?.name}}</td>
+          <td>{{device?.assigned}}</td>
+          <td>{{device?.created_at}}</td>
+          <td class="cursor-pointer">
+            <svg class="mx-auto" width="25" height="25" viewBox="0 0 25 25" fill="none"
+              xmlns="http://www.w3.org/2000/svg">
+              <path
+                d="M5.20833 10.4167C4.0625 10.4167 3.125 11.3542 3.125 12.5C3.125 13.6458 4.0625 14.5833 5.20833 14.5833C6.35417 14.5833 7.29167 13.6458 7.29167 12.5C7.29167 11.3542 6.35417 10.4167 5.20833 10.4167Z"
+                stroke="#1A232D" stroke-width="1.5" />
+              <path
+                d="M19.7917 10.4167C18.6459 10.4167 17.7084 11.3542 17.7084 12.5C17.7084 13.6458 18.6459 14.5833 19.7917 14.5833C20.9375 14.5833 21.875 13.6458 21.875 12.5C21.875 11.3542 20.9375 10.4167 19.7917 10.4167Z"
+                stroke="#1A232D" stroke-width="1.5" />
+              <path
+                d="M12.5 10.4167C11.3541 10.4167 10.4166 11.3542 10.4166 12.5C10.4166 13.6458 11.3541 14.5833 12.5 14.5833C13.6458 14.5833 14.5833 13.6458 14.5833 12.5C14.5833 11.3542 13.6458 10.4167 12.5 10.4167Z"
+                stroke="#1A232D" stroke-width="1.5" />
+            </svg>
+          </td>
+        </tr>
+      </ng-template>
+      <ng-template pTemplate="emptymessage" let-columns>
+        <tr>
+          <td [attr.colspan]="8">
+            <app-empty-state [loadingState]="loadingState()"></app-empty-state>
+          </td>
+        </tr>
+      </ng-template>
+    </p-table>
+  </div>
+</section>
+
+<p-menu #menu appendTo="body" styleClass="namespace_action" [model]="items" [popup]="true" />
+
+
+<!-- <p-dialog (onHide)="confirm_input.value = '' ; current_id_selected = null" header="" styleClass="select_type_popup"
+  [(visible)]="showDeletePopUp" [dismissableMask]="true" [modal]="true"
+  [breakpoints]="{ '1199px': '50vw', '575px': '90vw' }" [style]="{ width: '40vw' }" [draggable]="false"
+  [resizable]="false">
+  <div class="icon_over_lay flex items-center round justify-center">
+    <svg width="40" height="40" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M35 9.96663C29.45 9.41663 23.8667 9.1333 18.3 9.1333C15 9.1333 11.7 9.29997 8.4 9.6333L5 9.96663"
+        stroke="#D51C54" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+      <path
+        d="M14.167 8.2835L14.5337 6.10016C14.8003 4.51683 15.0003 3.3335 17.817 3.3335H22.1837C25.0003 3.3335 25.217 4.5835 25.467 6.11683L25.8337 8.2835"
+        stroke="#D51C54" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+      <path
+        d="M31.4163 15.2334L30.333 32.0167C30.1496 34.6334 29.9996 36.6667 25.3496 36.6667H14.6497C9.99967 36.6667 9.84967 34.6334 9.66634 32.0167L8.58301 15.2334"
+        stroke="#D51C54" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+      <path d="M17.2168 27.5H22.7668" stroke="#D51C54" stroke-width="2" stroke-linecap="round"
+        stroke-linejoin="round" />
+      <path d="M15.833 20.8335H24.1663" stroke="#D51C54" stroke-width="2" stroke-linecap="round"
+        stroke-linejoin="round" />
+    </svg>
+
+
+  </div>
+  <div class=" text-center mb-8">
+    <h5 class="text-2xl  text-primary font-medium ">Delete Role</h5>
+    <p class="text-primary/50">{{ 'DEVICES.DELETE_CONFIRM_MSG' | translate }} <strong>{{ 'DEVICES.DELETE' | translate
+        }}</strong> </p>
+  </div>
+  <div class="devices_types__container ">
+    <div class="form-group mb-5">
+      <div class="custom_input ">
+        <input #confirm_input id="name" class="custom_input" pInputText
+          [placeholder]="'DEVICES.DELETE_PLACEHOLDER' | translate" />
+      </div>
+    </div>
+  </div>
+  <ng-template pTemplate="footer">
+    <div class="flex justify-center">
+      <div class="action_btn">
+        <p-button [loading]="loading_delete()" (onClick)="handleDelete()"
+          [disabled]="confirm_input.value.toLocaleLowerCase().trim() != 'delete'"
+          [label]="'DEVICES.DELETE' | translate" />
+      </div>
+    </div>
+  </ng-template>
+</p-dialog> -->

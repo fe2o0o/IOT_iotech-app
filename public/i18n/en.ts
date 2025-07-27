@@ -54,7 +54,7 @@ export const enLang = {
       "USER_MANAGEMENT": "User Management",
       "ROLE_MANAGEMENT": "Roles & Permissions",
       "NOTIFICATIONS": "Notifications",
-      "ALARMS": "Alarms",
+      "ALARMS": "Alarm Templates",
       "Notification_Group":"Notification Group"
     },
     BREADCRUMB: {
@@ -364,6 +364,14 @@ Calibration: "Calibration",
     "Use_Case": "Use Case",
     "Barometric_Pressure": "Barometric Pressure",
     "Boiling_Point_Of_Water": "Boiling PointOfWater"
+    },
+    ALARMS: {
+      "ALARM": "Alarm",
+      SEARCH_PLC: "Search by alarm",
+      ADD: "Add Alarm",
+      NAME: "Name",
+      "Assigned_Devices": "Assigned Devices",
+      "CREATED_AT":"Created at"
   }
 }
 
