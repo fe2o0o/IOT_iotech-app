@@ -108,7 +108,7 @@
 
       <p-accordion [expandIcon]="'fi fi-rr-angle-small-down'" [collapseIcon]="'fi fi-rr-angle-small-up'"
         [activeIndex]="0">
-        @for(device of devicesTypes() ; track device){
+        @for(device of devicesTypes() ; track $index){
 
         <p-accordionTab tabStyleClass="mb-4" [header]="device.deviceType">
           <div class="flex flex-wrap items-center justify-between pb-6 mb-6 border-b border-gray_light">
