@@ -56,7 +56,7 @@
     </div>
     }
     <div [class]="{'hidden': loadingChart() || !current_chart_data().length}" class="chart overflow-x-auto">
-      <p-chart #alarms_chart type="line" height="400px" [width]="chartWidth+'%'" [data]="data_alarms"
+      <p-chart #alarms_chart type="line" height="400px" [width]="chartWidth()+'%'" [data]="data_alarms"
         [options]="optionsAlarm" />
     </div>
   </div>
@@ -65,9 +65,9 @@
 
 
 
-<p-dialog [modal]="true" header="{{ 'DEVICES.REANGE_DATE_FILTER' | translate }}" styleClass="filterDailog"
-  [position]="is_arabic ? 'left':'right'" [draggable]="false" [(visible)]="filterVisiblle" [dismissableMask]="true"
-  [breakpoints]="{
+<p-dialog (onHide)="filterForm.reset()" [modal]="true" header="{{ 'DEVICES.REANGE_DATE_FILTER' | translate }}"
+  styleClass="filterDailog" [position]="is_arabic ? 'left':'right'" [draggable]="false" [(visible)]="filterVisiblle"
+  [dismissableMask]="true" [breakpoints]="{
         '1920px': '30vw',
         '768px': '75vw',
         '576px': '90vw'

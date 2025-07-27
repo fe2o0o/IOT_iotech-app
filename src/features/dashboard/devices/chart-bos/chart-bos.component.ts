@@ -1,36 +1,31 @@
-import { Component, input, signal, SimpleChanges, ViewChild } from '@angular/core';
+import { ChangeDetectionStrategy, Component, input, signal, SimpleChanges, ViewChild } from '@angular/core';
 import { FormGroup, FormControl, Validators, AbstractControl, ValidationErrors } from '@angular/forms';
 import { TranslateService } from '@ngx-translate/core';
 import { DevicesService } from '../../../../core/services/devices.service';
 import { SharedService } from '../../../../shared/services/shared.service';
+import { ChangeDetectorRef } from '@angular/core';
 @Component({
   selector: 'app-chart-bos',
   standalone: false,
   templateUrl: './chart-bos.component.html',
-  styleUrl: './chart-bos.component.scss'
+  styleUrl: './chart-bos.component.scss',
+  changeDetection:ChangeDetectionStrategy.OnPush
 })
 export class ChartBOSComponent {
-  constructor(private _SharedService:SharedService,private translate: TranslateService , private _DevicesService:DevicesService) {
+  constructor(private _ChangeDetectorRef:ChangeDetectorRef,private _SharedService:SharedService,private translate: TranslateService , private _DevicesService:DevicesService) {
     this.peopleStatus=[
       {
         id: 1,
         name: this.translate.instant('DEVICES.Distance'),
         selected: true,
         icon: 'fi fi-rr-distribute-spacing-vertical'
-      },
-      {
-        id: 2,
-        name: this.translate.instant('DEVICES.Occupancy'),
-        selected: true,
-        icon: 'fi fi-rr-users-alt'
       }
-      ,
-      {
-        id: 3,
-        name: this.translate.instant('DEVICES.Calibration'),
-        selected: true,
-        icon: 'fi fi-rr-rewind'
-      }
+      // {
+      //   id: 2,
+      //   name: this.translate.instant('DEVICES.Occupancy'),
+      //   selected: true,
+      //   icon: 'fi fi-rr-users-alt'
+      // }
     ]
   }
 
@@ -40,7 +35,7 @@ export class ChartBOSComponent {
     this.initFilterForm()
     this.getChartData()
   }
-  chartWidth:number = 100
+  chartWidth = signal<number>(100)
   ngOnChanges(changes: SimpleChanges): void {
     if (changes['current_identifier_input'].currentValue) {
         this.current_identifier = changes['current_identifier_input'].currentValue
@@ -62,11 +57,10 @@ export class ChartBOSComponent {
       this.current_chart_data.set(res?.data)
       console.log("data chart", this.current_chart_data());
       if (this.current_chart_data().length > 10) {
-        this.chartWidth += this.current_chart_data.length * 4;
-        console.log("width chart", this.chartWidth);
+        this.chartWidth.set(this.current_chart_data().length * 4)
 
       } else {
-        this.chartWidth = 100;
+        this.chartWidth.set(100);
       }
       this.data_alarms.labels = res?.data?.map((item: any) => {
         return item?.lastSeen
@@ -75,17 +69,13 @@ export class ChartBOSComponent {
       this.data_alarms.datasets[0].data = res?.data?.map((item: any) => {
         return item?.distance
       })
-      this.data_alarms.datasets[1].data = res?.data?.map((item: any) => {
-        return item?.occupancy == 'N/A' ? 0 : item?.occupancy
-      })
-      this.data_alarms.datasets[2].data = res?.data?.map((item: any) => {
-        return item?.calibration == 'N/A' ? 0 : item?.calibration
-      })
 
-      this.alarms_chart?.chart?.update()
+      this.alarms_chart?.chart?.update();
+
       this.loadingChart.set(false);
       this.loadingFilter = false;
       this.filterVisiblle = false;
+      this._ChangeDetectorRef.markForCheck()
 
     })
   }
@@ -155,30 +145,6 @@ export class ChartBOSComponent {
         backgroundColor: '#9F8A60',
         borderColor: '#9F8A60',
         data: [10 , 16 ,18],
-        borderRadius: 6,
-        fill: false, // To avoid filling under the line, you can set fill: true for an area chart
-        tension: 0.4, // Make the line curved
-        borderCapStyle: 'round', // Rounded line caps
-        borderJoinStyle: 'round', // Rounded line joins
-        pointRadius: 5, // Optional: Adjust point size
-      },
-      {
-        label: 'occupancy',
-        backgroundColor: '#1A232D',
-        borderColor: '#1A232D',
-        data: [20 , 39,38],
-        borderRadius: 6,
-        fill: false, // To avoid filling under the line, you can set fill: true for an area chart
-        tension: 0.4, // Make the line curved
-        borderCapStyle: 'round', // Rounded line caps
-        borderJoinStyle: 'round', // Rounded line joins
-        pointRadius: 5, // Optional: Adjust point size
-      },
-      {
-        label: 'calibration',
-        backgroundColor: '#FF9500',
-        borderColor: '#FF9500',
-        data: [],
         borderRadius: 6,
         fill: false, // To avoid filling under the line, you can set fill: true for an area chart
         tension: 0.4, // Make the line curved
