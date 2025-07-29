@@ -87,7 +87,7 @@
         <h2 class="font-medium mb-3 text-2xl">{{ 'ALARMS.ALARM' | translate }}</h2>
       </div>
       <div class="flex items-center gap-4 flex-wrap flex-row-reverse">
-        <button [routerLink]="['/iotech_app/roles-management/action']"
+        <button [routerLink]="['/iotech_app/alarms/action']"
           class="bg-primary px-4 py-3 rounded-xl w-32 text-white_color">
           {{ 'ALARMS.ADD' | translate }}
         </button>
@@ -98,8 +98,8 @@
         </div>
       </div>
     </div>
-    <p-table [paginator]="true" [totalRecords]="alarm_list.length" [lazy]="true" [rows]="per_page"
-      [tableStyle]="{'min-width': '50rem'}" [value]="alarm_list">
+    <p-table [paginator]="true" [totalRecords]="alarm_list.length" [lazy]="true" (onLazyLoad)="getAlarmData()"
+      [rows]="per_page" [tableStyle]="{'min-width': '50rem'}" [value]="alarm_list">
       <ng-template pTemplate="header" let-columns>
         <tr>
           <th>{{ 'ALARMS.NAME' | translate }}</th>
@@ -110,10 +110,10 @@
       </ng-template>
       <ng-template pTemplate="body" let-device let-columns="columns">
         <tr class="rounded-full">
-          <td>{{device?.name}}</td>
-          <td>{{device?.assigned}}</td>
-          <td>{{device?.created_at}}</td>
-          <td class="cursor-pointer">
+          <td>{{device?.templateName}}</td>
+          <td>{{device?.assignedDevices}}</td>
+          <td>{{device?.creationTime}}</td>
+          <td (click)="menu.toggle($event)" class="cursor-pointer">
             <svg class="mx-auto" width="25" height="25" viewBox="0 0 25 25" fill="none"
               xmlns="http://www.w3.org/2000/svg">
               <path

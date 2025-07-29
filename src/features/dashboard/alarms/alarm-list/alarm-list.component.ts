@@ -3,7 +3,8 @@ import { ChangeDetectionStrategy, Component, signal } from '@angular/core';
 import { SharedService } from '../../../../shared/services/shared.service';
 import { TranslateService } from '@ngx-translate/core';
 import { Subject } from 'rxjs';
-
+import { AlarmService } from '../../../../core/services/alarm.service';
+import { ChangeDetectorRef } from '@angular/core';
 @Component({
   selector: 'app-alarm-list',
   standalone: false,
@@ -12,7 +13,7 @@ import { Subject } from 'rxjs';
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class AlarmListComponent {
-  constructor(private _TranslationsService:TranslationsService,private _SharedService: SharedService, private _TranslateService: TranslateService) {
+  constructor(private _ChangeDetectorRef:ChangeDetectorRef,private _AlarmService:AlarmService,private _TranslationsService:TranslationsService,private _SharedService: SharedService, private _TranslateService: TranslateService) {
     this.items = [
       {
         items: [
@@ -84,4 +85,18 @@ export class AlarmListComponent {
   is_arabic = signal<boolean>(false);
   loadingState = signal<boolean>(false);
   showRoleAction: boolean = false;
+
+
+
+
+  getAlarmData() {
+    this.loadingState.set(true)
+    this.alarm_list = []
+    this._AlarmService.getAllAlarms().subscribe((res: any) => {
+      console.log("res alarm", res?.data);
+      this.alarm_list = res?.data
+      this.loadingState.set(false);
+      this._ChangeDetectorRef.markForCheck()
+    })
+  }
 }

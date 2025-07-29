@@ -1,0 +1,123 @@
+<section class="bg-white_color shadow p-8 rounded-xl">
+  <form [formGroup]="alarm_form" action="">
+    <div class="form-group input_group col-span-12 lg:col-span-6 mb-6">
+      <div class=" ">
+        <label class="block mb-2" for="">{{"ALARMS.NAME"|translate}}</label>
+        <input pInputText formControlName="templateName" [placeholder]="'ALARMS.NAME' | translate" />
+      </div>
+      @if(alarm_form.get('templateName')?.errors && alarm_form.get('templateName')?.touched){
+      <p class="p-2 text-sm text-danger_color m-0">{{"ALARMS.ALARM_NAME_REQ"|translate}}</p>
+      }
+    </div>
+
+
+
+    <div class="form-group input_group col-span-12 lg:col-span-12 mb-6">
+      <label class="block mb-2" for="">{{"ALARMS.DEVICE_TYPE"|translate}}</label>
+
+      <p-dropdown (onChange)="handleGetSegement($event)" [options]="deviceTypes" optionValue="id"
+        [showClear]="alarm_form.get('deviceType')?.value" formControlName="deviceType" optionValue="deviceType"
+        appendTo="body" optionLabel="deviceType" [placeholder]="'ALARMS.DEVICE_TYPE' | translate" />
+      @if(alarm_form.get('deviceType')?.errors && alarm_form.get('deviceType')?.touched){
+      <p class="p-2 text-sm text-danger_color m-0">{{"ALARMS.DEVICE_TYPE_REQ"|translate}}</p> }
+    </div>
+  </form>
+
+
+  @for( segment of current_segments() ; track $index){
+  <p-accordion styleClass="segemnt_acc" class="w-full" expandIcon="dfsdf" collapseIcon="dfsdf">
+    <p-accordionTab>
+      <ng-template pTemplate="header">
+        <div class="flex items-center relative justify-between flex-1">
+          <p>{{segment?.name}}</p>
+
+          <div class="">
+            <p-inputSwitch (onChange)="stopPropergation($event)" [(ngModel)]="segment.isActive" />
+          </div>
+        </div>
+
+      </ng-template>
+
+
+
+      <div class="p-4 border border-gold_color rounded-3xl">
+        <h4 class="capitalize font-medium text-lg text-black_color mb-8">{{segment?.name + ' Ranges'}}</h4>
+
+
+        <div class="flex flex-wrap items-center justify-between mb-6">
+          <p>Ranges</p>
+
+          <div class="timeline w-3/4 ms-auto flex">
+            @for(seg of segment?.range ; track seg ; let i = $index){
+            <div [class]="seg?.color" class="single_segment relative w-1/4 flex items-center">
+              @if(i == 0){
+              <span [ngStyle]="{'color':seg?.color}" class="line_number me-1">{{seg?.min}}</span>
+              <div [ngStyle]="{'background-color':seg?.color}" class="doted"></div>
+
+              }
+              @if(i != segment?.range?.length -1 ){
+              <span [ngStyle]="{'color':seg?.color}" class="dot_number">{{seg?.max}}</span>
+              }
+              <div [ngStyle]="{'background-color':seg?.color}" class="line flex-1 rounded-lg"></div>
+              <!-- @if(i != segment?.range?.length -1 ){ -->
+              <div [ngStyle]="{'background-color':seg?.color}" class="doted"></div>
+              <!-- } -->
+
+              @if(i == segment?.range?.length -1 ){
+              <span [ngStyle]="{'color':seg?.color}">
+                @if(seg?.max > 10000){
+                <i class="fi fi-tr-infinity text-xl  ms-1"></i>
+                }@else {
+                {{seg?.max}}
+                }
+              </span>
+              }
+            </div>
+            }
+          </div>
+
+        </div>
+
+
+
+        <div>
+          @for(seg of segment?.range ; track seg ; let i = $index){
+          <div class="single_range flex items-center justify-between p-4 mb-3 rounded-2xl border border-gold_color">
+            <div class="flex items-center gap-2">
+              <div [style.backgroundColor]="seg?.color" class="circle">
+              </div>
+              <div class="data flex items-center gap-2">
+                <p [style.color]="seg?.color" class=" font-medium text-lg">{{seg?.label}}</p>
+                <span>{{ '
+                  < ' +seg?.max}}</span>
+              </div>
+            </div>
+
+
+            <div>
+              <button (click)="seg.isActive = !seg.isActive">
+                <i [ngClass]="{' text-primary': seg.isActive}" class="fi text-2xl fi-rr-light-emergency-on"></i>
+                    </button>
+              </div>
+
+            </div>
+            }
+          </div>
+        </div>
+
+    </p-accordionTab>
+  </p-accordion>
+  }
+
+
+
+
+  <div class="actions flex items-center gap-4 justify-end">
+    <div class="cancel_btn">
+      <p-button label="Cancel " />
+    </div>
+    <div class="action_btn ">
+      <p-button [disabled]="alarm_form.invalid" [label]="currentUpdateId ? ' Update Alarm' :'Add Alarm'" />
+    </div>
+  </div>
+</section>

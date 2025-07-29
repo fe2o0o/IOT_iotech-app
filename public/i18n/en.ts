@@ -371,7 +371,10 @@ Calibration: "Calibration",
       ADD: "Add Alarm",
       NAME: "Name",
       "Assigned_Devices": "Assigned Devices",
-      "CREATED_AT":"Created at"
+      "CREATED_AT": "Created at",
+      ALARM_NAME_REQ: "Alarm Name Is Required",
+      DEVICE_TYPE: "Device Type",
+      DEVICE_TYPE_REQ:"Device Type is Required"
   }
 }
 

@@ -5,10 +5,12 @@ import { AlarmsRoutingModule } from './alarms-routing.module';
 import { SharedModule } from '../../../shared/modules/shared/shared.module';
 import { SharedService } from '../../../shared/services/shared.service';
 import { AlarmListComponent } from './alarm-list/alarm-list.component';
+import { AlaramActionComponent } from './alaram-action/alaram-action.component';
 
 @NgModule({
   declarations: [
-    AlarmListComponent
+    AlarmListComponent,
+    AlaramActionComponent
   ],
   imports: [
     CommonModule,
