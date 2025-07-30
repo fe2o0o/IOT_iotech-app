@@ -117,7 +117,8 @@
       <p-button label="Cancel " />
     </div>
     <div class="action_btn ">
-      <p-button [disabled]="alarm_form.invalid" [label]="currentUpdateId ? ' Update Alarm' :'Add Alarm'" />
+      <p-button [loading]="load_action()" (onClick)="handleAlarmAction()" [disabled]="alarm_form.invalid"
+        [label]="currentUpdateId ? ' Update Alarm' :'Add Alarm'" />
     </div>
   </div>
 </section>

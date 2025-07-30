@@ -2,6 +2,8 @@ import { Component, OnInit, signal } from '@angular/core';
 import { SharedService } from '../../../../shared/services/shared.service';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { AlarmService } from '../../../../core/services/alarm.service';
+import { MessageService } from 'primeng/api';
+import { Router } from '@angular/router';
 @Component({
   selector: 'app-alaram-action',
   standalone: false,
@@ -9,7 +11,7 @@ import { AlarmService } from '../../../../core/services/alarm.service';
   styleUrl: './alaram-action.component.scss'
 })
 export class AlaramActionComponent implements OnInit {
-  constructor(private _AlarmService:AlarmService,private _SharedService:SharedService) {
+  constructor(private _Router:Router , private _MessageService:MessageService,private _AlarmService:AlarmService,private _SharedService:SharedService) {
     this._SharedService.breadCrumbTitle.next('SIDEBAR.ALARMS');
   }
 
@@ -46,6 +48,42 @@ export class AlaramActionComponent implements OnInit {
       templateName: new FormControl(null, [Validators.required]),
       deviceType: new FormControl(null , [Validators.required])
     })
+  }
+
+
+
+  load_action = signal<boolean>(false)
+
+
+  handleAlarmAction() {
+    this.load_action.set(true)
+    const req = {
+      ...this.alarm_form.value,
+      segments: this.current_segments().map((ele: any) => {
+        return {
+          ...ele,
+          // range: ''
+        }
+      })
+    }
+
+    const isUpdate$ = !this.currentUpdateId ? this._AlarmService.storeAlarm(req) : null;
+
+
+    isUpdate$?.subscribe({
+      next: (res: any) => {
+            this.load_action.set(false)
+        this._MessageService.add({ severity: 'success', summary: 'Success', detail: 'Alarm Added Successfully' })
+        this._Router.navigate(['/iotech_app/alarms/list'])
+      },
+      error: (err: any) => {
+            this.load_action.set(false)
+
+      }
+    })
+
+
+
   }
 
 

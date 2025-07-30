@@ -21,6 +21,9 @@ export class AlarmService {
   }
 
 
+  storeAlarm(payload:any): Observable<any>{
+    return this._HttpClient.post(environment.app_api_url + `AlarmTemplate/StoreAlarmTemplate` ,payload  )
+  }
   getDeviceTypeSegments(devicType: any): Observable<any>{
     return this._HttpClient.get(environment.app_api_url + `AlarmTemplate/GetDeviceTypeAlarmSegmentsDefaultS?deviceType=${devicType}`)
   }
