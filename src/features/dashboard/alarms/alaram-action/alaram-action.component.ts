@@ -5,6 +5,7 @@ import { AlarmService } from '../../../../core/services/alarm.service';
 import { MessageService } from 'primeng/api';
 import { Router } from '@angular/router';
 import { ActivatedRoute } from '@angular/router';
+import { ChangeDetectorRef } from '@angular/core';
 @Component({
   selector: 'app-alaram-action',
   standalone: false,
@@ -13,12 +14,13 @@ import { ActivatedRoute } from '@angular/router';
   changeDetection:ChangeDetectionStrategy.OnPush
 })
 export class AlaramActionComponent implements OnInit {
-  constructor(private _ActivatedRoute:ActivatedRoute,private _Router:Router , private _MessageService:MessageService,private _AlarmService:AlarmService,private _SharedService:SharedService) {
+  constructor(private _ChangeDetectorRef:ChangeDetectorRef,private _ActivatedRoute:ActivatedRoute,private _Router:Router , private _MessageService:MessageService,private _AlarmService:AlarmService,private _SharedService:SharedService) {
     this._SharedService.breadCrumbTitle.next('SIDEBAR.ALARMS');
       this.initAlarmForm();
     this.getDevicesType();
     this._ActivatedRoute.paramMap.subscribe((res: any) => {
       if (res.get('id')) {
+        this.currentUpdateId = res.get('id')
         this._AlarmService.getAlarmById(res.get('id')).subscribe((res: any) => {
           console.log("res" , res?.data);
           this.initAlarmForm(res?.data);
@@ -60,7 +62,7 @@ export class AlaramActionComponent implements OnInit {
       templateName: new FormControl(data ? data?.templateName : null, [Validators.required]),
       deviceType: new FormControl(data ? data?.deviceType : null , [Validators.required])
     })
-
+    this._ChangeDetectorRef.markForCheck()
   }
 
 
