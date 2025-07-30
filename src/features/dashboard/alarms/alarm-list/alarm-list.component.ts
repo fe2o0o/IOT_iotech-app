@@ -5,6 +5,7 @@ import { TranslateService } from '@ngx-translate/core';
 import { Subject } from 'rxjs';
 import { AlarmService } from '../../../../core/services/alarm.service';
 import { ChangeDetectorRef } from '@angular/core';
+import { Router } from '@angular/router';
 @Component({
   selector: 'app-alarm-list',
   standalone: false,
@@ -13,7 +14,7 @@ import { ChangeDetectorRef } from '@angular/core';
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class AlarmListComponent {
-  constructor(private _ChangeDetectorRef:ChangeDetectorRef,private _AlarmService:AlarmService,private _TranslationsService:TranslationsService,private _SharedService: SharedService, private _TranslateService: TranslateService) {
+  constructor(private _Router:Router,private _ChangeDetectorRef:ChangeDetectorRef,private _AlarmService:AlarmService,private _TranslationsService:TranslationsService,private _SharedService: SharedService, private _TranslateService: TranslateService) {
     this.items = [
       {
         items: [
@@ -21,22 +22,22 @@ export class AlarmListComponent {
             label: this._TranslateService.instant('DEVICES.EDIT'),
             icon: 'fi fi-rr-edit',
             command: () => {
-              // this._Router.navigate(['iotech_app/roles-management/action', this.current_id_selected])
+              this._Router.navigate(['iotech_app/alarms/action', this.current_id_selected])
             }
 
           },
-          {
-            label: this._TranslateService.instant('DEVICES.VIEW'),
-            icon: 'fi fi-rr-eye',
-            command: () => {
-              // this._Router.navigate(['iotech_app/roles-management/view', this.current_id_selected])
-            }
-          },
+          // {
+          //   label: this._TranslateService.instant('DEVICES.VIEW'),
+          //   icon: 'fi fi-rr-eye',
+          //   command: () => {
+          //     // this._Router.navigate(['iotech_app/roles-management/view', this.current_id_selected])
+          //   }
+          // },
           {
             label: this._TranslateService.instant('DEVICES.DELETE'),
             icon: 'fi fi-rr-trash',
             command: () => {
-              // this.showDeletePopUp = true;
+              this.showDeletePopUp = true;
             }
           }
         ]
@@ -52,7 +53,12 @@ export class AlarmListComponent {
     });
   }
 
+  loading_delete = signal<boolean>(false)
+  current_id_selected: any;
+  handleDelete() {
 
+  }
+  showDeletePopUp:boolean = false
   alarm_list: any[] = [
     {
       id:1,

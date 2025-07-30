@@ -1,25 +1,37 @@
-import { Component, OnInit, signal } from '@angular/core';
+import { ChangeDetectionStrategy, Component, OnInit, signal } from '@angular/core';
 import { SharedService } from '../../../../shared/services/shared.service';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { AlarmService } from '../../../../core/services/alarm.service';
 import { MessageService } from 'primeng/api';
 import { Router } from '@angular/router';
+import { ActivatedRoute } from '@angular/router';
 @Component({
   selector: 'app-alaram-action',
   standalone: false,
   templateUrl: './alaram-action.component.html',
-  styleUrl: './alaram-action.component.scss'
+  styleUrl: './alaram-action.component.scss',
+  changeDetection:ChangeDetectionStrategy.OnPush
 })
 export class AlaramActionComponent implements OnInit {
-  constructor(private _Router:Router , private _MessageService:MessageService,private _AlarmService:AlarmService,private _SharedService:SharedService) {
+  constructor(private _ActivatedRoute:ActivatedRoute,private _Router:Router , private _MessageService:MessageService,private _AlarmService:AlarmService,private _SharedService:SharedService) {
     this._SharedService.breadCrumbTitle.next('SIDEBAR.ALARMS');
+      this.initAlarmForm();
+    this.getDevicesType();
+    this._ActivatedRoute.paramMap.subscribe((res: any) => {
+      if (res.get('id')) {
+        this._AlarmService.getAlarmById(res.get('id')).subscribe((res: any) => {
+          console.log("res" , res?.data);
+          this.initAlarmForm(res?.data);
+          this.current_segments.set(res?.data?.segments)
+        })
+      }
+    })
   }
 
   alarm_form!: FormGroup;
 
   ngOnInit(): void {
-    this.initAlarmForm();
-    this.getDevicesType()
+
   }
 
   currentUpdateId: any = null;
@@ -43,11 +55,12 @@ export class AlaramActionComponent implements OnInit {
   current_segments = signal<any[]>([])
 
   deviceTypes:any[] = []
-  initAlarmForm() {
+  initAlarmForm(data?:any) {
     this.alarm_form = new FormGroup({
-      templateName: new FormControl(null, [Validators.required]),
-      deviceType: new FormControl(null , [Validators.required])
+      templateName: new FormControl(data ? data?.templateName : null, [Validators.required]),
+      deviceType: new FormControl(data ? data?.deviceType : null , [Validators.required])
     })
+
   }
 
 
@@ -59,12 +72,7 @@ export class AlaramActionComponent implements OnInit {
     this.load_action.set(true)
     const req = {
       ...this.alarm_form.value,
-      segments: this.current_segments().map((ele: any) => {
-        return {
-          ...ele,
-          // range: ''
-        }
-      })
+      segments: this.current_segments()
     }
 
     const isUpdate$ = !this.currentUpdateId ? this._AlarmService.storeAlarm(req) : null;

@@ -6,7 +6,8 @@ import { AlaramActionComponent } from './alaram-action/alaram-action.component';
 const routes: Routes = [
   { path: '', redirectTo: 'list', pathMatch: 'full' },
   { path: 'list', component: AlarmListComponent },
-  {path:'action' , component:AlaramActionComponent}
+  {path:'action' , component:AlaramActionComponent},
+  {path:'action/:id' , component:AlaramActionComponent},
 ];
 
 @NgModule({

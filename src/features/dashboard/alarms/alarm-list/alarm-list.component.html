@@ -113,7 +113,7 @@
           <td>{{device?.templateName}}</td>
           <td>{{device?.assignedDevices}}</td>
           <td>{{device?.creationTime}}</td>
-          <td (click)="menu.toggle($event)" class="cursor-pointer">
+          <td (click)="menu.toggle($event) ; current_id_selected = device?.id" class="cursor-pointer">
             <svg class="mx-auto" width="25" height="25" viewBox="0 0 25 25" fill="none"
               xmlns="http://www.w3.org/2000/svg">
               <path
@@ -143,7 +143,7 @@
 <p-menu #menu appendTo="body" styleClass="namespace_action" [model]="items" [popup]="true" />
 
 
-<!-- <p-dialog (onHide)="confirm_input.value = '' ; current_id_selected = null" header="" styleClass="select_type_popup"
+<p-dialog (onHide)="confirm_input.value = '' ; current_id_selected = null" header="" styleClass="select_type_popup"
   [(visible)]="showDeletePopUp" [dismissableMask]="true" [modal]="true"
   [breakpoints]="{ '1199px': '50vw', '575px': '90vw' }" [style]="{ width: '40vw' }" [draggable]="false"
   [resizable]="false">
@@ -166,7 +166,7 @@
 
   </div>
   <div class=" text-center mb-8">
-    <h5 class="text-2xl  text-primary font-medium ">Delete Role</h5>
+    <h5 class="text-2xl  text-primary font-medium ">Delete Alarm</h5>
     <p class="text-primary/50">{{ 'DEVICES.DELETE_CONFIRM_MSG' | translate }} <strong>{{ 'DEVICES.DELETE' | translate
         }}</strong> </p>
   </div>
@@ -187,4 +187,4 @@
       </div>
     </div>
   </ng-template>
-</p-dialog> -->
+</p-dialog>

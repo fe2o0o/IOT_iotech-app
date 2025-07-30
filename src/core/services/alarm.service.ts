@@ -27,4 +27,8 @@ export class AlarmService {
   getDeviceTypeSegments(devicType: any): Observable<any>{
     return this._HttpClient.get(environment.app_api_url + `AlarmTemplate/GetDeviceTypeAlarmSegmentsDefaultS?deviceType=${devicType}`)
   }
+
+  getAlarmById(id: any): Observable<any>{
+    return this._HttpClient.get(environment.app_api_url + `AlarmTemplate/GetAlarmTemplateById/${id}`)
+  }
 }
