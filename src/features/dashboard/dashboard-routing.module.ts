@@ -9,6 +9,7 @@ const routes: Routes = [
   {path:'users-management' , loadChildren:()=> import('./users-management/users-management.module').then(m => m.UsersManagementModule)},
   {path:'roles-management' , loadChildren:()=> import('./roles-managment/roles-managment.module').then(m => m.RolesManagmentModule)},
   {path:'alarms' , loadChildren:()=> import('./alarms/alarms.module').then(m => m.AlarmsModule)},
+  {path:'notification-managment' , loadChildren:()=> import('./notification/notification.module').then(m => m.NotificationModule)},
 ];
 
 @NgModule({

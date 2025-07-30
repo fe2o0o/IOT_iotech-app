@@ -1,0 +1,112 @@
+<section>
+
+  <div [ngClass]="{'rtl_dir':is_arabic() , 'ltr_dir':!is_arabic()}" class="devices_table">
+    <div class="table_head m-2 flex flex-wrap items-center justify-between">
+      <div class="flex items-center gap-3">
+        <h2 class="font-medium mb-3 text-2xl">{{ 'NOTIFICATIONS.Notifications' | translate }}</h2>
+      </div>
+      <div class="flex items-center gap-4 flex-wrap flex-row-reverse">
+        <button [routerLink]="['/iotech_app/notification-managment/action']"
+          class="bg-primary px-4 py-3 rounded-xl w-56 text-white_color">
+          {{ 'NOTIFICATIONS.ADD_NOT' | translate }}
+        </button>
+        <div class="adon-input relative w-64">
+          <input (input)="handleSearch()" [(ngModel)]="searchTerm" pInputText
+            [placeholder]="'NOTIFICATIONS.SEARCH_PLACE' | translate" />
+          <i class="fi fi-rr-search text-xl flex items-center justify-center text-gray_light"></i>
+        </div>
+      </div>
+    </div>
+    <p-table [paginator]="true" [totalRecords]="notification_list.length" [lazy]="true"
+      (onLazyLoad)="getNotificationData()" [rows]="per_page" [tableStyle]="{'min-width': '50rem'}"
+      [value]="notification_list">
+      <ng-template pTemplate="header" let-columns>
+        <tr>
+          <th>{{ 'NOTIFICATIONS.NAME' | translate }}</th>
+          <th>{{ 'NOTIFICATIONS.DEVICE' | translate }}</th>
+          <th>{{ 'NOTIFICATIONS.USERS' | translate }}</th>
+          <th>{{ 'NOTIFICATIONS.CREATED_AT' | translate }}</th>
+          <th></th>
+        </tr>
+      </ng-template>
+      <ng-template pTemplate="body" let-device let-columns="columns">
+        <tr class="rounded-full">
+          <td>{{device?.name}}</td>
+          <td>{{device?.devices?.length}}</td>
+          <td>{{device?.users?.length}}</td>
+          <td>{{device?.creationTime ?? 'N/A'}}</td>
+          <td (click)="menu.toggle($event) ; current_id_selected = device?.id" class="cursor-pointer">
+            <svg class="mx-auto" width="25" height="25" viewBox="0 0 25 25" fill="none"
+              xmlns="http://www.w3.org/2000/svg">
+              <path
+                d="M5.20833 10.4167C4.0625 10.4167 3.125 11.3542 3.125 12.5C3.125 13.6458 4.0625 14.5833 5.20833 14.5833C6.35417 14.5833 7.29167 13.6458 7.29167 12.5C7.29167 11.3542 6.35417 10.4167 5.20833 10.4167Z"
+                stroke="#1A232D" stroke-width="1.5" />
+              <path
+                d="M19.7917 10.4167C18.6459 10.4167 17.7084 11.3542 17.7084 12.5C17.7084 13.6458 18.6459 14.5833 19.7917 14.5833C20.9375 14.5833 21.875 13.6458 21.875 12.5C21.875 11.3542 20.9375 10.4167 19.7917 10.4167Z"
+                stroke="#1A232D" stroke-width="1.5" />
+              <path
+                d="M12.5 10.4167C11.3541 10.4167 10.4166 11.3542 10.4166 12.5C10.4166 13.6458 11.3541 14.5833 12.5 14.5833C13.6458 14.5833 14.5833 13.6458 14.5833 12.5C14.5833 11.3542 13.6458 10.4167 12.5 10.4167Z"
+                stroke="#1A232D" stroke-width="1.5" />
+            </svg>
+          </td>
+        </tr>
+      </ng-template>
+      <ng-template pTemplate="emptymessage" let-columns>
+        <tr>
+          <td [attr.colspan]="8">
+            <app-empty-state [loadingState]="loadingState()"></app-empty-state>
+          </td>
+        </tr>
+      </ng-template>
+    </p-table>
+  </div>
+</section>
+
+<p-menu #menu appendTo="body" styleClass="namespace_action" [model]="items" [popup]="true" />
+
+
+<!-- <p-dialog (onHide)="confirm_input.value = '' ; current_id_selected = null" header="" styleClass="select_type_popup"
+  [(visible)]="showDeletePopUp" [dismissableMask]="true" [modal]="true"
+  [breakpoints]="{ '1199px': '50vw', '575px': '90vw' }" [style]="{ width: '40vw' }" [draggable]="false"
+  [resizable]="false">
+  <div class="icon_over_lay flex items-center round justify-center">
+    <svg width="40" height="40" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M35 9.96663C29.45 9.41663 23.8667 9.1333 18.3 9.1333C15 9.1333 11.7 9.29997 8.4 9.6333L5 9.96663"
+        stroke="#D51C54" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+      <path
+        d="M14.167 8.2835L14.5337 6.10016C14.8003 4.51683 15.0003 3.3335 17.817 3.3335H22.1837C25.0003 3.3335 25.217 4.5835 25.467 6.11683L25.8337 8.2835"
+        stroke="#D51C54" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+      <path
+        d="M31.4163 15.2334L30.333 32.0167C30.1496 34.6334 29.9996 36.6667 25.3496 36.6667H14.6497C9.99967 36.6667 9.84967 34.6334 9.66634 32.0167L8.58301 15.2334"
+        stroke="#D51C54" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+      <path d="M17.2168 27.5H22.7668" stroke="#D51C54" stroke-width="2" stroke-linecap="round"
+        stroke-linejoin="round" />
+      <path d="M15.833 20.8335H24.1663" stroke="#D51C54" stroke-width="2" stroke-linecap="round"
+        stroke-linejoin="round" />
+    </svg>
+
+
+  </div>
+  <div class=" text-center mb-8">
+    <h5 class="text-2xl  text-primary font-medium ">Delete Alarm</h5>
+    <p class="text-primary/50">{{ 'DEVICES.DELETE_CONFIRM_MSG' | translate }} <strong>{{ 'DEVICES.DELETE' | translate
+        }}</strong> </p>
+  </div>
+  <div class="devices_types__container ">
+    <div class="form-group mb-5">
+      <div class="custom_input ">
+        <input #confirm_input id="name" class="custom_input" pInputText
+          [placeholder]="'DEVICES.DELETE_PLACEHOLDER' | translate" />
+      </div>
+    </div>
+  </div>
+  <ng-template pTemplate="footer">
+    <div class="flex justify-center">
+      <div class="action_btn">
+        <p-button [loading]="loading_delete()" (onClick)="handleDelete()"
+          [disabled]="confirm_input.value.toLocaleLowerCase().trim() != 'delete'"
+          [label]="'DEVICES.DELETE' | translate" />
+      </div>
+    </div>
+  </ng-template>
+</p-dialog> -->

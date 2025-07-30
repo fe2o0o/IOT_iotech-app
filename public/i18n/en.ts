@@ -334,7 +334,8 @@ Calibration: "Calibration",
       "DECRIPTION": "Description",
       "EN_DESC": "Enter Description",
       "DEVICES": "Devices",
-      "SEARCH_DEV":"Search Device Name ..."
+      "SEARCH_DEV": "Search Device Name ...",
+      "Notifications":"Notifications"
     },
 
   "LABELS": {
