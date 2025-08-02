@@ -16,10 +16,10 @@
     <div class="form-group input_group col-span-12 lg:col-span-6 mb-6">
       <div class=" ">
         <label class="block mb-2" for="">Description</label>
-        <textarea name="" id="" rows="5"></textarea>
+        <textarea formControlName="description" name="" id="" rows="5"></textarea>
       </div>
-      @if(main_form.get('name')?.errors && main_form.get('name')?.touched){
-      <p class="p-2 text-sm text-danger_color m-0">{{"ALARMS.ALARM_NAME_REQ"|translate}}</p>
+      @if(main_form.get('description')?.errors && main_form.get('description')?.touched){
+      <p class="p-2 text-sm text-danger_color m-0">Description is required </p>
       }
     </div>
   </form>
@@ -38,8 +38,8 @@
       </div>
 
       <div class="users h-72 overflow-y-auto">
-        @for(user of users ; track $index){
-        <div (click)="selected_users().push(user)"
+        @for(user of users() ; track $index ; let i = $index){
+        <div (click)="selected_users().push(user) ; users().splice(i , 1)"
           class="single_user cursor-pointer  mb-4 p-3 rounded-xl shadow flex items-center gap-4">
           <div class="user_img">
             <i class="fi fi-rr-circle-user text-4xl"></i>
@@ -76,6 +76,83 @@
       </div>
     </div>
   </div>
+  }@case(3){
+  <h2 class="text-xl font-medium mb-4">Devices</h2>
+  <div class="grid grid-cols-12 gap-8">
+    <div class="col-span-6 p-6 rounded-2xl shadow">
+      <div class="mb-8">
+        <h5 class="text-lg font-medium mb-4">Choose Devices</h5>
+        <div class="flex items-center gap-2">
+          <div class="adon-input relative w-full">
+            <input pInputText [placeholder]="'Search Device'" />
+            <i class="fi fi-rr-search text-xl flex items-center justify-center text-gray_light"></i>
+          </div>
+          <p-dropdown (onChange)="handleGetDevices()" [(ngModel)]="selected_type" [options]="devicesTypes()"
+            appendTo="body" [placeholder]="'Select Type'" />
+        </div>
+      </div>
+
+      <div class="users h-72 overflow-y-auto">
+        @for(device of devices() ; track $index ; let i = $index){
+        <div (click)="selected_devices().push(device) ; devices().splice(i , 1)"
+          class="single_user cursor-pointer  mb-4 p-4 rounded-xl shadow ">
+          <p>{{device?.deviceName}}</p>
+        </div>
+        }
+      </div>
+    </div>
+    <div class="col-span-6 p-6 rounded-2xl shadow">
+      <div class="mb-8">
+        <h5 class="text-lg font-medium mb-4">Selected Device</h5>
+        <div class="adon-input relative w-full">
+          <input pInputText [placeholder]="'Search Device'" />
+          <i class="fi fi-rr-search text-xl flex items-center justify-center text-gray_light"></i>
+        </div>
+      </div>
+
+      <div class="users h-72 overflow-y-auto">
+        @for(user of selected_devices() ; track $index){
+        <div class="single_user mb-4 p-4 rounded-xl shadow ">
+
+          <p>{{user?.deviceName}}</p>
+        </div>
+        }
+      </div>
+    </div>
+  </div>
+  }@case(4){
+  <h2 class="text-xl font-medium mb-4">Alarms</h2>
+  <div>
+    <div class="form_group mb-6">
+      <label class="block mb-2" for="">Alarm Tempelte</label>
+      <p-dropdown (onChange)="handleGetTemplates()" [(ngModel)]="selected_templete" optionLabel="templateName"
+        [options]="alarm_tempeletes()" appendTo="body" [placeholder]="'Select Tempelte'" />
+    </div>
+
+
+
+    <div>
+      @for(seg of data_segments() ; track $index){
+      <div class="seg p-4 flex items-center justify-between rounded-xl border border-gray_light/30 shadow-sm mb-4">
+        <p>{{seg?.name}}</p>
+
+
+
+        <div class="flex items-center gap-4 ">
+          @for(not of seg?.notifications ; track $index){
+          <button (click)="not.isActive = !not.isActive">
+            <i [classList]="not?.icon" [ngClass]="{'text-primary':not?.isActive}"></i>
+          </button>
+          }
+        </div>
+      </div>
+      }
+    </div>
+
+
+
+
+  </div>
   }
   }
 
@@ -86,7 +163,7 @@
     <p-button label="Cancel " />
   </div>
   <div class="action_btn ">
-    <p-button (onClick)="current_step.set(2)" [loading]="load_action()"
+    <p-button (onClick)="handleAction()" [loading]="load_action()"
       [label]="current_step() == 4 ? currentUpdateId ? ' Update Notification' :'Add Notification' : 'Next'" />
   </div>
 </div>

@@ -12,4 +12,17 @@ export class NotificationService {
   getNotificationData(): Observable<any>{
     return this._HttpClient.get(environment.app_api_url + `AlarmTemplate/GetAllNotificationGroups`)
   }
+
+  getDevicesType(): Observable<any>{
+    return this._HttpClient.get(environment.app_api_url + 'AlarmTemplate/GetAllDeviceTypesForNotificationGroup')
+  }
+
+  getDevicesForType(type: string): Observable<any>{
+    return this._HttpClient.get(environment.app_api_url + `AlarmTemplate/device-type-details-NotificationGroup?deviceType=${type}`)
+  }
+
+
+  addNotification(req: any): Observable<any>{
+    return this._HttpClient.post(environment.app_api_url + 'AlarmTemplate/AddNotificationGroup' , req)
+  }
 }
