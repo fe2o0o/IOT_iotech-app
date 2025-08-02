@@ -30,4 +30,9 @@ export class NotificationService {
   deleteNotification(id: any): Observable<any>{
     return this._HttpClient.delete(environment.app_api_url + `AlarmTemplate/DeleteNotificationGroup/${id}`)
   }
+
+
+  getSingleNotificationGroup(id: any): Observable<any>{
+    return this._HttpClient.get(environment.app_api_url + `AlarmTemplate/GetNotificationGroupByIdAsync/${id}`)
+  }
 }

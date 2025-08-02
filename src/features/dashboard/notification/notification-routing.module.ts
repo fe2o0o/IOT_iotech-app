@@ -6,7 +6,8 @@ import { ActionComponent } from './action/action.component';
 const routes: Routes = [
   { path: '', redirectTo: 'list', pathMatch: 'full' },
   { path: 'list', component: ListComponent },
-  {path:'action' , component:ActionComponent}
+  {path:'action' , component:ActionComponent},
+  {path:'action/:id' , component:ActionComponent},
 ];
 
 @NgModule({

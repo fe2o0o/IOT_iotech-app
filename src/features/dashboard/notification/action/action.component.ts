@@ -7,6 +7,8 @@ import { AlarmService } from '../../../../core/services/alarm.service';
 import { ChangeDetectorRef } from '@angular/core';
 import { MessageService } from 'primeng/api';
 import { Router } from '@angular/router';
+import { ActivatedRoute } from '@angular/router';
+import { forkJoin } from 'rxjs';
 @Component({
   selector: 'app-action',
   standalone: false,
@@ -15,17 +17,49 @@ import { Router } from '@angular/router';
   changeDetection:ChangeDetectionStrategy.OnPush
 })
 export class ActionComponent implements OnInit {
-  constructor(private _Router:Router,private _MessageService:MessageService,private _ChangeDetectorRef:ChangeDetectorRef,private _AlarmService:AlarmService,private _NotificationService:NotificationService,private _UsersManagmentsService:UsersManagmentsService,private _SharedService:SharedService) {
-        this._SharedService.breadCrumbTitle.next('BREADCRUMB.NOTIFICATIONS')
+  constructor(private _ActivatedRoute:ActivatedRoute,private _Router:Router,private _MessageService:MessageService,private _ChangeDetectorRef:ChangeDetectorRef,private _AlarmService:AlarmService,private _NotificationService:NotificationService,private _UsersManagmentsService:UsersManagmentsService,private _SharedService:SharedService) {
+    this._SharedService.breadCrumbTitle.next('BREADCRUMB.NOTIFICATIONS');
+
+
+    this.initMainForm()
 
   }
 
 
+  current_updated_data: any;
+
   ngOnInit(): void {
-    this.initMainForm();
-    this.getUsers();
-    this.getDevicesType();
-    this.getAlarmTemplates()
+    this._ActivatedRoute.paramMap.subscribe((param) => {
+      if (param.get('id')) {
+        this.currentUpdateId = param.get('id')
+        forkJoin([this._NotificationService.getSingleNotificationGroup(this.currentUpdateId), this._UsersManagmentsService.getAllUsers(1, 999), this._NotificationService.getDevicesType(), this._AlarmService.getAllAlarms()]).subscribe((res: any[]) => {
+          this.current_updated_data = res[0]?.data;
+          this.initMainForm(this.current_updated_data)
+          const usersIDS:any[] = this.current_updated_data?.users?.map((user: any) => user?.userId);
+
+          this.users.set(
+            res[1]?.data?.items.filter((us:any)=> !usersIDS.includes(us?.id) )
+          )
+
+          this.selected_users.set(
+            res[1]?.data?.items.filter((us:any)=> usersIDS.includes(us?.id) )
+          )
+          this.devicesTypes.set(res[2]?.data)
+          this.selected_type = this,this.current_updated_data?.deviceType
+
+          this.alarm_tempeletes.set(res[3]?.data);
+          this.selected_templete = this.alarm_tempeletes().filter((temp: any) => temp?.templateName == this.current_updated_data?.alarmTemplate)[0]
+          console.log("selected" , this.selected_templete);
+
+          this.handleGetTemplates(this.current_updated_data?.dataSegments)
+        })
+      } else {
+        this.initMainForm();
+        this.getUsers();
+        this.getDevicesType();
+        this.getAlarmTemplates()
+      }
+    })
   }
 
   current_step = signal<number>(1)
@@ -65,7 +99,7 @@ export class ActionComponent implements OnInit {
   }
 
   data_segments = signal<any[]>([])
-  handleGetTemplates() {
+  handleGetTemplates(dataUpdate?:any[]) {
     this._NotificationService.getDevicesForType(this.selected_templete?.deviceType).subscribe((res: any) => {
 
       this.data_segments.set(res?.data?.segments?.map((seg: any) => {
@@ -88,7 +122,15 @@ export class ActionComponent implements OnInit {
               }
             return {
               ...not,
-              isActive: false,
+              isActive: dataUpdate
+                ? dataUpdate?.some((segUp: any) => {
+                    if (seg == segUp?.segmentName) {
+                      return segUp.notificationTypes.includes(not?.name);
+                    } else {
+                      return false;
+                    }
+                  })
+                : false,
               icon: ic()
             }
           })
@@ -109,11 +151,17 @@ export class ActionComponent implements OnInit {
   selected_users = signal<any[]>([])
 
   main_form !: FormGroup;
-  initMainForm() {
+  initMainForm(data?:any) {
     this.main_form = new FormGroup({
-      name: new FormControl(null, Validators.required),
-      description :  new FormControl(null , Validators.required)
+      name: new FormControl(data ? data?.name : null , Validators.required),
+      description :  new FormControl(data ? data?.description : null , Validators.required)
     })
+
+
+    if (data) {
+
+      this._ChangeDetectorRef.markForCheck()
+    }
   }
 
 
