@@ -2,10 +2,11 @@ import { TranslationsService } from './../../../../shared/services/translation.s
 import { ChangeDetectionStrategy, Component, signal } from '@angular/core';
 import { SharedService } from '../../../../shared/services/shared.service';
 import { TranslateService } from '@ngx-translate/core';
-import { Subject } from 'rxjs';
+import { debounceTime, Subject } from 'rxjs';
 import { AlarmService } from '../../../../core/services/alarm.service';
 import { ChangeDetectorRef } from '@angular/core';
 import { Router } from '@angular/router';
+import { MessageService } from 'primeng/api';
 @Component({
   selector: 'app-alarm-list',
   standalone: false,
@@ -14,7 +15,7 @@ import { Router } from '@angular/router';
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class AlarmListComponent {
-  constructor(private _Router:Router,private _ChangeDetectorRef:ChangeDetectorRef,private _AlarmService:AlarmService,private _TranslationsService:TranslationsService,private _SharedService: SharedService, private _TranslateService: TranslateService) {
+  constructor(private _MessageService:MessageService,private _Router:Router,private _ChangeDetectorRef:ChangeDetectorRef,private _AlarmService:AlarmService,private _TranslationsService:TranslationsService,private _SharedService: SharedService, private _TranslateService: TranslateService) {
     this.items = [
       {
         items: [
@@ -37,7 +38,7 @@ export class AlarmListComponent {
             label: this._TranslateService.instant('DEVICES.DELETE'),
             icon: 'fi fi-rr-trash',
             command: () => {
-              this.showDeletePopUp = true;
+              this.showDeletePopUp.set(true);
             }
           }
         ]
@@ -50,15 +51,32 @@ export class AlarmListComponent {
       } else {
         this.is_arabic.set(false);
       }
-    });
+        });
+
+
+    this.searchSubject.pipe(debounceTime(300)).subscribe((res) => {
+      this.getAlarmData()
+    })
   }
 
   loading_delete = signal<boolean>(false)
   current_id_selected: any;
   handleDelete() {
-
+        this.loading_delete.set(true)
+    this._AlarmService.deleteAlarm(this.current_id_selected).subscribe({
+      next: (res: any) => {
+        this.loading_delete.set(false)
+        this.showDeletePopUp.set(false);
+        this._MessageService.add({ severity: 'success', summary: 'Success', detail: 'Alarm Templete Deleted Successfully ' });
+        this.getAlarmData()
+      },
+      error: (err: any) => {
+        this.loading_delete.set(false);
+        this.showDeletePopUp.set(false);
+      }
+    })
   }
-  showDeletePopUp:boolean = false
+  showDeletePopUp = signal<boolean>(false)
   alarm_list: any[] = [
     {
       id:1,
@@ -98,7 +116,7 @@ export class AlarmListComponent {
   getAlarmData() {
     this.loadingState.set(true)
     this.alarm_list = []
-    this._AlarmService.getAllAlarms().subscribe((res: any) => {
+    this._AlarmService.getAllAlarms(this.searchTerm).subscribe((res: any) => {
       console.log("res alarm", res?.data);
       this.alarm_list = res?.data
       this.loadingState.set(false);

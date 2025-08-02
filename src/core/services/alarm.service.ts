@@ -10,8 +10,8 @@ export class AlarmService {
   constructor(private _HttpClient: HttpClient) { }
 
 
-  getAllAlarms():Observable<any> {
-    return this._HttpClient.get(environment.app_api_url +'AlarmTemplate/GetAllAlarmTemplates')
+  getAllAlarms(search:string = ''):Observable<any> {
+    return this._HttpClient.get(environment.app_api_url +`AlarmTemplate/GetAllAlarmTemplates?search=${search}`)
   }
 
 
@@ -30,5 +30,10 @@ export class AlarmService {
 
   getAlarmById(id: any): Observable<any>{
     return this._HttpClient.get(environment.app_api_url + `AlarmTemplate/GetAlarmTemplateById/${id}`)
+  }
+
+
+  deleteAlarm(id: any): Observable<any>{
+    return this._HttpClient.delete(environment.app_api_url + `AlarmTemplate/DeleteAlarmTemplate/${id}`)
   }
 }
