@@ -87,8 +87,7 @@
         <h2 class="font-medium mb-3 text-2xl">{{ 'ALARMS.ALARM' | translate }}</h2>
       </div>
       <div class="flex items-center gap-4 flex-wrap flex-row-reverse">
-        <button [routerLink]="['/iotech_app/alarms/action']"
-          class="bg-primary px-4 py-3 rounded-xl w-32 text-white_color">
+        <button (click)="handleRouting()" class="bg-primary px-4 py-3 rounded-xl w-32 text-white_color">
           {{ 'ALARMS.ADD' | translate }}
         </button>
         <div class="adon-input relative w-80">

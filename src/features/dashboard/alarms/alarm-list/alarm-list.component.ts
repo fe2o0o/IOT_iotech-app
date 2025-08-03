@@ -111,16 +111,25 @@ export class AlarmListComponent {
   showRoleAction: boolean = false;
 
 
+  handleRouting() {
+    if (this.can_add) {
+      this._Router.navigate(['/iotech_app/alarms/action'])
+    } else {
+      this._MessageService.add({ severity: 'warn', summary:'Warning' , detail:"All Device Types Already Have Alarm Template  " })
+    }
+  }
 
+  can_add:boolean = true
 
   getAlarmData() {
     this.loadingState.set(true)
     this.alarm_list = []
     this._AlarmService.getAllAlarms(this.searchTerm).subscribe((res: any) => {
-      console.log("res alarm", res?.data);
-      this.alarm_list = res?.data
+      this.can_add = res?.data?.canAdd
+      this.alarm_list = res?.data?.templates
       this.loadingState.set(false);
       this._ChangeDetectorRef.markForCheck()
+
     })
   }
 }
