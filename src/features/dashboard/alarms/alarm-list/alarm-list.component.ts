@@ -129,7 +129,6 @@ export class AlarmListComponent {
       this.alarm_list = res?.data?.templates
       this.loadingState.set(false);
       this._ChangeDetectorRef.markForCheck()
-
     })
   }
 }

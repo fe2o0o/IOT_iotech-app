@@ -44,10 +44,12 @@ export class AlaramActionComponent implements OnInit {
     })
   }
 
-  handleGetSegement(event:any) {
-    this._AlarmService.getDeviceTypeSegments(event?.value).subscribe((res: any) => {
-      this.current_segments.set(res?.data?.segments)
-    })
+  handleGetSegement(event: any) {
+    if (event?.value) {
+      this._AlarmService.getDeviceTypeSegments(event?.value).subscribe((res: any) => {
+        this.current_segments.set(res?.data?.segments)
+      })
+    }
   }
 
   stopPropergation(event: any) {
@@ -77,13 +79,13 @@ export class AlaramActionComponent implements OnInit {
       segments: this.current_segments()
     }
 
-    const isUpdate$ = !this.currentUpdateId ? this._AlarmService.storeAlarm(req) : null;
+    const isUpdate$ = !this.currentUpdateId ? this._AlarmService.storeAlarm(req) : this._AlarmService.updateAlarm(this.currentUpdateId , req);
 
 
     isUpdate$?.subscribe({
       next: (res: any) => {
             this.load_action.set(false)
-        this._MessageService.add({ severity: 'success', summary: 'Success', detail: 'Alarm Added Successfully' })
+        this._MessageService.add({ severity: 'success', summary: 'Success', detail: !this.currentUpdateId ? 'Alarm Added Successfully' : 'Alarm Updated Successfully' })
         this._Router.navigate(['/iotech_app/alarms/list'])
       },
       error: (err: any) => {

@@ -20,6 +20,9 @@ export class AlarmService {
     return this._HttpClient.get(environment.app_api_url +'Auth/GetAllDeviceTypes')
   }
 
+  updateAlarm(id: any, req: any): Observable<any>{
+    return this._HttpClient.put(environment.app_api_url + `AlarmTemplate/UpdateAlarmTemplate/${id}` , req)
+  }
 
   storeAlarm(payload:any): Observable<any>{
     return this._HttpClient.post(environment.app_api_url + `AlarmTemplate/StoreAlarmTemplate` ,payload  )
