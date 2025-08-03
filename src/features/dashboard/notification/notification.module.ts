@@ -5,12 +5,14 @@ import { NotificationRoutingModule } from './notification-routing.module';
 import { ListComponent } from './list/list.component';
 import { SharedModule } from '../../../shared/modules/shared/shared.module';
 import { ActionComponent } from './action/action.component';
+import { ViewComponent } from './view/view.component';
 
 
 @NgModule({
   declarations: [
     ListComponent,
-    ActionComponent
+    ActionComponent,
+    ViewComponent
   ],
   imports: [
     CommonModule,

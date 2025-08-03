@@ -9,12 +9,12 @@ export class NotificationService {
 
   constructor(private _HttpClient: HttpClient) { }
 
-  getNotificationData(): Observable<any>{
-    return this._HttpClient.get(environment.app_api_url + `AlarmTemplate/GetAllNotificationGroups`)
+  getNotificationData(searTerm = ''): Observable<any>{
+    return this._HttpClient.get(environment.app_api_url + `AlarmTemplate/GetNotificationGroupsAsync?search=${searTerm}`)
   }
 
   getDevicesType(): Observable<any>{
-    return this._HttpClient.get(environment.app_api_url + 'AlarmTemplate/GetAllDeviceTypesForNotificationGroup')
+    return this._HttpClient.get(environment.app_api_url + 'Auth/GetAllDeviceTypes')
   }
 
   getDevicesForType(type: string): Observable<any>{

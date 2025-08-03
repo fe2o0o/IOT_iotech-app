@@ -45,9 +45,9 @@ export class ActionComponent implements OnInit {
             res[1]?.data?.items.filter((us:any)=> usersIDS.includes(us?.id) )
           )
           this.devicesTypes.set(res[2]?.data)
-          this.selected_type = this,this.current_updated_data?.deviceType
-
-          this.alarm_tempeletes.set(res[3]?.data);
+          this.selected_type = this.current_updated_data?.deviceType
+          this.handleGetDevices()
+          this.alarm_tempeletes.set(res[3]?.data?.templates);
           this.selected_templete = this.alarm_tempeletes().filter((temp: any) => temp?.templateName == this.current_updated_data?.alarmTemplate)[0]
           console.log("selected" , this.selected_templete);
 
@@ -74,6 +74,7 @@ export class ActionComponent implements OnInit {
   devices = signal<any[]>([])
   selected_devices = signal<any[]>([])
   handleGetDevices() {
+    this.selected_devices.set([])
     this._NotificationService.getDevicesForType(this.selected_type).subscribe((res: any) => {
       console.log("res devices" , res?.data);
       this.devices.set(res?.data?.devices)
@@ -94,7 +95,7 @@ export class ActionComponent implements OnInit {
 
   getAlarmTemplates() {
     this._AlarmService.getAllAlarms().subscribe(((res: any) => {
-      this.alarm_tempeletes.set(res?.data)
+      this.alarm_tempeletes.set(res?.data?.templates)
     }))
   }
 
@@ -166,6 +167,13 @@ export class ActionComponent implements OnInit {
 
 
 
+  handleBackword() {
+    if (this.current_step() == 0) {
+      this.current_step.set(1)
+    } else {
+      this.current_step.set(this.current_step() + 1)
+    }
+  }
 
 
   handleAction() {

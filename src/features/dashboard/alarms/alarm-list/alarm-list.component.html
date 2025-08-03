@@ -103,6 +103,7 @@
         <tr>
           <th>{{ 'ALARMS.NAME' | translate }}</th>
           <th>{{ 'ALARMS.Assigned_Devices' | translate }}</th>
+          <th>Device Type</th>
           <th>{{ 'ALARMS.CREATED_AT' | translate }}</th>
           <th></th>
         </tr>
@@ -111,6 +112,8 @@
         <tr class="rounded-full">
           <td>{{device?.templateName}}</td>
           <td>{{device?.assignedDevices}}</td>
+          <td>{{device?.deviceType}}</td>
+
           <td>{{device?.creationTime}}</td>
           <td (click)="menu.toggle($event) ; current_id_selected = device?.id" class="cursor-pointer">
             <svg class="mx-auto" width="25" height="25" viewBox="0 0 25 25" fill="none"

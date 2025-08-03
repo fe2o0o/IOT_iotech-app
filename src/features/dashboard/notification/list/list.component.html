@@ -6,8 +6,7 @@
         <h2 class="font-medium mb-3 text-2xl">{{ 'NOTIFICATIONS.Notifications' | translate }}</h2>
       </div>
       <div class="flex items-center gap-4 flex-wrap flex-row-reverse">
-        <button [routerLink]="['/iotech_app/notification-managment/action']"
-          class="bg-primary px-4 py-3 rounded-xl w-56 text-white_color">
+        <button (click)="handleRouting()" class="bg-primary px-4 py-3 rounded-xl w-56 text-white_color">
           {{ 'NOTIFICATIONS.ADD_NOT' | translate }}
         </button>
         <div class="adon-input relative w-64">
@@ -25,6 +24,7 @@
           <th>{{ 'NOTIFICATIONS.NAME' | translate }}</th>
           <th>{{ 'NOTIFICATIONS.DEVICE' | translate }}</th>
           <th>{{ 'NOTIFICATIONS.USERS' | translate }}</th>
+          <th>Device Type</th>
           <th>{{ 'NOTIFICATIONS.CREATED_AT' | translate }}</th>
           <th></th>
         </tr>
@@ -32,9 +32,10 @@
       <ng-template pTemplate="body" let-device let-columns="columns">
         <tr class="rounded-full">
           <td>{{device?.name}}</td>
-          <td>{{device?.devices?.length}}</td>
-          <td>{{device?.users?.length}}</td>
-          <td>{{device?.creationTime ?? 'N/A'}}</td>
+          <td>{{device?.devicesCount}}</td>
+          <td>{{device?.usersCount}}</td>
+          <td>{{device?.deviceType}}</td>
+          <td>{{device?.createdDate}}</td>
           <td (click)="menu.toggle($event) ; current_id_selected = device?.id" class="cursor-pointer">
             <svg class="mx-auto" width="25" height="25" viewBox="0 0 25 25" fill="none"
               xmlns="http://www.w3.org/2000/svg">

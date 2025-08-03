@@ -1,0 +1,109 @@
+<section>
+  <div class="mb-6">
+    @if(loading_data()){
+    <p-skeleton width="10rem" styleClass="mb-2" />
+    }@else {
+
+    <h1 class="text-2xl font-semibold mb-6">{{data_view()?.name}}</h1>
+    }
+
+
+    <div class="p-6 rounded-xl bg-white_color shadow">
+      <h2 class="text-xl font-medium mb-4">Group Description</h2>
+      <p>{{data_view()?.description}}</p>
+    </div>
+  </div>
+
+
+
+  <div class="p-5 rounded-xl bg-white_color shadow mb-6">
+    <div class="mb-4">
+      <h2 class="text-xl font-medium mb-2">Selected Alarm Templet</h2>
+      @if(loading_data()){
+      <p-skeleton width="10rem" styleClass="mb-2" />
+      }@else {
+
+      <p class="text-lg font-semibold ">{{data_view()?.alarmTemplate}}</p>
+      }
+
+    </div>
+
+
+    <div>
+      @for(seg of data_segments() ; track $index){
+      <div class="seg p-4 flex items-center justify-between rounded-xl border border-gray_light/30 shadow-sm mb-4">
+        <p>{{seg?.name?.segmentName}}</p>
+
+
+
+        <div class="flex items-center gap-4 ">
+          @for(not of seg?.notifications ; track $index){
+          <button>
+            <i [classList]="not?.icon" [ngClass]="{'text-primary':not?.isActive}"></i>
+          </button>
+          }
+        </div>
+
+
+
+      </div>
+      }
+    </div>
+
+
+  </div>
+
+
+  <div class="grid grid-cols-12 gap-6">
+    <div class="col-span-6 p-6 rounded-2xl shadow bg-white_color">
+      <div class="mb-8">
+        <h5 class="text-lg font-medium mb-4">Selected Users</h5>
+        <div class="adon-input relative w-full">
+          <input pInputText [placeholder]="'USERS.SEARCH_PLACEHOLDER' | translate" />
+          <i class="fi fi-rr-search text-xl flex items-center justify-center text-gray_light"></i>
+        </div>
+      </div>
+
+      <div class="users h-72 overflow-y-auto">
+        @for(user of data_view()?.users ; track $index ; let i =$index){
+        <div class="single_user mb-4 p-3 rounded-xl shadow  flex items-center ">
+          <div class=" flex-1 flex items-center gap-4">
+            <div class="user_img">
+              <i class="fi fi-rr-circle-user text-4xl"></i>
+            </div>
+            <div>
+              <p>{{user?.email}}</p>
+              <!-- <p>{{user?.companyName}}</p> -->
+            </div>
+          </div>
+        </div>
+        }
+      </div>
+    </div>
+
+
+    <div class="col-span-6 p-6 rounded-2xl shadow bg-white_color">
+      <div class="mb-8">
+        <h5 class="text-lg font-medium mb-4">Selected Device</h5>
+        <div class="adon-input relative w-full">
+          <input pInputText [placeholder]="'Search Device'" />
+          <i class="fi fi-rr-search text-xl flex items-center justify-center text-gray_light"></i>
+        </div>
+      </div>
+
+      <div class="users h-72 overflow-y-auto  ">
+        @for(user of data_view()?.linkedDevices ; track $index ; let i = $index){
+        <div class="single_user mb-4 p-4 rounded-xl shadow flex items-center justify-between">
+
+          <p>{{user?.deviceName}}</p>
+
+
+
+        </div>
+        }
+      </div>
+    </div>
+  </div>
+
+
+</section>
