@@ -93,8 +93,8 @@
             <input pInputText [placeholder]="'NOTIFICATIONS.SEARCH_DEVICE' | translate" />
             <i class="fi fi-rr-search text-xl flex items-center justify-center text-gray_light"></i>
           </div>
-          <p-dropdown (onChange)="handleGetDevices()" [(ngModel)]="selected_type" [options]="devicesTypes()"
-            appendTo="body" optionLabel="deviceType" optionValue="deviceType"
+          <p-dropdown (onChange)="handleGetDevices() ; this.selected_devices.set([])" [(ngModel)]="selected_type"
+            [options]="devicesTypes()" appendTo="body" optionLabel="deviceType" optionValue="deviceType"
             [placeholder]="'NOTIFICATIONS.SELECT_TYPE' | translate" />
         </div>
       </div>
@@ -135,8 +135,10 @@
   <div>
     <div class="form_group mb-6">
       <label class="block mb-2" for="">{{ 'NOTIFICATIONS.ALARM_TEMPLATE' | translate }}</label>
-      <p-dropdown (onChange)="handleGetTemplates()" [(ngModel)]="selected_templete" optionLabel="templateName"
-        [options]="alarm_tempeletes()" appendTo="body" [placeholder]="'NOTIFICATIONS.SELECT_TEMPLATE' | translate" />
+      <!-- <p-dropdown [disabled]="true" (onChange)="handleGetTemplates()" [(ngModel)]="selected_templete"
+        optionLabel="templateName" [options]="alarm_tempeletes()" appendTo="body"
+        [placeholder]="'NOTIFICATIONS.SELECT_TEMPLATE' | translate" /> -->
+      <p>{{selected_template()?.templateName}}</p>
     </div>
 
     <div>
@@ -159,7 +161,7 @@
 </section>
 
 <div class="actions flex items-center gap-6 justify-end">
-  @if(current_step() != 4 && current_step() != 1){
+  @if( current_step() != 1){
   <div class="cancel_btn">
     <p-button (onClick)="handleBackword()" [label]="'NOTIFICATIONS.PREVIOUS' | translate" />
   </div>

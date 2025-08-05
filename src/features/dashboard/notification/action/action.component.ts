@@ -55,12 +55,11 @@ export class ActionComponent implements OnInit {
           )
           this.devicesTypes.set(res[2]?.data)
           this.selected_type = this.current_updated_data?.deviceType
-          this.handleGetDevices()
           this.alarm_tempeletes.set(res[3]?.data?.templates);
           this.selected_templete = this.alarm_tempeletes().filter((temp: any) => temp?.templateName == this.current_updated_data?.alarmTemplate)[0]
-          console.log("selected" , this.selected_templete);
+          console.log("selected", this.selected_templete);
 
-          this.handleGetTemplates(this.current_updated_data?.dataSegments)
+          // this.handleGetTemplates(this.current_updated_data?.dataSegments)
         })
       } else {
         this.initMainForm();
@@ -85,10 +84,13 @@ export class ActionComponent implements OnInit {
   handleGetDevices() {
     this.selected_devices.set([])
     this._NotificationService.getDevicesForType(this.selected_type).subscribe((res: any) => {
-      console.log("res devices" , res?.data);
       this.devices.set(res?.data?.devices)
+      this.selected_template.set(res?.data)
+      this.handleGetTemplates()
     })
   }
+
+  selected_template = signal<any>(null)
 
   devicesTypes = signal<any[]>([])
   selected_type:any = null
@@ -110,12 +112,13 @@ export class ActionComponent implements OnInit {
 
   data_segments = signal<any[]>([])
   handleGetTemplates(dataUpdate?:any[]) {
-    this._NotificationService.getDevicesForType(this.selected_templete?.deviceType).subscribe((res: any) => {
+    this.selected_templete = this.selected_template()
+    console.log("selected_template" , this.selected_template());
 
-      this.data_segments.set(res?.data?.segments?.map((seg: any) => {
+      this.data_segments.set(this.selected_template().segments?.map((seg: any) => {
         return {
           name: seg,
-          notifications: res?.data?.notificationTypes.map((not: any) => {
+          notifications: this.selected_template()?.notificationTypes.map((not: any) => {
             const ic = () => {
                 switch (not?.name) {
                   case 'SMS':
@@ -149,9 +152,7 @@ export class ActionComponent implements OnInit {
 
 
 
-      console.log("data seg" , this.data_segments());
       this._ChangeDetectorRef.markForCheck()
-    })
   }
   load_action = signal<boolean>(false)
   currentUpdateId: any;
@@ -197,7 +198,7 @@ export class ActionComponent implements OnInit {
         userIds: this.selected_users().map((user: any) => {
           return user?.id
         }),
-        alarmTemplateId:this.selected_templete?.id,
+        alarmTemplateId:this.selected_template()?.templateId,
         deviceIds: this.selected_devices().map((dev: any) => {
           return dev?.id
         }),
