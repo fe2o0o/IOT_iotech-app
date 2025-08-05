@@ -12,7 +12,7 @@
       </div>
     </div>
   </div>
-  <div class="devices_types__container grid grid-cols-12 gap-6 ">
+  <div class="devices_types__container grid grid-cols-12 gap-6  mb-12">
     <form [formGroup]="user_form" class="col-span-12 grid grid-cols-12 gap-6">
       <div class="form-group input_group col-span-12 lg:col-span-6">
         <div class=" ">
@@ -120,12 +120,12 @@
             </div>
 
             <div class="flex items-center gap-16 flex-wrap ">
-              <div class="input_group flex items-center gap-2 flex-row-reverse">
+              <!-- <div class="input_group flex items-center gap-2 flex-row-reverse">
                 <label for="">Add All</label>
                 <p-checkbox [binary]="true"
                   (onChange)="handleSelectAllPermissionForType(device, 'Add', device.all_add_perm)"
                   [(ngModel)]="device.all_add_perm" inputId="binary" />
-              </div>
+              </div> -->
               <div class="input_group flex items-center gap-2 flex-row-reverse">
                 <label for="">View All</label>
                 <p-checkbox (onChange)="handleSelectAllPermissionForType(device, 'View', device.all_view_perm)"
@@ -165,7 +165,33 @@
         }
       </p-accordion>
     </div>
+
+
+
+    <div class="col-span-12">
+      <h2 class="mb-6 text-xl font-semibold">Staff Permssions</h2>
+
+      <div class="flex items-center justify-between">
+
+        <div class="input_group flex items-center gap-2 flex-row-reverse">
+          <label for="">Select All</label>
+          <p-checkbox [binary]="true" inputId="binary" (onChange)="handleSelectAllStaff($event)" />
+        </div>
+
+        <div class="flex items-center gap-8">
+          @for(per of staff_Perm ; track per){
+          <div class="input_group flex items-center gap-2 flex-row-reverse">
+            <label for="">{{per.name}}</label>
+            <p-checkbox [binary]="true" [(ngModel)]="per.isActive" inputId="binary" />
+          </div>
+          }
+        </div>
+      </div>
+
+    </div>
   </div>
+
+
 
 
 

@@ -34,7 +34,7 @@ export class UserActionComponent implements OnInit {
           const user = res[2]?.data;
 
           const deviceTypes = res[1]?.data?.deviceTypes || [];
-          const permissions = res[1]?.data?.permissions || [];
+          const permissions = res[1]?.data?.permissions?.filter((per:any)=>{return per.name != 'Add'}) || [];
           const userDevices = user?.devices || [];
 
           const structured = deviceTypes.map((type: any) => {
@@ -254,10 +254,33 @@ export class UserActionComponent implements OnInit {
   }
 
 
+  staff_Perm = [
+          {
+                "id": 1,
+                "name": "Add",
+                isActive:false
+            },
+            {
+                "id": 2,
+                "name": "View",
+                isActive:false
+            },
+            {
+                "id": 3,
+                "name": "Delete",
+                isActive:false
+            },
+            {
+                "id": 4,
+                "name": "Edit",
+                isActive:false
+            }
+  ]
+
   handleDevicesRoles() {
     this._UsersManagmentsService.getPermsionsDevices().subscribe((res: any) => {
       const deviceTypes = res?.data?.deviceTypes || [];
-      const permissions = res?.data?.permissions || [];
+      const permissions = res?.data?.permissions?.filter((per:any)=>{return per.name != 'Add'}) || [];
 
       const structured = deviceTypes.map((type: any) => ({
         deviceType: type.deviceType,
@@ -323,6 +346,16 @@ export class UserActionComponent implements OnInit {
   }
 
 
+  handleSelectAllStaff(event:any) {
+    this.staff_Perm.map((per) => {
+        if (event?.checked) {
+        per.isActive = true
+        } else {
+          per.isActive = false
+      }
+      })
+  }
+
   userAction() {
     const selected_devices = this.devicesTypes()
       .flatMap((type: any) =>
@@ -346,7 +379,8 @@ export class UserActionComponent implements OnInit {
       ...this.user_form.value,
       isActive: this.user_form.get('isActive')?.value == 1 ? true : false,
       devices: selected_devices,
-      profileImageUrl: this.imageSrc || null
+      profileImageUrl: this.imageSrc || null,
+      staffPermissions: this.staff_Perm.filter((per) => per.isActive).map((per) =>  per.id)
     };
 
     this.loadAction.set(true);
