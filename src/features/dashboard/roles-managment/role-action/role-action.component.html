@@ -42,12 +42,12 @@
           </div>
 
           <div class="flex items-center gap-16 flex-wrap ">
-            <div class="input_group flex items-center gap-2 flex-row-reverse">
+            <!-- <div class="input_group flex items-center gap-2 flex-row-reverse">
               <label for="">Add All</label>
               <p-checkbox [binary]="true"
                 (onChange)="handleSelectAllPermissionForType(device, 'Add', device.all_add_perm)"
                 [(ngModel)]="device.all_add_perm" inputId="binary" />
-            </div>
+            </div> -->
             <div class="input_group flex items-center gap-2 flex-row-reverse">
               <label for="">View All</label>
               <p-checkbox (onChange)="handleSelectAllPermissionForType(device, 'View', device.all_view_perm)"
@@ -67,19 +67,15 @@
         </div>
         <div class="flex items-center flex-wrap justify-between">
           @for(dev of device?.devices ; track dev){
-          <div class="flex items-center gap-4">
-            <p-checkbox (onChange)="handleSelectedAll($event,dev , device)" [binary]="true"
-              [(ngModel)]="dev.is_selected_all" inputId="binary" />
 
-            <h3 class="font-bold text-lg">{{dev?.deviceName}}</h3>
-          </div>
           @for(per of dev?.permissions ; track per){
-
+          @if(per?.name !== 'Add'){
           <div class="input_group flex items-center gap-2 flex-row-reverse">
             <label for="">{{ per?.name }}</label>
             <p-checkbox (onChange)="handleSelectSingle($event , dev , device)" [binary]="true"
               [(ngModel)]="per.isSelected" inputId="binary" />
           </div>
+          }
           }
           }
         </div>

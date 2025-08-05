@@ -335,7 +335,24 @@ Calibration: "Calibration",
       "EN_DESC": "Enter Description",
       "DEVICES": "Devices",
       "SEARCH_DEV": "Search Device Name ...",
-      "Notifications":"Notifications"
+      "Notifications": "Notifications",
+  SELECTED_USERS: "Selected Users",
+  CHOOSE_DEVICES: "Choose Devices",
+  SELECTED_DEVICE: "Selected Device",
+  ALARMS: "Alarms",
+  ALARM_TEMPLATE: "Alarm Template Name",
+  SELECT_TEMPLATE: "Select Template",
+  ALARM_NAME: "Name",
+  ALARM_NAME_REQ: "Alarm name is required",
+  DESCRIPTION: "Description",
+  DESCRIPTION_REQ: "Description is required",
+  SEARCH_PLACEHOLDER: "Search",
+  SEARCH_DEVICE: "Search Device",
+  SELECT_TYPE: "Select Type",
+  PREVIOUS: "Previous",
+  NEXT: "Next",
+  ADD_NOTIFICATION: "Add Notification",
+  UPDATE_NOTIFICATION: "Update Notification"
     },
 
   "LABELS": {
@@ -366,16 +383,27 @@ Calibration: "Calibration",
     "Barometric_Pressure": "Barometric Pressure",
     "Boiling_Point_Of_Water": "Boiling PointOfWater"
     },
-    ALARMS: {
-      "ALARM": "Alarm",
-      SEARCH_PLC: "Search by alarm",
-      ADD: "Add Alarm",
-      NAME: "Name",
-      "Assigned_Devices": "Assigned Devices",
-      "CREATED_AT": "Created at",
-      ALARM_NAME_REQ: "Alarm Name Is Required",
-      DEVICE_TYPE: "Device Type",
-      DEVICE_TYPE_REQ:"Device Type is Required"
+    ALARM: {
+TOTAL_ROLES: "Total Roles",
+  TOTAL_PERMISSIONS: "Total Permissions",
+  ROLES_GROWTH: "Roles Growth",
+  ALARM: "Alarm",
+  ADD: "Add",
+  SEARCH_PLC: "Search Alarms",
+  NAME: "Name",
+  ASSIGNED_DEVICES: "Assigned Devices",
+  DEVICE_TYPE: "Device Type",
+  CREATED_AT: "Created At",
+  DELETE_CONFIRM_MSG: "Are you sure you want to delete this alarm?",
+  DELETE: "Delete",
+  DELETE_ALARM: "Delete Alarm",
+  DELETE_PLACEHOLDER: "Type 'delete' to confirm",
+  ALARM_NAME_REQ: "Alarm name is required",
+  DEVICE_TYPE_REQ: "Device type is required",
+  RANGES: "Ranges",
+  CANCEL: "Cancel",
+  ADD_ALARM: "Add Alarm",
+  UPDATE_ALARM: "Update Alarm"
   }
 }
 

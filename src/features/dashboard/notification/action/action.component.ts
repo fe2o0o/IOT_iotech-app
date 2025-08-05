@@ -9,6 +9,7 @@ import { MessageService } from 'primeng/api';
 import { Router } from '@angular/router';
 import { ActivatedRoute } from '@angular/router';
 import { forkJoin } from 'rxjs';
+import { TranslateService } from '@ngx-translate/core';
 @Component({
   selector: 'app-action',
   standalone: false,
@@ -17,7 +18,7 @@ import { forkJoin } from 'rxjs';
   changeDetection:ChangeDetectionStrategy.OnPush
 })
 export class ActionComponent implements OnInit {
-  constructor(private _ActivatedRoute:ActivatedRoute,private _Router:Router,private _MessageService:MessageService,private _ChangeDetectorRef:ChangeDetectorRef,private _AlarmService:AlarmService,private _NotificationService:NotificationService,private _UsersManagmentsService:UsersManagmentsService,private _SharedService:SharedService) {
+  constructor(private translate:TranslateService,private _ActivatedRoute:ActivatedRoute,private _Router:Router,private _MessageService:MessageService,private _ChangeDetectorRef:ChangeDetectorRef,private _AlarmService:AlarmService,private _NotificationService:NotificationService,private _UsersManagmentsService:UsersManagmentsService,private _SharedService:SharedService) {
     this._SharedService.breadCrumbTitle.next('BREADCRUMB.NOTIFICATIONS');
 
 
@@ -25,6 +26,14 @@ export class ActionComponent implements OnInit {
 
   }
 
+  getActionLabel() {
+  if (this.current_step() == 4) {
+    return this.currentUpdateId
+      ? this.translate.instant('NOTIFICATIONS.UPDATE_NOTIFICATION')
+      : this.translate.instant('NOTIFICATIONS.ADD_NOTIFICATION');
+  }
+  return this.translate.instant('NOTIFICATIONS.NEXT');
+}
 
   current_updated_data: any;
 
@@ -116,7 +125,7 @@ export class ActionComponent implements OnInit {
                   case 'System':
                     return 'fi fi-rs-bell text-xl'
                   case 'WhatsApp':
-                    return 'fi fi-brands-whatsapp text-xl'
+                    return ''
                   default:
                     return '';
                 }
@@ -171,7 +180,7 @@ export class ActionComponent implements OnInit {
     if (this.current_step() == 0) {
       this.current_step.set(1)
     } else {
-      this.current_step.set(this.current_step() + 1)
+      this.current_step.set(this.current_step() - 1)
     }
   }
 

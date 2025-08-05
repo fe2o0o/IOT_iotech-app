@@ -3,7 +3,7 @@
   <div [ngClass]="{'rtl_dir':is_arabic() , 'ltr_dir':!is_arabic()}" class="devices_table">
     <div class="table_head m-2 flex flex-wrap items-center justify-between">
       <div class="flex items-center gap-3">
-        <h2 class="font-medium mb-3 text-2xl">{{ 'NOTIFICATIONS.Notifications' | translate }}</h2>
+        <h2 class="font-medium mb-3 text-2xl">{{ 'SIDEBAR.NOTIFICATIONS' | translate }}</h2>
       </div>
       <div class="flex items-center gap-4 flex-wrap flex-row-reverse">
         <button (click)="handleRouting()" class="bg-primary px-4 py-3 rounded-xl w-56 text-white_color">
@@ -24,7 +24,7 @@
           <th>{{ 'NOTIFICATIONS.NAME' | translate }}</th>
           <th>{{ 'NOTIFICATIONS.DEVICE' | translate }}</th>
           <th>{{ 'NOTIFICATIONS.USERS' | translate }}</th>
-          <th>Device Type</th>
+          <th>{{'DEVICES.DEVICE_TYPE'|translate}}</th>
           <th>{{ 'NOTIFICATIONS.CREATED_AT' | translate }}</th>
           <th></th>
         </tr>
