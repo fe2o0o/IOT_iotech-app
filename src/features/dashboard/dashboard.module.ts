@@ -5,12 +5,14 @@ import { DashboardRoutingModule } from './dashboard-routing.module';
 import { IndexComponent } from './index/index.component';
 import { SharedModule } from '../../shared/modules/shared/shared.module';
 import { MapComponent } from './map/map.component';
+import { SubscriptionsComponent } from './subscriptions/subscriptions.component';
 
 
 @NgModule({
   declarations: [
     IndexComponent,
-    MapComponent
+    MapComponent,
+    SubscriptionsComponent
   ],
   imports: [
     CommonModule,

@@ -1,0 +1,38 @@
+<section>
+
+  @for(sub of sub_data() ; track sub){
+  <div class="sub p-6 rounded-2xl mb-5 shadow">
+    <div class="flex items-center justify-between mb-4">
+      <div class="flex items-center gap-4">
+        <i class="fi fi-rr-time-oclock"></i>
+        <h1 class="text-lg font-semibold">Time Remaining {{sub?.durationDays}} Days</h1>
+      </div>
+
+      <p class="bg-primary p-3 rounded-2xl text-white_color font-semibold">{{sub?.isActive ? 'Active':'InActive'}}</p>
+    </div>
+
+
+    <div>
+      <div class="flex items-center gap-20">
+        <p>Start Date : {{sub?.startDate | date:'dd MMM yyyy '}}</p>
+        <p>Start Date : {{sub?.endDate | date:'dd MMM yyyy '}}</p>
+      </div>
+
+
+
+      <div class="flex items-center gap-4">
+        <div class="progress h-2 rounded-2xl flex-1 w-full bg-gray_light/30">
+          <div [style.width]="(getdiffDate(sub?.endDate)/sub?.durationDays)*100+'%'"
+            class="inner h-2 rounded-2xl bg-primary"></div>
+        </div>
+
+
+        <p>{{getdiffDate(sub?.endDate)}}/{{sub?.durationDays}}</p>
+      </div>
+    </div>
+
+
+  </div>
+  }
+
+</section>

@@ -69,6 +69,12 @@ export class SidebarMainLayoutComponent {
       link:'/iotech_app/alarms',
       visible:true,
     },
+    {
+            name:'SIDEBAR.SUBSCRIPTIONS' ,
+      icon:'fi fi-rr-users-alt',
+      link:'/iotech_app/subscriptions',
+      visible:true,
+    }
 
   ])
 

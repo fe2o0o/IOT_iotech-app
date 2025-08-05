@@ -55,7 +55,8 @@ export const arLang = {
       "ROLE_MANAGEMENT": "الأدوار والصلاحيات",
       "NOTIFICATIONS": "الإشعارات",
       "ALARMS": "الإنذارات",
-      "Notification_Group": "مجموعة الإشعارات"
+      "Notification_Group": "مجموعة الإشعارات",
+      "SUBSCRIPTIONS":"المشتركين"
     },
     BREADCRUMB: {
       "DEVICE_MANAGEMENT": "إدارة الأجهزة",
