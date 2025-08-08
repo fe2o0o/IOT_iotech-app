@@ -30,6 +30,11 @@ export class ListComponent implements OnInit {
     this._SharedService.breadCrumbTitle.next('SIDEBAR.ROLE_MANAGEMENT');
   }
 
+
+  handleDisabledDelete(val: string): boolean {
+  const normalizedInput = val ? val.toLocaleLowerCase() : '';
+  return normalizedInput !== 'delete' && normalizedInput !== 'حذف';
+}
   per_page: number = 15;
   is_arabic = signal<boolean>(false);
   loadingState = signal<boolean>(false);

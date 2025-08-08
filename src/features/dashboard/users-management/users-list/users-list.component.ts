@@ -162,6 +162,12 @@ export class UsersListComponent implements OnInit {
 
 
 
+handleDisabledDelete(val: string): boolean {
+  const normalizedInput = val ? val.toLocaleLowerCase() : '';
+  return normalizedInput !== 'delete' && normalizedInput !== 'حذف';
+}
+
+
   handleSearch() {
     this.searchSubject.next(this.searchTerm);
   }

@@ -63,6 +63,14 @@ export class ListComponent {
     this.searchSub$.next(this.searchTerm)
   }
 
+
+  handleDisabledDelete(val: string): boolean {
+  const normalizedInput = val ? val.toLocaleLowerCase() : '';
+  return normalizedInput !== 'delete' && normalizedInput !== 'حذف';
+}
+
+
+
   searchSub$ = new Subject<string>()
   searchTerm:string = ''
     items: any[] = []

@@ -98,6 +98,13 @@ export class AlarmListComponent {
     },
   ]
 
+
+
+  handleDisabledDelete(val: string): boolean {
+  const normalizedInput = val ? val.toLocaleLowerCase() : '';
+  return normalizedInput !== 'delete' && normalizedInput !== 'حذف';
+}
+
     searchTerm: string = '';
     private searchSubject = new Subject<string>()
     handleSearch() {

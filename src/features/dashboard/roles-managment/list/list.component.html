@@ -187,8 +187,7 @@
     <div class="flex justify-center">
       <div class="action_btn">
         <p-button [loading]="loading_delete()" (onClick)="handleDelete()"
-          [disabled]="confirm_input.value.toLocaleLowerCase().trim() != 'delete'"
-          [label]="'DEVICES.DELETE' | translate" />
+          [disabled]="handleDisabledDelete(confirm_input.value)" [label]="'DEVICES.DELETE' | translate" />
       </div>
     </div>
   </ng-template>
