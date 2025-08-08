@@ -70,6 +70,12 @@ export class SidebarMainLayoutComponent {
       visible:true,
     },
     {
+      name:'SIDEBAR.ALERT' ,
+      icon:'fi fi-rr-light-emergency-on',
+      link:'/iotech_app/alert-managment',
+      visible:true,
+    },
+    {
             name:'SIDEBAR.SUBSCRIPTIONS' ,
       icon:'fi fi-rr-users-alt',
       link:'/iotech_app/subscriptions',

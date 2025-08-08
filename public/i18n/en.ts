@@ -56,7 +56,8 @@ export const enLang = {
       "NOTIFICATIONS": "Notifications",
       "ALARMS": "Alarm Templates",
       "Notification_Group": "Notification Group",
-      "SUBSCRIPTIONS":"Subscriptions"
+      "SUBSCRIPTIONS": "Subscriptions",
+      "ALERT":'Alert'
     },
     BREADCRUMB: {
       "DEVICE_MANAGEMENT": "Device Management",

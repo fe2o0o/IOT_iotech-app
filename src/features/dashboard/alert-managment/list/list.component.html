@@ -1,0 +1,95 @@
+<section>
+
+  <div class="tabs_container flex  items-center gap-6 mb-6">
+    @for(tab of tabs ; track tab.id){
+    <button (click)="handleFilterAlerts(tab.id)"
+      [ngClass]="{'bg-primary':tab.is_active , 'bg-white_color':!tab.is_active , 'text-white_color':tab.is_active }"
+      class="py-2 px-4 rounded-xl bg-white_color shadow-sm">
+      <span>{{tab.name}}</span>
+    </button>
+    }
+  </div>
+
+
+
+  <div class="alerts_container">
+    @if(loading_state()){
+    <app-empty-state [loadingState]="loading_state()"></app-empty-state>
+    }@else {
+    @if(alerts().length > 0){
+    <p-accordion class="w-full" expandIcon="fi fi-rr-angle-small-down" collapseIcon="fi fi-rr-angle-small-up">
+      @for(alert of alerts() ; track alert){
+
+      <p-accordionTab>
+        <ng-template pTemplate="header">
+          <div class="flex items-center justify-between flex-1">
+            <div>
+
+              <h2 class="flex items-center gap-2 mb-2">
+                <i class="fi fi-rr-light-emergency-on text-primary"></i>
+                <span>Alert For Device : {{alert.deviceName}}</span>
+              </h2>
+
+              <p class="flex items-center gap-2">
+                <i class="fi fi-rr-alarm-clock"></i>
+                <span>{{alert?.sentDate}}</span>
+              </p>
+            </div>
+
+
+
+            <div class="actions flex items-center gap-4 mr-4">
+              <div class="action_btn">
+                <p-button label="Device Details" [routerLink]="''" />
+              </div>
+
+
+              <button>
+                Mark as Unread
+              </button>
+
+              <button>
+                Dismiss
+              </button>
+            </div>
+          </div>
+        </ng-template>
+
+
+
+        @for(not of alert.notifications ; track not){
+        <div class="mb-4">
+          <h2 class="flex items-center gap-2 mb-2">
+            <i class="fi fi-rr-light-emergency-on text-primary"></i>
+            <span>Alerts : {{alert.deviceName}}</span>
+          </h2>
+
+
+          <div class="flex items-center justify-between">
+            <p>Metric : {{not?.metric}}</p>
+            <p>Range : {{not?.range}}</p>
+            <p>Value : {{not?.value|number}}</p>
+            <p>Category : {{not?.category}}</p>
+          </div>
+
+
+        </div>
+        }
+      </p-accordionTab>
+      }
+    </p-accordion>
+    }@else {
+    <div class="w-100 bg-white text-center">
+      <img class="w-40 mx-auto" src="images/nodata.png" alt="">
+      No Data Avaliable
+    </div>
+    }
+    }
+
+  </div>
+
+
+
+
+
+</section>

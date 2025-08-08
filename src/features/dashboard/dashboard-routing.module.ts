@@ -11,6 +11,7 @@ const routes: Routes = [
   {path:'roles-management' , loadChildren:()=> import('./roles-managment/roles-managment.module').then(m => m.RolesManagmentModule)},
   {path:'alarms' , loadChildren:()=> import('./alarms/alarms.module').then(m => m.AlarmsModule)},
   { path: 'notification-managment', loadChildren: () => import('./notification/notification.module').then(m => m.NotificationModule) },
+  { path: 'alert-managment', loadChildren: () => import('./alert-managment/alert-managment.module').then(m => m.AlertManagmentModule) },
   {path:'subscriptions' , component:SubscriptionsComponent}
 ];
 

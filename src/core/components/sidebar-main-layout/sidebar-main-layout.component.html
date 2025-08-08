@@ -20,7 +20,7 @@
     <ul>
       @for(link of sidebarLinks() ; track $index){
       @if(link.visible){
-      <li routerLinkActive="active" class="sidebar__sidebar-container-links-item rounded-lg flex gap-4 mb-6">
+      <li routerLinkActive="active" class="sidebar__sidebar-container-links-item rounded-lg flex gap-4 mb-2">
         <a (click)="handleOpenOverlay()" [routerLink]="link?.link" class="flex algin-center gap-2">
           <i [class]="link.icon" class="text-white_color text-xl"></i>
           @if(isColapsed()){

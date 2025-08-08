@@ -248,3 +248,14 @@ i.pass_toggle {
   -ms-border-radius: 50%;
   -o-border-radius: 50%;
 }
+
+
+
+.p-accordion .p-accordion-header-link{
+  flex: 1 !important;
+}
+
+
+.p-accordion p-accordiontab .p-accordion-tab{
+  @apply mb-4
+}
