@@ -111,5 +111,12 @@ public refreshSubscription: Subscription | any;
     })
   }
 
+
+
+
+  getAllNotifications(page:number = 1 , size:number = 999):Observable<any> {
+    return this._HttpClient.get(environment.app_api_url + `SystemAlerts/GetSystemNotifications?PageNumber=${page}&PageSize=${size}`)
+  }
+
 }
 

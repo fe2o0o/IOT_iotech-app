@@ -59,7 +59,8 @@ export class BreadcrumbComponent implements OnInit {
   ngOnInit(): void {
     this._AuthService.userData.subscribe((res) => {
         this.userData = res
-      })
+    })
+
   }
 
   handleSelectedLanguage() {
@@ -91,4 +92,24 @@ export class BreadcrumbComponent implements OnInit {
 
 
   title_bread = signal<string>('')
+
+
+  loading_state = signal<boolean>(false)
+
+  notifications = signal<any[]>([])
+
+
+
+
+  getNotifications() {
+    this.loading_state.set(true)
+    this.notifications.set([])
+
+    this._AuthService.getAllNotifications().subscribe((res) => {
+      console.log("not res" , res);
+      this.notifications.set(res?.data?.items)
+      this.loading_state.set(false)
+    })
+  }
+
 }

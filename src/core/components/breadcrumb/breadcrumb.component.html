@@ -12,7 +12,34 @@
     <div class="flex items-center gap-5 flex-wrap">
       <div class="flex items-center gap-3 flex-wrap">
         <img src="images/IoTech-Logo2024 2.svg" width="80" alt="">
+
+
       </div>
+      <div (click)="op.toggle($event) ; getNotifications()   "
+        class="notifications relative cursor-pointer flex items-center justify-center">
+        <svg width="40" height="40" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <g clip-path="url(#clip0_545_1293)">
+            <path d="M21.9154 14.9707L23.1639 20.3785" stroke="black" stroke-width="2" stroke-miterlimit="10"
+              stroke-linecap="round" />
+            <path
+              d="M20.2833 7.7534C14.3072 9.1331 10.5851 15.0897 11.9648 21.0659L12.7521 24.4762C13.0071 25.5804 12.9348 27.3418 12.5838 28.415L11.3162 32.3339C10.5407 34.7537 11.965 36.9222 14.4835 37.1618C22.8421 37.9518 31.2379 36.0135 38.4042 31.6393C40.4278 30.4024 40.7774 27.6191 39.1345 25.9115L36.2772 22.9449C35.4914 22.1342 34.6505 20.5665 34.3993 19.4785L33.612 16.0682C32.2236 10.1283 26.227 6.3812 20.2833 7.7534Z"
+              stroke="black" stroke-width="2" stroke-miterlimit="10" stroke-linecap="round" />
+            <path
+              d="M31.9647 33.8273C32.6508 36.7991 30.7773 39.7974 27.8055 40.4835C26.3277 40.8247 24.8211 40.5225 23.6218 39.7731C22.4225 39.0237 21.4905 37.802 21.1493 36.3242"
+              stroke="black" stroke-width="2" stroke-miterlimit="10" />
+          </g>
+          <defs>
+            <clipPath id="clip0_545_1293">
+              <rect width="40" height="40" fill="white" transform="translate(0.0135803 9.01172) rotate(-13)" />
+            </clipPath>
+          </defs>
+        </svg>
+        <span class="mainDotWrap">
+          <span class="singleDt"></span>
+          <span class="vvDt"></span>
+        </span>
+      </div>
+
       <div class="user_info cursor-pointer flex flex-wrap items-center gap-3">
         <div class="switch_lang flex items-center gap-3">
           <div class="icon">
@@ -39,3 +66,42 @@
 
 
 <p-menu #menu appendTo="body" styleClass="namespace_action" [model]="items" [popup]="true" />
+
+
+<p-overlayPanel #op styleClass="notification_panal">
+  <div class="notications_container">
+    @if(!loading_state() && notifications().length > 0){
+    @for(notGro of notifications() ; track notGro){
+    @for(not of notGro.notifications ; track not){
+    <div class=" p-4 rounded-lg hover:bg-primary hover:text-white_color mb-4">
+      <div class="mb-2">
+        <h2 class="flex items-center gap-2 mb-2">
+          <i class="fi fi-rr-light-emergency-on"></i>
+          <span>Alert For Device : {{not.deviceName}}</span>
+        </h2>
+        <p class="text-sm font-normal">{{not?.message}}</p>
+      </div>
+
+      <div class="flex items-center justify-between">
+        <p class="flex items-center gap-2">
+          <i class="fi fi-rr-alarm-clock"></i>
+          <span>{{not?.sentDate | date:'dd-mm-yy hh:mm'}}</span>
+        </p>
+        <div class="action_btn">
+          <p-button label="Device Details"
+            [routerLink]="`/iotech_app/devices-management/device/${not.deviceIdentifier}/${not.deviceName}`" />
+        </div>
+      </div>
+    </div>
+    }
+    }
+    }@else {
+    @if(loading_state() && notifications().length == 0){
+    <p-progressSpinner ariaLabel="loading" />
+    }@else{
+
+    <app-empty-state [loadingState]="false"></app-empty-state>
+    }
+    }
+  </div>
+</p-overlayPanel>

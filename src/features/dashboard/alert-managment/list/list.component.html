@@ -40,7 +40,8 @@
 
             <div class="actions flex items-center gap-4 mr-4">
               <div class="action_btn">
-                <p-button label="Device Details" [routerLink]="''" />
+                <p-button label="Device Details"
+                  [routerLink]="`/iotech_app/devices-management/device/${alert.deviceIdentifier}/${alert.deviceName}`" />
               </div>
 
 
