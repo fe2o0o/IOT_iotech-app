@@ -27,6 +27,13 @@ export class NotificationService {
   }
 
 
+
+
+  updateNotification(req: any, id: any): Observable<any>{
+    return this._HttpClient.put(environment.app_api_url + `AlarmTemplate/UpdateNotificationGroup/${id} ` , req)
+  }
+
+
   deleteNotification(id: any): Observable<any>{
     return this._HttpClient.delete(environment.app_api_url + `AlarmTemplate/DeleteNotificationGroup/${id}`)
   }

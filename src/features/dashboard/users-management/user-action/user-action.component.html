@@ -98,6 +98,27 @@
       </div>
       }
     </form>
+    <div class="col-span-12">
+      <h2 class="mb-6 text-xl font-semibold">Staff Permssions</h2>
+
+      <div class="flex items-center justify-between">
+
+        <div class="input_group flex items-center gap-2 flex-row-reverse">
+          <label for="">Select All</label>
+          <p-checkbox [binary]="true" inputId="binary" (onChange)="handleSelectAllStaff($event)" />
+        </div>
+
+        <div class="flex items-center gap-8">
+          @for(per of staff_Perm ; track per){
+          <div class="input_group flex items-center gap-2 flex-row-reverse">
+            <label for="">{{per.name}}</label>
+            <p-checkbox [binary]="true" [(ngModel)]="per.isActive" inputId="binary" />
+          </div>
+          }
+        </div>
+      </div>
+
+    </div>
     <div class="col-span-12 permsiions">
       @if(showPermssionsError){
 
@@ -168,27 +189,7 @@
 
 
 
-    <div class="col-span-12">
-      <h2 class="mb-6 text-xl font-semibold">Staff Permssions</h2>
 
-      <div class="flex items-center justify-between">
-
-        <div class="input_group flex items-center gap-2 flex-row-reverse">
-          <label for="">Select All</label>
-          <p-checkbox [binary]="true" inputId="binary" (onChange)="handleSelectAllStaff($event)" />
-        </div>
-
-        <div class="flex items-center gap-8">
-          @for(per of staff_Perm ; track per){
-          <div class="input_group flex items-center gap-2 flex-row-reverse">
-            <label for="">{{per.name}}</label>
-            <p-checkbox [binary]="true" [(ngModel)]="per.isActive" inputId="binary" />
-          </div>
-          }
-        </div>
-      </div>
-
-    </div>
   </div>
 
 

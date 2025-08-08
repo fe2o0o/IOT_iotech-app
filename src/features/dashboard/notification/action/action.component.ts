@@ -57,7 +57,8 @@ export class ActionComponent implements OnInit {
           this.selected_type = this.current_updated_data?.deviceType
           this.alarm_tempeletes.set(res[3]?.data?.templates);
           this.selected_templete = this.alarm_tempeletes().filter((temp: any) => temp?.templateName == this.current_updated_data?.alarmTemplate)[0]
-          console.log("selected", this.selected_templete);
+          console.log("selected", this.selected_type);
+          this.handleGetDevices()
 
           // this.handleGetTemplates(this.current_updated_data?.dataSegments)
         })
@@ -187,51 +188,88 @@ export class ActionComponent implements OnInit {
 
 
   handleAction() {
-    if (this.current_step() != 4) {
-      this.current_step.set(this.current_step() + 1)
-      return;
-    }
+    // if (this.current_step() != 4) {
+    //   this.current_step.set(this.current_step() + 1)
+    //   return;
+    // }
 
-    this.load_action.set(true)
-    const req = {
-        ...this.main_form.value,
-        userIds: this.selected_users().map((user: any) => {
-          return user?.id
-        }),
-        alarmTemplateId:this.selected_template()?.templateId,
-        deviceIds: this.selected_devices().map((dev: any) => {
-          return dev?.id
-        }),
-        dataSegments: this.data_segments().map((seg: any) => {
-          const selected_seg = seg?.notifications.filter((not:any)=> not?.isActive)
+    if (this.current_step() == 4) {
+      this.load_action.set(true)
+      const req = {
+          ...this.main_form.value,
+          userIds: this.selected_users().map((user: any) => {
+            return user?.id
+          }),
+          alarmTemplateId:this.selected_template()?.templateId,
+          deviceIds: this.selected_devices().map((dev: any) => {
+            return dev?.id
+          }),
+          dataSegments: this.data_segments().map((seg: any) => {
+            const selected_seg = seg?.notifications.filter((not:any)=> not?.isActive)
 
-          if (selected_seg.length > 0) {
-            return {
-              name: seg.name,
-              notificationTypeIds: seg?.notifications.filter((not:any) => not?.isActive).map((notAc:any)=> notAc?.id)
+            if (selected_seg.length > 0) {
+              return {
+                name: seg.name,
+                notificationTypeIds: seg?.notifications.filter((not:any) => not?.isActive).map((notAc:any)=> notAc?.id)
+              }
+            } else {
+              return null
             }
+
+          }).filter((seg: any) => seg != null),
+          deviceType:this.selected_type
+
+      }
+      console.log("req", req);
+
+      const API = this.currentUpdateId ? this._NotificationService.updateNotification(req , this.currentUpdateId) : this._NotificationService.addNotification(req)
+
+
+      API?.subscribe({
+        next: (res: any) => {
+          this.load_action.set(false)
+          if (!this.currentUpdateId) {
+            this._MessageService.add({severity:'success' , summary:"Success" , detail:"Notification Group Added Successfully"})
           } else {
-            return null
+            this._MessageService.add({severity:'success' , summary:"Success" , detail:"Notification Group Updated Successfully"})
+
           }
-
-        }).filter((seg: any) => seg != null),
-        deviceType:this.selected_type
-
-    }
-    console.log("req", req);
-
-    const API = this.currentUpdateId ? null : this._NotificationService.addNotification(req)
-
-
-    API?.subscribe({
-      next: (res: any) => {
-        this.load_action.set(false)
-        if (!this.currentUpdateId) {
-          this._MessageService.add({severity:'success' , summary:"Success" , detail:"Notification Group Added Successfully"})
+          this._Router.navigate(['/iotech_app/notification-managment/list'])
+        },
+        error: (err) => {
+          this.load_action.set(false)
           this._Router.navigate(['/iotech_app/notification-managment/list'])
         }
+      })
+    } else {
+      switch (this.current_step()) {
+        case 1:
+          if (this.main_form.valid) {
+            this.current_step.set(this.current_step() + 1)
+          } else {
+            this.main_form.markAllAsTouched()
+            this._MessageService.add({severity:'error' , summary:'Error' , detail:'All Data Is Required'})
+          }
+          break;
+        case 2:
+          if (this.selected_users().length > 0) {
+            this.current_step.set(this.current_step() + 1)
+          } else {
+            this._MessageService.add({severity:'error' , summary:'Error' , detail:'Please Select at Least one User'})
+          }
+          break;
+        case 3:
+            if (this.selected_devices().length > 0) {
+            this.current_step.set(this.current_step() + 1)
+          } else {
+            this._MessageService.add({severity:'error' , summary:'Error' , detail:'Please Select at Least one Device Based on Types '})
+          }
+          break;
+        default:
+          break;
       }
-    })
+    }
+
   }
 }
 
