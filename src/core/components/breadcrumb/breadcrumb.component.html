@@ -73,10 +73,10 @@
     @if(!loading_state() && notifications().length > 0){
     @for(notGro of notifications() ; track notGro){
     @for(not of notGro.notifications ; track not){
-    <div class=" p-4 rounded-lg hover:bg-primary hover:text-white_color mb-4">
+    <div class=" p-4 rounded-lg  mb-4">
       <div class="mb-2">
         <h2 class="flex items-center gap-2 mb-2">
-          <i class="fi fi-rr-light-emergency-on"></i>
+          <i class="fi fi-rr-light-emergency-on text-primary"></i>
           <span>Alert For Device : {{not.deviceName}}</span>
         </h2>
         <p class="text-sm font-normal">{{not?.message}}</p>
