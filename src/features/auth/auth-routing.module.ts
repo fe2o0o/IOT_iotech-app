@@ -8,18 +8,12 @@ import { UpdatePasswordComponent } from './update-password/update-password.compo
 import { SuccessComponent } from './success/success.component';
 
 const routes: Routes = [
-  {
-    path: '',
-    component: AuthOuletComponent,
-    children: [
       { path: '', redirectTo: 'login', pathMatch: 'full' },
       { path: 'login', component: LoginComponent },
       { path: 'forgot-password', component: ForgetPasswordComponent },
       { path: 'otp-verfication', component: OTPVerficationComponent },
       { path: 'update-password', component: UpdatePasswordComponent },
       {path:'success-update' , component:SuccessComponent}
-    ]
-  }
 ];
 
 @NgModule({

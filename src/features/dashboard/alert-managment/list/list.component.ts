@@ -1,6 +1,7 @@
 import { ChangeDetectionStrategy, Component, OnInit, signal } from '@angular/core';
 import { SharedService } from '../../../../shared/services/shared.service';
 import { AlertServiceService } from '../../../../core/services/alert-service.service';
+import { TranslateService } from '@ngx-translate/core';
 @Component({
   selector: 'app-list',
   standalone: false,
@@ -9,15 +10,36 @@ import { AlertServiceService } from '../../../../core/services/alert-service.ser
   changeDetection:ChangeDetectionStrategy.OnPush
 })
 export class ListComponent implements OnInit {
-  constructor(private _AlertServiceService:AlertServiceService  ,private _SharedService:SharedService) {
+  constructor(private _TranslateService:TranslateService,private _AlertServiceService:AlertServiceService  ,private _SharedService:SharedService) {
     this._SharedService.breadCrumbTitle.next('SIDEBAR.ALERT')
-
+    this.tabs = [
+    {
+      id: 1,
+      name: this._TranslateService.instant('ALERTS.ALL'),
+      is_active:true
+    },
+    {
+      id: 2,
+      name: this._TranslateService.instant('ALERTS.READ'),
+      is_active: false
+    },
+    {
+      id: 3,
+      name: this._TranslateService.instant('ALERTS.UNREAD'),
+      is_active:false
+    },
+    {
+      id: 4,
+      name: this._TranslateService.instant('ALERTS.DISMISS'),
+      is_active:false
+    },
+  ]
   }
 
 
   handleFilterAlerts(id: any) {
 
-    this.tabs.map((tab) => {
+    this.tabs.map((tab:any) => {
       if (tab.id == id) {
         tab.is_active = true
       } else {
@@ -48,28 +70,7 @@ export class ListComponent implements OnInit {
   }
 
 
-  tabs = [
-    {
-      id: 1,
-      name: "All",
-      is_active:true
-    },
-    {
-      id: 2,
-      name: "Read",
-      is_active: false
-    },
-    {
-      id: 3,
-      name: "Unread",
-      is_active:false
-    },
-    {
-      id: 4,
-      name: "Dismiss",
-      is_active:false
-    },
-  ]
+  tabs:any = []
 
 
   alerts = signal<any[]>([])
@@ -85,9 +86,16 @@ export class ListComponent implements OnInit {
   getAlerts(onlyRead: boolean = false, onlyUnread: boolean = false, onlyDismissed: boolean = false) {
     this.loading_state.set(true)
     this._AlertServiceService.getAlertLis(onlyRead, onlyUnread, onlyDismissed).subscribe((res) => {
-      console.log("alert list res" , res);
-      this.alerts.set(res?.data)
 
+      this.alerts.set(res?.data?.map((alert: any) => {
+        return {
+          ...alert,
+          isRead:alert?.notifications?.every((not:any) => not?.isRead),
+          isDismiss:alert?.notifications?.every((not:any) => not?.isDismissed)
+        }
+      }))
+
+      console.log("alert list res" , this.alerts());
       this.loading_state.set(false)
     })
   }

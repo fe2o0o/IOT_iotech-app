@@ -36,7 +36,7 @@ export class OTPVerficationComponent implements OnInit {
 
   initOTPForm() {
     this.otp_form = new FormGroup({
-      otp: new FormControl(null , [Validators.required , Validators.minLength(6)])
+      otp: new FormControl(null , [Validators.required , Validators.minLength(4)])
     })
   }
 

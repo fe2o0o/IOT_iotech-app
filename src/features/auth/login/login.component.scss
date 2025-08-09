@@ -1,0 +1,34 @@
+.login {
+  width: 500px;
+}
+
+
+.eliapse1 {
+  top: 50%;
+  transform: translateY(-80%);
+  -webkit-transform: translateY(-80%);
+  -moz-transform: translateY(-80%);
+  -ms-transform: translateY(-80%);
+  -o-transform: translateY(-80%);
+  right: -30%;
+}
+
+@media screen and (max-width:600px) {
+  .login {
+    width: 100% !important;
+  }
+}
+
+@media screen and (max-width:800px) {
+
+  .eliapse1,
+  .eliapse2 {
+    @apply hidden;
+  }
+}
+
+
+i.pass_toggle {
+  right: 1.5rem !important;
+  left: auto;
+}

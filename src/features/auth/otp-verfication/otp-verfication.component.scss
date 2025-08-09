@@ -5,3 +5,57 @@
     font-size: 1.5rem;
   }
 }
+
+
+
+
+
+
+.login {
+  width: 500px;
+}
+
+
+.eliapse1 {
+  top: 50%;
+  transform: translateY(-80%);
+  -webkit-transform: translateY(-80%);
+  -moz-transform: translateY(-80%);
+  -ms-transform: translateY(-80%);
+  -o-transform: translateY(-80%);
+  right: -30%;
+  z-index: 1;
+}
+
+@media screen and (max-width:600px) {
+  .login {
+    width: 100% !important;
+  }
+}
+
+@media screen and (max-width:800px) {
+
+  .eliapse1,
+  .eliapse2 {
+    @apply hidden;
+  }
+}
+
+
+i.pass_toggle {
+  right: 1.5rem !important;
+  left: auto;
+}
+
+
+
+::ng-deep .p-inputotp .p-inputtext {
+  width: 70px;
+  height: 70px;
+  border-radius: 20px;
+  -webkit-border-radius: 20px;
+  -moz-border-radius: 20px;
+  -ms-border-radius: 20px;
+  -o-border-radius: 20px;
+  border: 1px solid #E21073;
+}

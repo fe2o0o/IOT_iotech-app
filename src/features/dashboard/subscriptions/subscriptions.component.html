@@ -1,4 +1,8 @@
 <section>
+  @if(loading_state()){
+  <app-empty-state [loadingState]="loading_state()"></app-empty-state>
+  }@else {
+  @if(sub_data().length > 0 ){
 
   @for(sub of sub_data() ; track sub){
   <div class="sub p-6 rounded-2xl mb-5 shadow">
@@ -33,6 +37,13 @@
 
 
   </div>
+  }
+  }@else {
+  <div class="w-100 bg-white text-center">
+    <img class="w-40 mx-auto" src="images/nodata.png" alt="">
+    No Subscription Data Avaliable
+  </div>
+  }
   }
 
 </section>

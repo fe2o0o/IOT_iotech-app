@@ -1,4 +1,4 @@
-<div class="flex flex-col  justify-center  h-full p-4">
+<!-- <div class="flex flex-col  justify-center  h-full p-4">
   <div class="head text-center mb-12">
     <h2 class="text-5xl font-semibold text-white_color mb-4">{{"AUTH.SIGN_IN"|translate}}</h2>
     <p class="text-sm text-white_color">{{"AUTH.LOGIN_PAGE_TITLE"|translate}}</p>
@@ -55,4 +55,73 @@
     </form>
   </div>
 
-</div>
+</div> -->
+
+
+
+<section class="h-screen">
+  <div class="flex items-center justify-center h-full relative">
+    <div class="login">
+      <div class="welcom text-center mb-6">
+        <div class="logo mb-8">
+          <img width="250" loading="lazy" class="mx-auto" src="images/images/logo_primary.svg" alt="">
+        </div>
+        <div>
+          <h1 class="text-2xl font-semibold mb-4">Welcome Back</h1>
+          <p class="text-gray_light">Login to your account</p>
+        </div>
+      </div>
+
+      <form [formGroup]="loginForm" class="login_form relative">
+        <img class="absolute eliapse1" loading="lazy" src="images/images/eliapse1.svg" alt="">
+        <div class="form_group mb-6">
+          <label for="email" class="text-xl block mb-3">Email Address</label>
+          <div class="input_icon_group ">
+            <input id="email" formControlName="email" type="email" pInputText placeholder="Example@gmail.com" />
+            <i class="fi text-lg fi-rr-envelope"></i>
+          </div>
+          @if(loginForm.get('email')?.errors && loginForm.get('email')?.touched){
+          <div>
+            @if(loginForm.get('email')?.getError('required')){
+            <p class="p-2 text-sm text-danger_color m-0">Email is required</p>
+            }
+            @if(loginForm.get('email')?.getError('email')){
+            <p class="p-2 text-sm text-danger_color m-0">Enter vaild email address</p>
+            }
+          </div>
+          }
+        </div>
+        <div class="form_group mb-6">
+          <label for="password" class="text-xl block mb-3">Password</label>
+          <div class="input_icon_group mb-2">
+            <i (click)="isShowPass.set(!isShowPass())"
+              [ngClass]="{'fi-rr-eye': !isShowPass() , 'fi fi-rr-eye-crossed':isShowPass()}"
+              class="fi  cursor-pointer pass_toggle"></i>
+            <input id="password" formControlName="password" [type]="!isShowPass() ? 'password':'text'" pInputText
+              placeholder="***********" />
+            <i class="fi text-lg fi-rr-lock"></i>
+          </div>
+          @if(loginForm.get('password')?.errors && loginForm.get('password')?.touched){
+          <div>
+            @if(loginForm.get('password')?.getError('required')){
+            <p class="p-2 text-sm text-danger_color m-0">Password is required</p>
+            }
+
+          </div>
+          }
+          <a [routerLink]="['/auth/forgot-password']" routerLinkActive="router-link-active"
+            class="flex justify-end underline text-dark">{{"AUTH.FORGOT_PASSWORD"|translate}}</a>
+        </div>
+
+        <div class="auth_btn">
+          <p-button [loading]="isLoginBtnLoading()" (click)="handleLogin()" label="Login"
+            [disabled]="loginForm.invalid" />
+        </div>
+
+      </form>
+    </div>
+
+    <img class="absolute eliapse2 left-0 bottom-24" src="images/images/eliapse2.svg" alt="">
+
+  </div>
+</section>

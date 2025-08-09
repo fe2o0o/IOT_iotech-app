@@ -27,7 +27,7 @@
 
               <h2 class="flex items-center gap-2 mb-2">
                 <i class="fi fi-rr-light-emergency-on text-primary"></i>
-                <span>Alert For Device : {{alert.deviceName}}</span>
+                <span>{{"ALERTS.ALERT_FOR_DEV" | translate}} : {{alert.deviceName}}</span>
               </h2>
 
               <p class="flex items-center gap-2">
@@ -46,11 +46,21 @@
 
 
               <button>
-                Mark as Unread
+                @if(alert?.isRead){
+                {{'ALERTS.MARK_AS_UNREAD' | translate}}
+                }@else{
+
+                {{ 'ALERTS.MARK_AS_READ' | translate}}
+                }
               </button>
 
               <button>
-                Dismiss
+                @if(alert?.isDismiss){
+                {{'ALERTS.UN_DISMISS' | translate}}
+                }@else{
+
+                {{ 'ALERTS.DISMISS' | translate}}
+                }
               </button>
             </div>
           </div>

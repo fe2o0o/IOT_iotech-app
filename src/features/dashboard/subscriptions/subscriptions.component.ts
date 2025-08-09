@@ -26,10 +26,12 @@ export class SubscriptionsComponent implements OnInit {
 
 
   sub_data = signal<any[]>([])
-
+  loading_state = signal<boolean>(false)
   getSubscriptionData() {
+    this.loading_state.set(true)
     this._SubscriptionsService.getSubscriptions().subscribe((res: any) => {
       this.sub_data.set(res?.data?.items)
+      this.loading_state.set(false)
     })
   }
 

@@ -56,7 +56,8 @@ export const arLang = {
       "NOTIFICATIONS": "الإشعارات",
       "ALARMS": "الإنذارات",
       "Notification_Group": "مجموعة الإشعارات",
-      "SUBSCRIPTIONS":"المشتركين"
+      "SUBSCRIPTIONS": "المشتركين",
+      "ALERT":"التنبيهات"
     },
     BREADCRUMB: {
       "DEVICE_MANAGEMENT": "إدارة الأجهزة",
@@ -215,7 +216,16 @@ Occupancy: "الإشغال",
       "DELETE_PLACEHOLDER": "أدخل كلمة حذف هنا",
       "NEW_THRESHOLD_VALUE": "قيمة الحد الجديدة",
       "SET": "تعيين",
-      "RECENT_ALERTS_TITLE": "التنبيهات الأخيرة"
+      "RECENT_ALERTS_TITLE": "التنبيهات الأخيرة",
+      "ALL": "الكل",
+      "UNREAD": "غير مقروء",
+      "READ": "مقروء",
+      "DISMISS": "مروفوض",
+      "DEV_DETAILS": "تفاصيل الجهاز",
+      "MARK_AS_UNREAD": "تعليم كغير مقروء",
+      "MARK_AS_READ": " تعليم كمقروء",
+      "UN_DISMISS": "غير مروفوض",
+      "ALERT_FOR_DEV" : "التنبيهات لجهاز"
     },
     MAP: {
       "BEACON_ID": "معرف البيكون",

@@ -237,6 +237,16 @@ Calibration: "Calibration",
       "NEW_THRESHOLD_VALUE": "New Threshold Value",
       "SET": "Set",
       "RECENT_ALERTS_TITLE": "Recent Alerts",
+      "ALL": "All",
+      "UNREAD": "Unread",
+      "READ": "Read",
+      "DISMISS": "Dismiss",
+      "DEV_DETAILS": "Device Details",
+      "MARK_AS_UNREAD": " Mark as Unread",
+      "MARK_AS_READ": " Mark as Read",
+      "UN_DISMISS": "Un Dismiss",
+      "ALERT_FOR_DEV":"Alert For Device"
+
     },
     MAP: {
       "BEACON_ID": "Beacon ID",

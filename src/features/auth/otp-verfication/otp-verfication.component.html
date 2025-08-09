@@ -1,4 +1,4 @@
-<div class="flex flex-col  justify-center  h-full">
+<!-- <div class="flex flex-col  justify-center  h-full">
   <div class="head text-center mb-8 lg:w-3/5 mx-auto">
     <h2 class="text-5xl font-semibold text-white_color mb-4">
       {{ 'AUTH.OTP_VERIFICATION_TITLE' | translate }}
@@ -36,4 +36,53 @@
       {{ 'AUTH.RESEND_CODE' | translate }}
     </button>
   </p>
-</div>
+</div> -->
+
+
+
+<section class="h-screen">
+  <div class="flex items-center justify-center h-full relative z-10">
+    <div class="login">
+      <div class="welcom text-center mb-12">
+        <div class="logo mb-8">
+          <img width="250" loading="lazy" class="mx-auto" src="images/images/logo_primary.svg" alt="">
+        </div>
+        <div>
+          <h1 class="text-2xl font-semibold mb-4">OTP Verification </h1>
+          <p class="text-gray_light">We will send you a one-time password to restore access to your profile
+            {{current_mail()}} </p>
+        </div>
+      </div>
+
+      <form [formGroup]="otp_form" class="login_form relative ">
+        <img class="absolute eliapse1" loading="lazy" src="images/images/eliapse1.svg" alt="">
+
+
+
+        <div class="form_group my-12 flex  justify-center">
+          <p-inputOtp formControlName="otp" />
+        </div>
+
+
+
+        <div class="auth_btn mb-6 relative z-30">
+          <p-button (click)="handleOTPVerfication()" [loading]="isLoading()" label="Verify"
+            [disabled]="otp_form.invalid" />
+        </div>
+
+
+        <p class="text-primary mb-12 text-center">
+          {{ 'AUTH.CODE_EXPIRES_IN' | translate }}
+          <span class="text-primary">{{ minutes() }}:{{ seconds() }}</span>
+        </p>
+
+        <div class="mb-12 text-center">
+          <p>Didn't get code? <span class="text-primary">Resend Code</span></p>
+        </div>
+      </form>
+    </div>
+
+    <img class="absolute eliapse2 left-0 bottom-24" src="images/images/eliapse2.svg" alt="">
+
+  </div>
+</section>
