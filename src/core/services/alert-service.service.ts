@@ -17,4 +17,10 @@ export class AlertServiceService {
   }
 
 
+
+  updateAlertStatud(req: any): Observable<any>{
+    return this._HttpClient.post(environment.app_api_url + 'SystemAlerts/User-Alerts-UpdateStatus' , req)
+  }
+
+
 }

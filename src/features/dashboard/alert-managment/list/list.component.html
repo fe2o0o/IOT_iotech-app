@@ -45,7 +45,7 @@
               </div>
 
 
-              <button>
+              <button (click)="toogleReading(alert , $event)">
                 @if(alert?.isRead){
                 {{'ALERTS.MARK_AS_UNREAD' | translate}}
                 }@else{
@@ -54,7 +54,7 @@
                 }
               </button>
 
-              <button>
+              <button (click)="toogleDismiss(alert , $event)">
                 @if(alert?.isDismiss){
                 {{'ALERTS.UN_DISMISS' | translate}}
                 }@else{
